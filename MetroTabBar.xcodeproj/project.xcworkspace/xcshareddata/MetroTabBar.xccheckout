@@ -5,41 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>CD10D11C-CA75-4272-AAF3-CE4A8B940E38</string>
+	<string>2364CB5B-41C1-40B8-A8DC-44BB1C217C42</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MetroTabBar</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E39E210D-AAD8-4B96-8FAB-58FEA771C74E</key>
-		<string>https://strangewiz.svn.beanstalkapp.com/metroapp</string>
+		<key>7292B4B0-7B38-4200-B9E7-5B3B14697FCD</key>
+		<string>https://github.com/strangewiz/MetroTabBar.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>trunk/MetroTabBar/MetroTabBar.xcodeproj/project.xcworkspace</string>
+	<string>MetroTabBar.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E39E210D-AAD8-4B96-8FAB-58FEA771C74E</key>
-		<string>../../../..</string>
-	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>E39E210D-AAD8-4B96-8FAB-58FEA771C74E</key>
-		<string>https://strangewiz.svn.beanstalkapp.com/metroapp</string>
+		<key>7292B4B0-7B38-4200-B9E7-5B3B14697FCD</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://strangewiz.svn.beanstalkapp.com/metroapp/trunk/MetroTabBar/MetroTabBar.xcodeproj</string>
+	<string>https://github.com/strangewiz/MetroTabBar.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E39E210D-AAD8-4B96-8FAB-58FEA771C74E</string>
+	<string>7292B4B0-7B38-4200-B9E7-5B3B14697FCD</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E39E210D-AAD8-4B96-8FAB-58FEA771C74E</string>
+			<string>7292B4B0-7B38-4200-B9E7-5B3B14697FCD</string>
 			<key>IDESourceControlWCCName</key>
-			<string>metroapp</string>
+			<string>MetroTabBar</string>
 		</dict>
 	</array>
 </dict>
