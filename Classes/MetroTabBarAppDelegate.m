@@ -6,6 +6,8 @@
 //  Copyright __MyCompanyName__ 2008. All rights reserved.
 //
 
+#import <Crashlytics/Crashlytics.h>
+
 #import "MetroTabBarAppDelegate.h"
 #import "ListViewController.h"
 
@@ -23,6 +25,9 @@
 // we need an accessor for the favorites data, setting favorites data, and the metro list
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
+
+  [Crashlytics startWithAPIKey:@"d355de85f8bbd162b98536bf3c020b8b87c7947e"];
+
   // Update window size for tall iPhones.
   CGSize size = [[UIScreen mainScreen] bounds].size;
   self.window.frame = CGRectMake(0, 0, size.width, size.height);

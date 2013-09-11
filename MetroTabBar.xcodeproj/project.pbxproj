@@ -42,6 +42,7 @@
 		50649A1217DD2C9C007FE44C /* r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FC17DD2C9C007FE44C /* r@2x.png */; };
 		50649A1317DD2C9C007FE44C /* y.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FD17DD2C9C007FE44C /* y.png */; };
 		50649A1417DD2C9C007FE44C /* y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FE17DD2C9C007FE44C /* y@2x.png */; };
+		5067DDD017E0082F00423797 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5067DDCF17E0082F00423797 /* Crashlytics.framework */; };
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
 		50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */; };
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
@@ -103,6 +104,7 @@
 		506499FC17DD2C9C007FE44C /* r@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "r@2x.png"; path = "metrolinescolors/r@2x.png"; sourceTree = "<group>"; };
 		506499FD17DD2C9C007FE44C /* y.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = y.png; path = metrolinescolors/y.png; sourceTree = "<group>"; };
 		506499FE17DD2C9C007FE44C /* y@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "y@2x.png"; path = "metrolinescolors/y@2x.png"; sourceTree = "<group>"; };
+		5067DDCF17E0082F00423797 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
 		50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon2.png"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			files = (
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				5067DDD017E0082F00423797 /* Crashlytics.framework in Frameworks */,
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,6 +230,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5067DDCF17E0082F00423797 /* Crashlytics.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
@@ -273,6 +277,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				5067DDCE17E007F900423797 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -365,6 +370,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5067DDCE17E007F900423797 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run d355de85f8bbd162b98536bf3c020b8b87c7947e";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -393,6 +414,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/justinc/work/MetroTabBar,
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -413,6 +438,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/justinc/work/MetroTabBar,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MetroTabBar_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
@@ -446,6 +475,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/justinc/work/MetroTabBar,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MetroTabBar_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
