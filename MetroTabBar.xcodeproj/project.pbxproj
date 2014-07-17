@@ -43,6 +43,10 @@
 		50649A1317DD2C9C007FE44C /* y.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FD17DD2C9C007FE44C /* y.png */; };
 		50649A1417DD2C9C007FE44C /* y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FE17DD2C9C007FE44C /* y@2x.png */; };
 		5067DDD017E0082F00423797 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5067DDCF17E0082F00423797 /* Crashlytics.framework */; };
+		506F916E19780C6000242E91 /* s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F916C19780C6000242E91 /* s@2x.png */; };
+		506F916F19780C6000242E91 /* s.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F916D19780C6000242E91 /* s.png */; };
+		506F917119780FC700242E91 /* dc_metro_silver.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F917019780FC700242E91 /* dc_metro_silver.png */; };
+		506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */ = {isa = PBXBuildFile; fileRef = 506F917219780FFB00242E91 /* dc-metro-silver.html */; };
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
 		50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */; };
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
@@ -105,6 +109,10 @@
 		506499FD17DD2C9C007FE44C /* y.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = y.png; path = metrolinescolors/y.png; sourceTree = "<group>"; };
 		506499FE17DD2C9C007FE44C /* y@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "y@2x.png"; path = "metrolinescolors/y@2x.png"; sourceTree = "<group>"; };
 		5067DDCF17E0082F00423797 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		506F916C19780C6000242E91 /* s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "s@2x.png"; path = "metrolinescolors/s@2x.png"; sourceTree = "<group>"; };
+		506F916D19780C6000242E91 /* s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = s.png; path = metrolinescolors/s.png; sourceTree = "<group>"; };
+		506F917019780FC700242E91 /* dc_metro_silver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dc_metro_silver.png; sourceTree = "<group>"; };
+		506F917219780FFB00242E91 /* dc-metro-silver.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "dc-metro-silver.html"; sourceTree = "<group>"; };
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
 		50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon2.png"; sourceTree = "<group>"; };
@@ -203,6 +211,7 @@
 			children = (
 				50D10EF617DD0C8900D7E34B /* Images.xcassets */,
 				505AA0CD1331BC4B0010B6FF /* dc-metro-crush.png */,
+				506F917019780FC700242E91 /* dc_metro_silver.png */,
 				505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */,
 				9339AE660EC8C00300980E24 /* metro lines */,
 				93D9901C0EB2E79500DC7F32 /* orange-star.png */,
@@ -215,6 +224,7 @@
 				934322910EC8E64900374E69 /* map.png */,
 				506499B717DD209E007FE44C /* map@2x.png */,
 				932D8C050EC02A1C001DD300 /* dc-metro.html */,
+				506F917219780FFB00242E91 /* dc-metro-silver.html */,
 				50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */,
 				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -261,6 +271,8 @@
 				506499FA17DD2C9C007FE44C /* o@2x.png */,
 				506499FB17DD2C9C007FE44C /* r.png */,
 				506499FC17DD2C9C007FE44C /* r@2x.png */,
+				506F916D19780C6000242E91 /* s.png */,
+				506F916C19780C6000242E91 /* s@2x.png */,
 				506499FD17DD2C9C007FE44C /* y.png */,
 				506499FE17DD2C9C007FE44C /* y@2x.png */,
 			);
@@ -331,6 +343,8 @@
 				D09E9B050E91726900ECE763 /* MapView.xib in Resources */,
 				50649A0C17DD2C9C007FE44C /* gy@2x.png in Resources */,
 				50649A0617DD2C9C007FE44C /* bor@2x.png in Resources */,
+				506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */,
+				506F917119780FC700242E91 /* dc_metro_silver.png in Resources */,
 				D0C10A040E918A01008F3EA7 /* FavoritesView.xib in Resources */,
 				D0EFE0560E91900B006EDB00 /* WebView.xib in Resources */,
 				50649A0817DD2C9C007FE44C /* by@2x.png in Resources */,
@@ -349,7 +363,9 @@
 				506499BA17DD2573007FE44C /* grey-star@2x.png in Resources */,
 				50649A1017DD2C9C007FE44C /* o@2x.png in Resources */,
 				50649A0A17DD2C9C007FE44C /* g@2x.png in Resources */,
+				506F916F19780C6000242E91 /* s.png in Resources */,
 				506499BC17DD257B007FE44C /* orange-star@2x.png in Resources */,
+				506F916E19780C6000242E91 /* s@2x.png in Resources */,
 				50649A0D17DD2C9C007FE44C /* gyr.png in Resources */,
 				50649A0717DD2C9C007FE44C /* by.png in Resources */,
 				934322920EC8E64900374E69 /* list.png in Resources */,
@@ -412,7 +428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Justin Cohen (EKSAS29HFU)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -472,7 +488,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Justin Cohen (49WDPW523Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
