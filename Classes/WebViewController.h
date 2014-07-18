@@ -8,18 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface WebViewController : UIViewController {
-	NSString *metroId;
-	UIWebView *webView;
-    UIActivityIndicatorView* progressView;
+  NSString* metroId;
+  UIWebView* webView;
+  UIActivityIndicatorView* progressView;
 }
 
 - (BOOL)isFavorite;
 - (void)changeFavorite;
 - (void)stopLoad;
 
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (copy, readwrite) NSString *metroId;
+@property(nonatomic, retain) IBOutlet UIWebView* webView;
+@property(copy, readwrite) NSString* metroId;
 
 @end

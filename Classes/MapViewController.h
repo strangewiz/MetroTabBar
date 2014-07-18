@@ -9,16 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "WebViewController.h"
 
-@interface MapViewController : UIViewController <UIScrollViewDelegate> {
-	IBOutlet UIScrollView* scrollView;
-	IBOutlet UIImageView* imageView;
-	WebViewController *wvController;
+@interface MapViewController : UIViewController<UIScrollViewDelegate> {
+  IBOutlet UIScrollView* scrollView;
+  IBOutlet UIImageView* imageView;
+  WebViewController* wvController;
 }
 
+@property(nonatomic, retain) WebViewController* wvController;
 
-@property (nonatomic, retain) WebViewController *wvController;
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event;
 //- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 

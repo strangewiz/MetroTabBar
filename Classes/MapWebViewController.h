@@ -9,15 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "WebViewController.h"
 
-
 @interface MapWebViewController : UIViewController {
-	UIWebView *webView;
-	WebViewController *wvController;
-    UIActivityIndicatorView* progressView;
+  UIWebView* webView;
+  WebViewController* wvController;
+  UIActivityIndicatorView* progressView;
 }
 
-
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (nonatomic, retain) WebViewController *wvController;
+@property(nonatomic, retain) IBOutlet UIWebView* webView;
+@property(nonatomic, retain) WebViewController* wvController;
 
 @end

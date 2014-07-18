@@ -11,32 +11,29 @@
 #import "MetroTabBarAppDelegate.h"
 #import "ListViewController.h"
 
-
 @implementation MetroTabBarAppDelegate
 
 @synthesize window;
 @synthesize tabBarController;
 @synthesize listOfStations;
 
-
-
-//++++ 
+//++++
 // we need a singleton for the application?
-// we need an accessor for the favorites data, setting favorites data, and the metro list
+// we need an accessor for the favorites data, setting favorites data, and the
+// metro list
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {
+- (void)applicationDidFinishLaunching:(UIApplication*)application {
 
   [Crashlytics startWithAPIKey:@"d355de85f8bbd162b98536bf3c020b8b87c7947e"];
 
   // Update window size for tall iPhones.
   CGSize size = [[UIScreen mainScreen] bounds].size;
   self.window.frame = CGRectMake(0, 0, size.width, size.height);
-  
+
   // Add the tab bar controller's current view as a subview of the window
   [self.window setRootViewController:tabBarController];
 
-    
-	self.listOfStations = [[NSMutableArray alloc] initWithCapacity:40];
+  self.listOfStations = [[NSMutableArray alloc] initWithCapacity:40];
     
 	[self.listOfStations addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Addison Road-Seat Pleasant", @"name", @"92", @"site", @"b", @"colorImage", nil]];
 	[self.listOfStations addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Anacostia", @"name", @"85", @"site", @"g", @"colorImage", nil]];
@@ -136,25 +133,28 @@
 //+++++
 // This seems stupid. Easier way?
 int gLastIndex = -1;
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if(gLastIndex != -1)
-        [[self.tabBarController.viewControllers objectAtIndex:gLastIndex] popToRootViewControllerAnimated: NO];
-    
-    gLastIndex = self.tabBarController.selectedIndex;
+- (void)tabBarController:(UITabBarController*)tabBarController
+    didSelectViewController:(UIViewController*)viewController {
+  if (gLastIndex != -1)
+    [[self.tabBarController.viewControllers objectAtIndex:gLastIndex]
+        popToRootViewControllerAnimated:NO];
+
+  gLastIndex = self.tabBarController.selectedIndex;
 }
 
 /*
 // Optional UITabBarControllerDelegate method
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed {
+- (void)tabBarController:(UITabBarController *)tabBarController
+didEndCustomizingViewControllers:(NSArray *)viewControllers
+changed:(BOOL)changed {
 }
 */
 
 - (void)dealloc {
-    [listOfStations release];
-    [tabBarController release];
-    [window release];
-    [super dealloc];
+  [listOfStations release];
+  [tabBarController release];
+  [window release];
+  [super dealloc];
 }
 
 @end
-

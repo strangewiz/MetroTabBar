@@ -11,19 +11,17 @@
 @class WebViewController;
 
 @interface ListViewController : UITableViewController {
-	NSMutableArray *listOfContents;
-	NSMutableArray *listOfSections;
-	NSMutableArray *listOfSectionTitles;
-	WebViewController *wvController;
+  NSMutableArray* listOfContents;
+  NSMutableArray* listOfSections;
+  NSMutableArray* listOfSectionTitles;
+  WebViewController* wvController;
 }
 
++ (ListViewController*)GetInstance;
 
-+(ListViewController*)GetInstance;
-
-@property (nonatomic, retain) NSMutableArray *listOfContents;
-@property (nonatomic, retain) NSMutableArray *listOfSections;
-@property (nonatomic, retain) NSMutableArray *listOfSectionTitles;
-@property (nonatomic, retain) WebViewController *wvController;
-
+@property(nonatomic, retain) NSMutableArray* listOfContents;
+@property(nonatomic, retain) NSMutableArray* listOfSections;
+@property(nonatomic, retain) NSMutableArray* listOfSectionTitles;
+@property(nonatomic, retain) WebViewController* wvController;
 
 @end

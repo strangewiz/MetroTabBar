@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MetroTabBarAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
-    UIWindow *window;
-    UITabBarController *tabBarController;
-    NSMutableArray *listOfStations;
+@interface MetroTabBarAppDelegate
+    : NSObject<UIApplicationDelegate, UITabBarControllerDelegate> {
+  UIWindow* window;
+  UITabBarController* tabBarController;
+  NSMutableArray* listOfStations;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
-@property (nonatomic, retain) NSMutableArray *listOfStations;
+@property(nonatomic, retain) IBOutlet UIWindow* window;
+@property(nonatomic, retain) IBOutlet UITabBarController* tabBarController;
+@property(nonatomic, retain) NSMutableArray* listOfStations;
 
 @end
