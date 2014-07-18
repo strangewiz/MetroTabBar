@@ -77,9 +77,9 @@
         //NSString *HTMLData = @"<img src='dc-metro.png' />";
         //[webView loadHTMLString:HTMLData baseURL:[NSURL URLWithString: [NSString stringWithFormat:@"file:/%@//",imagePath]]];
         
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"dc-metro" ofType:@"html"];  
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"dc-metro-silver" ofType:@"html"];
         NSData *htmlData = [NSData dataWithContentsOfFile:filePath];  
-        [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString: [NSString stringWithFormat:@"file:/%@//",imagePath]]]; 
+        [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString: [NSString stringWithFormat:@"file:/%@//",imagePath]]];
         
     }
     return YES;
