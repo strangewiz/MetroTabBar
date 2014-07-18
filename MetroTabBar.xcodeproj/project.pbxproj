@@ -14,7 +14,6 @@
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		28AD73880D9D96C1002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD73870D9D96C1002E5188 /* MainWindow.xib */; };
 		505AA0CC1331B9E30010B6FF /* apple-touch-icon-retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */; };
-		505AA0CE1331BC4B0010B6FF /* dc-metro-crush.png in Resources */ = {isa = PBXBuildFile; fileRef = 505AA0CD1331BC4B0010B6FF /* dc-metro-crush.png */; };
 		506499B417DD16CA007FE44C /* MapWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506499B317DD16CA007FE44C /* MapWebViewController.m */; };
 		506499B617DD2097007FE44C /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499B517DD2097007FE44C /* list@2x.png */; };
 		506499B817DD209E007FE44C /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499B717DD209E007FE44C /* map@2x.png */; };
@@ -51,7 +50,6 @@
 		50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */; };
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
 		930F23D50EBFFF0F00DDFBB0 /* MapWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */; };
-		932D8C060EC02A1C001DD300 /* dc-metro.html in Resources */ = {isa = PBXBuildFile; fileRef = 932D8C050EC02A1C001DD300 /* dc-metro.html */; };
 		934322920EC8E64900374E69 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322900EC8E64900374E69 /* list.png */; };
 		934322930EC8E64900374E69 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322910EC8E64900374E69 /* map.png */; };
 		93B33E080EC0DA290069A656 /* apple-touch-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93B33E070EC0DA290069A656 /* apple-touch-icon.png */; };
@@ -79,7 +77,6 @@
 		28AD73870D9D96C1002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-retina.png"; sourceTree = "<group>"; };
-		505AA0CD1331BC4B0010B6FF /* dc-metro-crush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dc-metro-crush.png"; sourceTree = "<group>"; };
 		506499B217DD16CA007FE44C /* MapWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWebViewController.h; sourceTree = "<group>"; };
 		506499B317DD16CA007FE44C /* MapWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapWebViewController.m; sourceTree = "<group>"; };
 		506499B517DD2097007FE44C /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@2x.png"; sourceTree = "<group>"; };
@@ -118,7 +115,6 @@
 		50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon2.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapWebView.xib; sourceTree = "<group>"; };
-		932D8C050EC02A1C001DD300 /* dc-metro.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "dc-metro.html"; sourceTree = "<group>"; };
 		934322900EC8E64900374E69 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
 		934322910EC8E64900374E69 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		93B33E070EC0DA290069A656 /* apple-touch-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon.png"; sourceTree = "<group>"; };
@@ -210,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				50D10EF617DD0C8900D7E34B /* Images.xcassets */,
-				505AA0CD1331BC4B0010B6FF /* dc-metro-crush.png */,
 				506F917019780FC700242E91 /* dc_metro_silver.png */,
 				505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */,
 				9339AE660EC8C00300980E24 /* metro lines */,
@@ -223,7 +218,6 @@
 				506499B517DD2097007FE44C /* list@2x.png */,
 				934322910EC8E64900374E69 /* map.png */,
 				506499B717DD209E007FE44C /* map@2x.png */,
-				932D8C050EC02A1C001DD300 /* dc-metro.html */,
 				506F917219780FFB00242E91 /* dc-metro-silver.html */,
 				50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */,
 				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
@@ -351,7 +345,6 @@
 				93D9901D0EB2E79500DC7F32 /* orange-star.png in Resources */,
 				93D990CC0EB2F77700DC7F32 /* grey-star.png in Resources */,
 				930F23D50EBFFF0F00DDFBB0 /* MapWebView.xib in Resources */,
-				932D8C060EC02A1C001DD300 /* dc-metro.html in Resources */,
 				506499B817DD209E007FE44C /* map@2x.png in Resources */,
 				50649A1417DD2C9C007FE44C /* y@2x.png in Resources */,
 				50649A0E17DD2C9C007FE44C /* gyr@2x.png in Resources */,
@@ -376,7 +369,6 @@
 				505AA0CC1331B9E30010B6FF /* apple-touch-icon-retina.png in Resources */,
 				50649A0317DD2C9C007FE44C /* bogy.png in Resources */,
 				50649A1117DD2C9C007FE44C /* r.png in Resources */,
-				505AA0CE1331BC4B0010B6FF /* dc-metro-crush.png in Resources */,
 				50649A0517DD2C9C007FE44C /* bor.png in Resources */,
 				50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */,
 				50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */,
