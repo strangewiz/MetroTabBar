@@ -49,6 +49,7 @@
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
 		50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */; };
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
+		50ED01D61DA14C8C006F0BC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ED01D51DA14C8C006F0BC1 /* LaunchScreen.storyboard */; };
 		91AA614E9F4F96ABCD0F6525 /* libPods-MetroTabBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2656B962578D5C83BBDEF168 /* libPods-MetroTabBar.a */; };
 		930F23D50EBFFF0F00DDFBB0 /* MapWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */; };
 		934322920EC8E64900374E69 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322900EC8E64900374E69 /* list.png */; };
@@ -116,6 +117,7 @@
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
 		50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon2.png"; sourceTree = "<group>"; };
+		50ED01D51DA14C8C006F0BC1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D0ADEF0BBFA4799EC6AE57F /* Pods-MetroTabBar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetroTabBar.release.xcconfig"; path = "Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapWebView.xib; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				D0C10A030E918A01008F3EA7 /* FavoritesView.xib */,
 				D0EFE0550E91900B006EDB00 /* WebView.xib */,
 				930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */,
+				50ED01D51DA14C8C006F0BC1 /* LaunchScreen.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				D09E9B050E91726900ECE763 /* MapView.xib in Resources */,
 				50649A0C17DD2C9C007FE44C /* gy@2x.png in Resources */,
 				50649A0617DD2C9C007FE44C /* bor@2x.png in Resources */,
+				50ED01D61DA14C8C006F0BC1 /* LaunchScreen.storyboard in Resources */,
 				506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */,
 				506F917119780FC700242E91 /* dc_metro_silver.png in Resources */,
 				D0C10A040E918A01008F3EA7 /* FavoritesView.xib in Resources */,

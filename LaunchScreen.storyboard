@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="To6-1F-hPw">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem systemItem="favorites" id="IPj-wi-9dl"/>
+                                    <tabBarItem title="Metro List" image="list" id="6Ne-aW-L2H"/>
+                                    <tabBarItem title="Map" image="map" id="K3z-aI-1cH"/>
+                                </items>
+                            </tabBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fdL-3F-OYL">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cJ-M5-MON">
+                                <items>
+                                    <navigationItem title="Favorites" id="iEb-XL-F6w"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="To6-1F-hPw" firstAttribute="top" secondItem="fdL-3F-OYL" secondAttribute="bottom" id="56F-mA-ixi"/>
+                            <constraint firstItem="To6-1F-hPw" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="6Ys-Ul-cXb"/>
+                            <constraint firstAttribute="trailing" secondItem="fdL-3F-OYL" secondAttribute="trailing" id="7aI-GZ-bTf"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="To6-1F-hPw" secondAttribute="bottom" id="As6-WC-afN"/>
+                            <constraint firstItem="To6-1F-hPw" firstAttribute="top" secondItem="fdL-3F-OYL" secondAttribute="bottom" id="F6l-fL-wu1"/>
+                            <constraint firstItem="9cJ-M5-MON" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="GC2-Av-bHB"/>
+                            <constraint firstItem="9cJ-M5-MON" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Jvr-GO-42V"/>
+                            <constraint firstItem="9cJ-M5-MON" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="R0n-bi-9BX"/>
+                            <constraint firstItem="fdL-3F-OYL" firstAttribute="top" secondItem="9cJ-M5-MON" secondAttribute="bottom" id="RUC-s1-Msw"/>
+                            <constraint firstAttribute="trailing" secondItem="9cJ-M5-MON" secondAttribute="trailing" id="VEN-Yh-baB"/>
+                            <constraint firstItem="fdL-3F-OYL" firstAttribute="top" secondItem="9cJ-M5-MON" secondAttribute="bottom" id="bDh-di-Hgy"/>
+                            <constraint firstItem="fdL-3F-OYL" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="e00-7a-ZzR"/>
+                            <constraint firstAttribute="trailing" secondItem="9cJ-M5-MON" secondAttribute="trailing" id="e1T-KV-cJG"/>
+                            <constraint firstAttribute="trailing" secondItem="To6-1F-hPw" secondAttribute="trailing" id="eqO-Rc-cf8"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="To6-1F-hPw" secondAttribute="bottom" id="qrz-1N-mRH"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="list" width="25" height="25"/>
+        <image name="map" width="25" height="25"/>
+    </resources>
+</document>
