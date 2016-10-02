@@ -140,7 +140,7 @@ int gLastIndex = -1;
     [[self.tabBarController.viewControllers objectAtIndex:gLastIndex]
         popToRootViewControllerAnimated:NO];
 
-  gLastIndex = self.tabBarController.selectedIndex;
+  gLastIndex = (int)self.tabBarController.selectedIndex;
 }
 
 /*
