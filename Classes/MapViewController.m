@@ -160,7 +160,7 @@ perform additional customization that is not appropriate for viewDidLoad.
 
 - (void)scrollViewDidEndZooming:(UIScrollView*)aScrollView
                        withView:(UIView*)view
-                        atScale:(float)scale {
+                        atScale:(CGFloat)scale {
   gCurrentOffset = aScrollView.contentOffset;
   NSLog(@"scale: %f", scale);
   NSLog(@"bounds-origin: %f, %f -- bounds-size: %f, %f",

@@ -88,7 +88,7 @@ static FavoritesViewController* fvController;
 }
 
 - (void)removeMetroId:(NSString*)id {
-  int count = [self.listOfContents count];
+  int count = (int)[self.listOfContents count];
   for (int i = 0; i < count; i++) {
     if ([[[self.listOfContents objectAtIndex:i] objectForKey:@"site"]
             isEqualToString:id]) {
@@ -242,9 +242,9 @@ static FavoritesViewController* fvController;
 - (void)tableView:(UITableView*)tableView
     moveRowAtIndexPath:(NSIndexPath*)fromIndexPath
            toIndexPath:(NSIndexPath*)toIndexPath {
-  NSLog(@"fromIndexPath :%d", fromIndexPath.row);
-  NSLog(@"toIndexPath :%d", toIndexPath.row);
-  NSLog(@"sizeIndexPath :%d", [self.listOfContents count]);
+//  NSLog(@"fromIndexPath :%ld", (long)fromIndexPath.row);
+//  NSLog(@"toIndexPath :%ld", (long)toIndexPath.row);
+//  NSLog(@"sizeIndexPath :%ld", (unsigned long)[self.listOfContents count]);
 
   //+++++
   // Is this leaking?  I see a retain, do I need to release?

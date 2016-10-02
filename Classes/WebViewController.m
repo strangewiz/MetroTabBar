@@ -152,7 +152,7 @@ perform additional customization that is not appropriate for viewDidLoad.
 }
 
 - (BOOL)isFavorite {
-  int count = [[FavoritesViewController GetInstance].listOfContents count];
+  int count = (int)[[FavoritesViewController GetInstance].listOfContents count];
   for (int i = 0; i < count; i++) {
     if ([[[[FavoritesViewController GetInstance].listOfContents objectAtIndex:i]
             objectForKey:@"site"] isEqualToString:self.metroId]) {
@@ -171,7 +171,7 @@ perform additional customization that is not appropriate for viewDidLoad.
         ((MetroTabBarAppDelegate*)[[UIApplication sharedApplication] delegate])
             .listOfStations;
 
-    int count = [listOfContents count];
+    int count = (int)[listOfContents count];
     for (int i = 0; i < count; i++) {
       if ([[[listOfContents objectAtIndex:i] objectForKey:@"site"]
               isEqualToString:self.metroId]) {

@@ -57,7 +57,7 @@ perform additional customization that is not appropriate for viewDidLoad.
         ((MetroTabBarAppDelegate*)[[UIApplication sharedApplication] delegate])
             .listOfStations;
 
-    int count = [listOfContents count];
+    int count = (int)[listOfContents count];
     for (int i = 0; i < count; i++) {
       if ([[[listOfContents objectAtIndex:i] objectForKey:@"site"]
               isEqualToString:fragment]) {
