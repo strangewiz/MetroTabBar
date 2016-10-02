@@ -49,6 +49,7 @@
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
 		50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */; };
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
+		91AA614E9F4F96ABCD0F6525 /* libPods-MetroTabBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2656B962578D5C83BBDEF168 /* libPods-MetroTabBar.a */; };
 		930F23D50EBFFF0F00DDFBB0 /* MapWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */; };
 		934322920EC8E64900374E69 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322900EC8E64900374E69 /* list.png */; };
 		934322930EC8E64900374E69 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322910EC8E64900374E69 /* map.png */; };
@@ -72,10 +73,12 @@
 		1D3623250D0F684500981E51 /* MetroTabBarAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetroTabBarAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* MetroTabBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetroTabBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2656B962578D5C83BBDEF168 /* libPods-MetroTabBar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MetroTabBar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* MetroTabBar_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetroTabBar_Prefix.pch; sourceTree = "<group>"; };
 		28AD73870D9D96C1002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		39ACEFCB6F60D69E01417795 /* Pods-MetroTabBar.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetroTabBar.distribution.xcconfig"; path = "Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar.distribution.xcconfig"; sourceTree = "<group>"; };
 		505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-retina.png"; sourceTree = "<group>"; };
 		506499B217DD16CA007FE44C /* MapWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWebViewController.h; sourceTree = "<group>"; };
 		506499B317DD16CA007FE44C /* MapWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapWebViewController.m; sourceTree = "<group>"; };
@@ -113,6 +116,7 @@
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
 		50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon2.png"; sourceTree = "<group>"; };
+		6D0ADEF0BBFA4799EC6AE57F /* Pods-MetroTabBar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetroTabBar.release.xcconfig"; path = "Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapWebView.xib; sourceTree = "<group>"; };
 		934322900EC8E64900374E69 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		93D990CB0EB2F77700DC7F32 /* grey-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-star.png"; sourceTree = "<group>"; };
 		93EF6C440EB3F560005092A7 /* MapUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUIScrollView.h; sourceTree = "<group>"; };
 		93EF6C450EB3F560005092A7 /* MapUIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapUIScrollView.m; sourceTree = "<group>"; };
+		C0FB1E78C8D1593CE9685D33 /* Pods-MetroTabBar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetroTabBar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar.debug.xcconfig"; sourceTree = "<group>"; };
 		D09E9B020E91726300ECE763 /* ListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListView.xib; sourceTree = "<group>"; };
 		D09E9B040E91726900ECE763 /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		D09E9B060E91727F00ECE763 /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				5067DDD017E0082F00423797 /* Crashlytics.framework in Frameworks */,
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
+				91AA614E9F4F96ABCD0F6525 /* libPods-MetroTabBar.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +178,16 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		102C3D0A92F0D15CE18ADC88 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C0FB1E78C8D1593CE9685D33 /* Pods-MetroTabBar.debug.xcconfig */,
+				6D0ADEF0BBFA4799EC6AE57F /* Pods-MetroTabBar.release.xcconfig */,
+				39ACEFCB6F60D69E01417795 /* Pods-MetroTabBar.distribution.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +205,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				102C3D0A92F0D15CE18ADC88 /* Pods */,
 			);
 			name = MetroTabBar;
 			sourceTree = "<group>";
@@ -238,6 +255,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
+				2656B962578D5C83BBDEF168 /* libPods-MetroTabBar.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -280,10 +298,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MetroTabBar" */;
 			buildPhases = (
+				8B7895FA0B24F17836152922 /* [CP] Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				5067DDCE17E007F900423797 /* ShellScript */,
+				F729C19B157C2D83E8F9E485 /* [CP] Embed Pods Frameworks */,
+				FECF8859A7E68C74CE2F0E58 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -315,6 +336,7 @@
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* MetroTabBar */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -390,7 +412,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run d355de85f8bbd162b98536bf3c020b8b87c7947e";
+			shellScript = "${PODS_ROOT}/Fabric/run d355de85f8bbd162b98536bf3c020b8b87c7947e 0ef78a9e51be1bde9081fc0ad30d14c6230418f0349fef9d840442fc6865f799";
+		};
+		8B7895FA0B24F17836152922 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F729C19B157C2D83E8F9E485 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FECF8859A7E68C74CE2F0E58 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -415,6 +482,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0FB1E78C8D1593CE9685D33 /* Pods-MetroTabBar.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -440,6 +508,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D0ADEF0BBFA4799EC6AE57F /* Pods-MetroTabBar.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -478,6 +547,7 @@
 		};
 		939795370ECB7D62008123EE /* Distribution */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39ACEFCB6F60D69E01417795 /* Pods-MetroTabBar.distribution.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
