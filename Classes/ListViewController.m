@@ -115,6 +115,7 @@ static ListViewController* lvController;
 
     //@""
     self.wvController.metroId = site;
+    self.wvController.metroName = name;
     [wvController setTitle:name];
 
     [[self navigationController] pushViewController:wvController animated:YES];

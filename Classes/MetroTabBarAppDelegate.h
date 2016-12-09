@@ -13,10 +13,13 @@
   UIWindow* window;
   UITabBarController* tabBarController;
   NSMutableArray* listOfStations;
+  NSMutableArray* listofStationsMap;
 }
 
 @property(nonatomic, retain) IBOutlet UIWindow* window;
 @property(nonatomic, retain) IBOutlet UITabBarController* tabBarController;
 @property(nonatomic, retain) NSMutableArray* listOfStations;
+@property(nonatomic, retain) NSMutableArray* listofStationsMap;
+
 
 @end

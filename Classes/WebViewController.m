@@ -12,7 +12,7 @@
 
 @implementation WebViewController
 
-@synthesize metroId, webView;
+@synthesize metroId, metroName, webView;
 
 - (void)webView:(UIWebView*)webView didFailLoadWithError:(NSError*)error {
   if (![progressView isAnimating])
@@ -52,6 +52,17 @@
   [self stopLoad];
 }
 
+- (void)setMetroId:(NSString*)id {
+  metroId = id;
+  NSMutableArray* listofStationsMap =
+      ((MetroTabBarAppDelegate*)[[UIApplication sharedApplication] delegate]).listofStationsMap;
+  for (NSDictionary* new_item in listofStationsMap) {
+    if ([id isEqualToString:[new_item objectForKey:@"old_id"]]) {
+      metroId = [new_item objectForKey:@"new_id"];
+    }
+  }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 
   UIButton* button =
@@ -66,10 +77,18 @@
   // NSString *webAddress = [[NSString alloc]
   // initWithFormat:@"http://wmata.com/metrorail/Stations/showpid/showpid.cfm?station=%@",
   // metroId];
+  //Clarendon#K02%7CClarendon
+  NSString* name = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+                              NULL,
+                              (CFStringRef)metroName,
+                              NULL,
+                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                              kCFStringEncodingUTF8 );
+
   NSString* webAddress = [[NSString alloc]
       initWithFormat:
-          @"http://www.wmata.com/rider_tools/pids/showpid.cfm?station_id=%@",
-          metroId];
+          @"https://www.wmata.com/js/nexttrain/nexttrain.html?stationId=%@&label=%@",
+          metroId, name];
 
   // load metro website
   NSURL* metroUrl = [NSURL URLWithString:webAddress];

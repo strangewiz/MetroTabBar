@@ -10,6 +10,7 @@
 
 @interface WebViewController : UIViewController {
   NSString* metroId;
+  NSString* metroName;
   UIWebView* webView;
   UIActivityIndicatorView* progressView;
 }
@@ -19,6 +20,7 @@
 - (void)stopLoad;
 
 @property(nonatomic, retain) IBOutlet UIWebView* webView;
-@property(copy, readwrite) NSString* metroId;
+@property(nonatomic, copy, readwrite) NSString* metroId;
+@property(copy, readwrite) NSString* metroName;
 
 @end

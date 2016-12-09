@@ -61,8 +61,10 @@ perform additional customization that is not appropriate for viewDidLoad.
     for (int i = 0; i < count; i++) {
       if ([[[listOfContents objectAtIndex:i] objectForKey:@"site"]
               isEqualToString:fragment]) {
+        NSString* name = [[listOfContents objectAtIndex:i] objectForKey:@"name"];
+        self.wvController.metroName = name;
         [wvController
-            setTitle:[[listOfContents objectAtIndex:i] objectForKey:@"name"]];
+            setTitle:name];
         break;
       }
     }

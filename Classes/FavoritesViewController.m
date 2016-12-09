@@ -8,6 +8,7 @@
 
 #import "FavoritesViewController.h"
 #import "ListViewController.h"
+#import "MetroTabBarAppDelegate.h"
 
 @implementation FavoritesViewController
 
@@ -58,6 +59,32 @@ static FavoritesViewController* fvController;
       [[NSKeyedUnarchiver unarchiveObjectWithFile:[self favoritesPath]] retain];
   if (!self.listOfContents) {
     self.listOfContents = [[NSMutableArray alloc] initWithCapacity:1];
+  }
+
+
+  self.listOfContents = [NSMutableArray arrayWithArray:self.listOfContents];
+
+  NSMutableArray* listofStationsMap =
+      ((MetroTabBarAppDelegate*)[[UIApplication sharedApplication] delegate]).listofStationsMap;
+
+  BOOL needsUpdate = NO;
+  for (int i = 0; i < [self.listOfContents count]; i++) {
+    NSDictionary* item = self.listOfContents[i];
+    NSString* old_id = [item objectForKey:@"site"];
+    for (NSDictionary* new_item in listofStationsMap) {
+      if ([old_id isEqualToString:[new_item objectForKey:@"old_id"]]) {
+        NSString* new_id = [new_item objectForKey:@"new_id"];
+        NSString* new_name = [new_item objectForKey:@"new_name"];
+        NSMutableDictionary* mutable_item = [item mutableCopy];
+        [mutable_item setValue:new_id forKey:@"site"];
+        [mutable_item setValue:new_name forKey:@"name"];
+        self.listOfContents[i] = mutable_item;
+        needsUpdate = YES;
+      }
+    }
+  }
+  if (needsUpdate) {
+    [self saveList];
   }
 
   // For testing, but maybe it would be cool to auto add smithsoneum or
@@ -207,8 +234,10 @@ static FavoritesViewController* fvController;
 
   self.wvController.metroId =
       [[listOfContents objectAtIndex:indexPath.row] objectForKey:@"site"];
-  [wvController setTitle:[[listOfContents objectAtIndex:indexPath.row]
-                             objectForKey:@"name"]];
+  NSString* name = [[listOfContents objectAtIndex:indexPath.row]
+                    objectForKey:@"name"];
+  self.wvController.metroName = name;
+  [wvController setTitle:name];
   [[self navigationController] pushViewController:wvController animated:YES];
 }
 

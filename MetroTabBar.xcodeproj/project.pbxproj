@@ -325,11 +325,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0800;
-				TargetAttributes = {
-					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 49WDPW523Y;
-					};
-				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MetroTabBar" */;
 			compatibilityVersion = "Xcode 8.0";
@@ -416,7 +411,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/Fabric/run d355de85f8bbd162b98536bf3c020b8b87c7947e 0ef78a9e51be1bde9081fc0ad30d14c6230418f0349fef9d840442fc6865f799";
+			shellScript = "${PODS_ROOT}/Fabric/Fabric.framework/run d355de85f8bbd162b98536bf3c020b8b87c7947e 0ef78a9e51be1bde9081fc0ad30d14c6230418f0349fef9d840442fc6865f799";
 		};
 		8B7895FA0B24F17836152922 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -492,9 +487,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/justinc/work/MetroTabBar,
 					"$(SRCROOT)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -516,9 +511,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/justinc/work/MetroTabBar,
 					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -568,9 +563,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/justinc/work/MetroTabBar,
 					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
