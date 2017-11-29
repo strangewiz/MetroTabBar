@@ -200,18 +200,18 @@ static FavoritesViewController* fvController;
   UITableViewCell* cell =
       [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
-    cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero
+    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                    reuseIdentifier:CellIdentifier] autorelease];
   }
 
   NSString* colorImage =
       [[listOfContents objectAtIndex:indexPath.row] objectForKey:@"colorImage"];
-  cell.image = [UIImage
+  cell.imageView.image = [UIImage
       imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:colorImage
                                                               ofType:@"png"
                                                          inDirectory:@"/"]];
 
-  cell.text =
+  cell.textLabel.text =
       [[listOfContents objectAtIndex:indexPath.row] objectForKey:@"name"];
 
   return cell;

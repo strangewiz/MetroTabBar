@@ -59,18 +59,18 @@ static ListViewController* lvController;
 
   // If no cell is available, create a new one using the given identifier
   if (cell == nil) {
-    cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero
+    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                    reuseIdentifier:MyIdentifier] autorelease];
   }
 
   NSString* colorImage = [[[[listOfSections objectAtIndex:indexPath.section]
       objectForKey:@"objects"] objectAtIndex:indexPath.row]
       objectForKey:@"colorImage"];
-  cell.image = [UIImage
+  cell.imageView.image = [UIImage
       imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:colorImage
                                                               ofType:@"png"
                                                          inDirectory:@"/"]];
-  cell.text = [[[[listOfSections objectAtIndex:indexPath.section]
+  cell.textLabel.text = [[[[listOfSections objectAtIndex:indexPath.section]
       objectForKey:@"objects"] objectAtIndex:indexPath.row]
       objectForKey:@"name"];
   return cell;
