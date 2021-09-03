@@ -6,7 +6,6 @@ target 'MetroTabBar' do
   # use_frameworks!
 
   # Pods for MetroTabBar
-  pod 'Fabric'
-  pod 'Crashlytics'
-
+  #pod 'Firebase/Crashlytics'
+  platform :ios, '12.0'
 end

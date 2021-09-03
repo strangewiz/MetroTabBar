@@ -6,8 +6,9 @@
 //  Copyright __MyCompanyName__ 2008. All rights reserved.
 //
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
+//#import <Fabric/Fabric.h>
+//@import FirebaseCrashlytics
+//#import <Crashlytics/Crashlytics.h>
 
 #import "MetroTabBarAppDelegate.h"
 #import "ListViewController.h"
@@ -26,7 +27,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication*)application {
 
-  [Fabric with:@[[Crashlytics class]]];
+//  [Fabric with:@[[Crashlytics class]]];
 
   // Update window size for tall iPhones.
   CGSize size = [[UIScreen mainScreen] bounds].size;

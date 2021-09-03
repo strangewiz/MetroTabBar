@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,7 +41,6 @@
 		50649A1217DD2C9C007FE44C /* r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FC17DD2C9C007FE44C /* r@2x.png */; };
 		50649A1317DD2C9C007FE44C /* y.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FD17DD2C9C007FE44C /* y.png */; };
 		50649A1417DD2C9C007FE44C /* y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499FE17DD2C9C007FE44C /* y@2x.png */; };
-		5067DDD017E0082F00423797 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5067DDCF17E0082F00423797 /* Crashlytics.framework */; };
 		506F916E19780C6000242E91 /* s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F916C19780C6000242E91 /* s@2x.png */; };
 		506F916F19780C6000242E91 /* s.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F916D19780C6000242E91 /* s.png */; };
 		506F917119780FC700242E91 /* dc_metro_silver.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F917019780FC700242E91 /* dc_metro_silver.png */; };
@@ -50,7 +49,6 @@
 		50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D1A6E11336763C00AFAFCD /* MainWindow-iPad.xib */; };
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
 		50ED01D61DA14C8C006F0BC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ED01D51DA14C8C006F0BC1 /* LaunchScreen.storyboard */; };
-		91AA614E9F4F96ABCD0F6525 /* libPods-MetroTabBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2656B962578D5C83BBDEF168 /* libPods-MetroTabBar.a */; };
 		930F23D50EBFFF0F00DDFBB0 /* MapWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930F23D40EBFFF0F00DDFBB0 /* MapWebView.xib */; };
 		934322920EC8E64900374E69 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322900EC8E64900374E69 /* list.png */; };
 		934322930EC8E64900374E69 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322910EC8E64900374E69 /* map.png */; };
@@ -150,9 +148,7 @@
 			files = (
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				5067DDD017E0082F00423797 /* Crashlytics.framework in Frameworks */,
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
-				91AA614E9F4F96ABCD0F6525 /* libPods-MetroTabBar.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */,
+				9346E44125881AA80029399C /* Screenshots */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -294,6 +291,13 @@
 			name = "metro lines";
 			sourceTree = "<group>";
 		};
+		9346E44125881AA80029399C /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -305,9 +309,6 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				5067DDCE17E007F900423797 /* ShellScript */,
-				F729C19B157C2D83E8F9E485 /* [CP] Embed Pods Frameworks */,
-				FECF8859A7E68C74CE2F0E58 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -327,10 +328,11 @@
 				LastUpgradeCheck = 0800;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MetroTabBar" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* MetroTabBar */;
@@ -400,62 +402,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5067DDCE17E007F900423797 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/Fabric/run d355de85f8bbd162b98536bf3c020b8b87c7947e 0ef78a9e51be1bde9081fc0ad30d14c6230418f0349fef9d840442fc6865f799";
-		};
 		8B7895FA0B24F17836152922 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MetroTabBar-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F729C19B157C2D83E8F9E485 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FECF8859A7E68C74CE2F0E58 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MetroTabBar/Pods-MetroTabBar-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -487,6 +449,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1.0.12;
 				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -497,8 +460,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MetroTabBar_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.dev;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
 				PRODUCT_NAME = MetroTabBar;
 			};
 			name = Debug;
@@ -511,6 +475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1.0.12;
 				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -519,8 +484,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MetroTabBar_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.dev;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
 				PRODUCT_NAME = MetroTabBar;
 			};
 			name = Release;
@@ -563,6 +529,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1.0.12;
 				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,8 +538,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MetroTabBar_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.dev;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
 				PRODUCT_NAME = MetroTabBar;
 			};
 			name = Distribution;
