@@ -85,10 +85,10 @@
                               (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                               kCFStringEncodingUTF8 );
 
+  NSString* web_name = [[metroName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
   NSString* webAddress = [[NSString alloc]
       initWithFormat:
-          @"https://www.wmata.com/js/nexttrain/nexttrain.html?stationId=%@&label=%@",
-          metroId, name];
+          @"https://www.wmata.com/ridertools/station/%@", web_name];
 
   // load metro website
   NSURL* metroUrl = [NSURL URLWithString:webAddress];
