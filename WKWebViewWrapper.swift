@@ -11,6 +11,9 @@ struct WKWebViewWrapper: UIViewRepresentable {
         let configuration = WKWebViewConfiguration()
         
         if !isLocalHTML {
+            // Register the script message handler for Xcode console logging
+            configuration.userContentController.add(context.coordinator, name: "logger")
+            
             // Hide the body initially at document start to prevent flashing the header/footer
             let hideSource = """
             var style = document.createElement('style');
@@ -21,25 +24,65 @@ struct WKWebViewWrapper: UIViewRepresentable {
             let hideScript = WKUserScript(source: hideSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
             configuration.userContentController.addUserScript(hideScript)
             
-            // Extract the train times and restore body display at document end
-            let extractSource = """
-            var targetDiv = document.querySelector('div.tabs.tabs-details');
-            if (targetDiv) {
-                document.body.innerHTML = '';
-                document.body.appendChild(targetDiv);
+            // Use MutationObserver at document start to wait for the target div to appear dynamically (React/Next.js hydration)
+            let observerSource = """
+            (function() {
+                function log(msg) {
+                    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.logger) {
+                        window.webkit.messageHandlers.logger.postMessage(msg);
+                    }
+                }
                 
-                // Add clean typography and spacing for the isolated content
-                var style = document.createElement('style');
-                style.innerHTML = 'body { display: block !important; padding: 16px !important; background-color: transparent !important; }';
-                document.documentElement.appendChild(style);
-            } else {
-                // If not found, make sure we still show the body as a fallback
-                var style = document.getElementById('hide-body-style');
-                if (style) style.remove();
-            }
+                function isolate(targetDiv) {
+                    log("Target div '.tabs.tabs-details' found! Isolating content.");
+                    document.body.innerHTML = '';
+                    document.body.appendChild(targetDiv);
+                    
+                    // Add clean styling for the isolated content
+                    var style = document.createElement('style');
+                    style.innerHTML = 'body { display: block !important; padding: 16px !important; background-color: transparent !important; }';
+                    document.documentElement.appendChild(style);
+                }
+                
+                log("Setting up MutationObserver to watch for dynamic DOM hydration...");
+                
+                var targetDiv = document.querySelector('div.tabs.tabs-details');
+                if (targetDiv) {
+                    isolate(targetDiv);
+                } else {
+                    var observer = new MutationObserver(function(mutations, obs) {
+                        var targetDiv = document.querySelector('div.tabs.tabs-details');
+                        if (targetDiv) {
+                            obs.disconnect();
+                            isolate(targetDiv);
+                        }
+                    });
+                    
+                    observer.observe(document.documentElement, {
+                        childList: true,
+                        subtree: true
+                    });
+                    
+                    // Safety fallback: if it doesn't appear in 5 seconds, reveal the body and dump DOM info
+                    setTimeout(function() {
+                        observer.disconnect();
+                        var style = document.getElementById('hide-body-style');
+                        if (style) {
+                            log("Target div '.tabs.tabs-details' not found after 5s timeout. Revealing default page.");
+                            style.remove();
+                            
+                            // Dump structural details of the DOM for debugging
+                            var firstDivs = Array.from(document.querySelectorAll('div'))
+                                .slice(0, 15)
+                                .map(function(d) { return d.tagName + (d.className ? '.' + d.className.split(' ').join('.') : '') + (d.id ? '#' + d.id : ''); });
+                            log("Top 15 DOM elements found: " + JSON.stringify(firstDivs));
+                        }
+                    }, 5000);
+                }
+            })();
             """
-            let extractScript = WKUserScript(source: extractSource, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-            configuration.userContentController.addUserScript(extractScript)
+            let observerScript = WKUserScript(source: observerSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(observerScript)
         }
         
         let webView = WKWebView(frame: .zero, configuration: configuration)
@@ -130,6 +173,14 @@ struct WKWebViewWrapper: UIViewRepresentable {
                 }
             }
             decisionHandler(.allow)
+        }
+    }
+}
+
+extension WKWebViewWrapper.Coordinator: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "logger" {
+            print("WKWebView [JS LOG]: \(message.body)")
         }
     }
 }
