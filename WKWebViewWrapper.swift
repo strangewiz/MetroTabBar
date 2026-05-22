@@ -9,6 +9,39 @@ struct WKWebViewWrapper: UIViewRepresentable {
     
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
+        
+        if !isLocalHTML {
+            // Hide the body initially at document start to prevent flashing the header/footer
+            let hideSource = """
+            var style = document.createElement('style');
+            style.id = 'hide-body-style';
+            style.innerHTML = 'body { display: none !important; }';
+            document.documentElement.appendChild(style);
+            """
+            let hideScript = WKUserScript(source: hideSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(hideScript)
+            
+            // Extract the train times and restore body display at document end
+            let extractSource = """
+            var targetDiv = document.querySelector('div.tabs.tabs-details');
+            if (targetDiv) {
+                document.body.innerHTML = '';
+                document.body.appendChild(targetDiv);
+                
+                // Add clean typography and spacing for the isolated content
+                var style = document.createElement('style');
+                style.innerHTML = 'body { display: block !important; padding: 16px !important; background-color: transparent !important; }';
+                document.documentElement.appendChild(style);
+            } else {
+                // If not found, make sure we still show the body as a fallback
+                var style = document.getElementById('hide-body-style');
+                if (style) style.remove();
+            }
+            """
+            let extractScript = WKUserScript(source: extractSource, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(extractScript)
+        }
+        
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = context.coordinator
         
