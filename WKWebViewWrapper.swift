@@ -25,15 +25,23 @@ struct WKWebViewWrapper: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
+        let coordinator = context.coordinator
+        coordinator.parent = self
+        
         if isLocalHTML {
-            // Load the DC Metro interactive HTML map from bundle resources
-            if let htmlPath = Bundle.main.path(forResource: "dc-metro-silver", ofType: "html") {
-                let htmlURL = URL(fileURLWithPath: htmlPath)
-                uiView.loadFileURL(htmlURL, allowingReadAccessTo: Bundle.main.bundleURL)
+            if !coordinator.lastLoadedLocalHTML {
+                coordinator.lastLoadedLocalHTML = true
+                if let htmlPath = Bundle.main.path(forResource: "dc-metro-silver", ofType: "html") {
+                    let htmlURL = URL(fileURLWithPath: htmlPath)
+                    uiView.loadFileURL(htmlURL, allowingReadAccessTo: Bundle.main.bundleURL)
+                }
             }
         } else if let url = url {
-            let request = URLRequest(url: url)
-            uiView.load(request)
+            if coordinator.lastLoadedURL != url {
+                coordinator.lastLoadedURL = url
+                let request = URLRequest(url: url)
+                uiView.load(request)
+            }
         }
     }
     
@@ -43,6 +51,8 @@ struct WKWebViewWrapper: UIViewRepresentable {
     
     class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WKWebViewWrapper
+        var lastLoadedURL: URL? = nil
+        var lastLoadedLocalHTML = false
         
         init(_ parent: WKWebViewWrapper) {
             self.parent = parent

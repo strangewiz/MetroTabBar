@@ -6,14 +6,13 @@ struct StationDetailView: View {
     @State private var isLoading = true
     
     var body: some View {
-        ZStack {
-            WKWebViewWrapper(
-                url: station.webURL,
-                isLocalHTML: false,
-                isLoading: $isLoading
-            )
-            .edgesIgnoringSafeArea(.bottom)
-            
+        WKWebViewWrapper(
+            url: station.webURL,
+            isLocalHTML: false,
+            isLoading: $isLoading
+        )
+        .edgesIgnoringSafeArea(.bottom)
+        .overlay {
             if isLoading {
                 ProgressView()
                     .scaleEffect(1.5)

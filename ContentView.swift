@@ -160,20 +160,19 @@ struct ContentView: View {
     
     // MARK: - Interactive HTML Map Block
     private var mapView: some View {
-        ZStack {
-            WKWebViewWrapper(
-                url: nil,
-                isLocalHTML: true,
-                onStationFragmentTapped: { code in
-                    // Look up station by site code
-                    if let station = Station.allStations.first(where: { $0.id == code }) {
-                        selectedStation = station
-                    }
-                },
-                isLoading: $isMapLoading
-            )
-            .edgesIgnoringSafeArea(.all)
-            
+        WKWebViewWrapper(
+            url: nil,
+            isLocalHTML: true,
+            onStationFragmentTapped: { code in
+                // Look up station by site code
+                if let station = Station.allStations.first(where: { $0.id == code }) {
+                    selectedStation = station
+                }
+            },
+            isLoading: $isMapLoading
+        )
+        .edgesIgnoringSafeArea(.all)
+        .overlay {
             if isMapLoading {
                 ProgressView("Loading System Map...")
                     .scaleEffect(1.2)
