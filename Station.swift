@@ -1,6 +1,6 @@
 import Foundation
 
-struct Station: Identifiable, Codable, Hashable {
+struct Station: Identifiable, Hashable {
     let id: String // site code (e.g. "G03")
     let name: String
     let colorImageName: String // color image tag (e.g. "b", "gyr")

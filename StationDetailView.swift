@@ -11,7 +11,7 @@ struct StationDetailView: View {
             isLocalHTML: false,
             isLoading: $isLoading
         )
-        .edgesIgnoringSafeArea(.bottom)
+        .ignoresSafeArea(edges: .bottom)
         .overlay {
             if isLoading {
                 ProgressView()

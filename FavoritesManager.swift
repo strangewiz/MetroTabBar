@@ -45,7 +45,7 @@ class FavoritesManager: ObservableObject {
             if FileManager.default.fileExists(atPath: legacyURL.path) {
                 do {
                     let data = try Data(contentsOf: legacyURL)
-                    if let legacyArray = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [[String: Any]] {
+                    if let legacyArray = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self, NSDictionary.self, NSString.self], from: data) as? [[String: Any]] {
                         var importedIDs: [String] = []
                         for dict in legacyArray {
                             if let site = dict["site"] as? String {

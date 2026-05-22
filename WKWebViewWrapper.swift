@@ -192,16 +192,6 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     return
                 }
 
-                // Also support custom URL schemes or fragments formatted differently depending on OS loading
-                let absoluteString = url.absoluteString
-                if absoluteString.contains("#") {
-                    let parts = absoluteString.components(separatedBy: "#")
-                    if parts.count > 1, let lastPart = parts.last, !lastPart.isEmpty {
-                        parent.onStationFragmentTapped?(lastPart)
-                        decisionHandler(.cancel)
-                        return
-                    }
-                }
             }
             decisionHandler(.allow)
         }

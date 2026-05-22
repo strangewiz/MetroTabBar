@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var favoritesManager: FavoritesManager
     @State private var searchText = ""
-    @State private var selectedStation: Station? = nil
+    @State private var selectedStation: Station?
     @State private var isMapLoading = true
     @State private var activeTab = 0
 
@@ -92,7 +92,7 @@ struct ContentView: View {
                         favoritesManager.reorder(from: source, to: destination)
                     }
                 }
-                .listStyle(InsetGroupedListStyle())
+                .listStyle(.insetGrouped)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         if !favoritedStations.isEmpty && activeTab == 0 {
@@ -148,7 +148,7 @@ struct ContentView: View {
                         StationRowView(station: station)
                     }
                 }
-                .listStyle(PlainListStyle())
+                .listStyle(.plain)
             } else {
                 ScrollViewReader { proxy in
                     ZStack(alignment: .trailing) {
@@ -165,7 +165,7 @@ struct ContentView: View {
                                 }
                             }
                         }
-                        .listStyle(PlainListStyle())
+                        .listStyle(.plain)
 
                         AlphabetIndexSidebar(letters: groupedStations.map { $0.letter }) { letter in
                             withAnimation {

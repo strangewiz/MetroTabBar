@@ -1,10 +1,15 @@
+# OS-specific files
 .DS_Store
-*.swp
-*.lock
-profile
-*~.nib
-DerivedData/
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Xcode
 build/
+DerivedData/
 *.pbxuser
 *.mode1v3
 *.mode2v3
@@ -13,6 +18,25 @@ build/
 !default.mode1v3
 !default.mode2v3
 !default.perspectivev3
-xcuserdata
+xcuserdata/
 *.moved-aside
-Pods
+*.xccheckout
+*.xcworkspace
+!default.xcworkspace
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+Packages/
+.swiftpm/
+Package.resolved
+
+# CocoaPods (not used now, but good to keep out if anyone runs pod init)
+Pods/
+*.xcworkspace
+
+# Backup/Temp files
+*~.nib
+*.swp
+*.lock
+*~
