@@ -6,14 +6,14 @@ struct WKWebViewWrapper: UIViewRepresentable {
     let isLocalHTML: Bool
     var onStationFragmentTapped: ((String) -> Void)? = nil
     @Binding var isLoading: Bool
-    
+
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
-        
+
         if !isLocalHTML {
             // Register the script message handler for Xcode console logging
             configuration.userContentController.add(context.coordinator, name: "logger")
-            
+
             // Inject CSS isolation stylesheet at document start.
             // This immediately hides non-essential layouts (header, footer, map, back button)
             // and styles the main container to be clean, transparent, and responsive.
@@ -85,7 +85,7 @@ struct WKWebViewWrapper: UIViewRepresentable {
             """
             let cssScript = WKUserScript(source: cssSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
             configuration.userContentController.addUserScript(cssScript)
-            
+
             // Keep a clean instrumentation script to notify Xcode of loading success/state
             let instrumentSource = """
             (function() {
@@ -115,26 +115,26 @@ struct WKWebViewWrapper: UIViewRepresentable {
             let instrumentScript = WKUserScript(source: instrumentSource, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
             configuration.userContentController.addUserScript(instrumentScript)
         }
-        
+
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = context.coordinator
-        
+
         // Make the background transparent to look integrated
         webView.isOpaque = false
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
-        
+
         // Custom interactive zoom features for map if needed
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
-        
+
         return webView
     }
-    
+
     func updateUIView(_ uiView: WKWebView, context: Context) {
         let coordinator = context.coordinator
         coordinator.parent = self
-        
+
         if isLocalHTML {
             if !coordinator.lastLoadedLocalHTML {
                 coordinator.lastLoadedLocalHTML = true
@@ -151,39 +151,39 @@ struct WKWebViewWrapper: UIViewRepresentable {
             }
         }
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+
     class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WKWebViewWrapper
-        var lastLoadedURL: URL? = nil
+        var lastLoadedURL: URL?
         var lastLoadedLocalHTML = false
-        
+
         init(_ parent: WKWebViewWrapper) {
             self.parent = parent
         }
-        
-        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+
+        func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
             DispatchQueue.main.async {
                 self.parent.isLoading = true
             }
         }
-        
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+
+        func webView(_: WKWebView, didFinish _: WKNavigation!) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
             }
         }
-        
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+
+        func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
             }
         }
-        
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             if let url = navigationAction.request.url {
                 // If the tapped link has a fragment (hash tag) e.g., file:///...html#G03
                 if let fragment = url.fragment, !fragment.isEmpty {
@@ -191,7 +191,7 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     decisionHandler(.cancel)
                     return
                 }
-                
+
                 // Also support custom URL schemes or fragments formatted differently depending on OS loading
                 let absoluteString = url.absoluteString
                 if absoluteString.contains("#") {
@@ -209,7 +209,7 @@ struct WKWebViewWrapper: UIViewRepresentable {
 }
 
 extension WKWebViewWrapper.Coordinator: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "logger" {
             print("WKWebView [JS LOG]: \(message.body)")
         }

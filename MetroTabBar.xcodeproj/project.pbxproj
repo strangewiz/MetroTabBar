@@ -7,21 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50AB100125881AA80029399C /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000125881AA80029399C /* Station.swift */; };
-		50AB100225881AA80029399C /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000225881AA80029399C /* FavoritesManager.swift */; };
-		50AB100325881AA80029399C /* WKWebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000325881AA80029399C /* WKWebViewWrapper.swift */; };
-		50AB100425881AA80029399C /* StationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000425881AA80029399C /* StationDetailView.swift */; };
-		50AB100525881AA80029399C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000525881AA80029399C /* ContentView.swift */; };
-		50AB100625881AA80029399C /* MetroTabBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000625881AA80029399C /* MetroTabBarApp.swift */; };
-
-
-
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
-
 		505AA0CC1331B9E30010B6FF /* apple-touch-icon-retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */; };
-
 		506499B617DD2097007FE44C /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499B517DD2097007FE44C /* list@2x.png */; };
 		506499B817DD209E007FE44C /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499B717DD209E007FE44C /* map@2x.png */; };
 		506499BA17DD2573007FE44C /* grey-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 506499B917DD2573007FE44C /* grey-star@2x.png */; };
@@ -52,49 +41,27 @@
 		506F916F19780C6000242E91 /* s.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F916D19780C6000242E91 /* s.png */; };
 		506F917119780FC700242E91 /* dc_metro_silver.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F917019780FC700242E91 /* dc_metro_silver.png */; };
 		506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */ = {isa = PBXBuildFile; fileRef = 506F917219780FFB00242E91 /* dc-metro-silver.html */; };
+		50AB100125881AA80029399C /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000125881AA80029399C /* Station.swift */; };
+		50AB100225881AA80029399C /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000225881AA80029399C /* FavoritesManager.swift */; };
+		50AB100325881AA80029399C /* WKWebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000325881AA80029399C /* WKWebViewWrapper.swift */; };
+		50AB100425881AA80029399C /* StationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000425881AA80029399C /* StationDetailView.swift */; };
+		50AB100525881AA80029399C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000525881AA80029399C /* ContentView.swift */; };
+		50AB100625881AA80029399C /* MetroTabBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000625881AA80029399C /* MetroTabBarApp.swift */; };
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
-
 		50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */; };
-
-
 		934322920EC8E64900374E69 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322900EC8E64900374E69 /* list.png */; };
 		934322930EC8E64900374E69 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 934322910EC8E64900374E69 /* map.png */; };
 		93B33E080EC0DA290069A656 /* apple-touch-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93B33E070EC0DA290069A656 /* apple-touch-icon.png */; };
 		93D9901D0EB2E79500DC7F32 /* orange-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D9901C0EB2E79500DC7F32 /* orange-star.png */; };
 		93D990CC0EB2F77700DC7F32 /* grey-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D990CB0EB2F77700DC7F32 /* grey-star.png */; };
-
-
-
-
-
-
-
-
-
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		50AB000125881AA80029399C /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
-		50AB000225881AA80029399C /* FavoritesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
-		50AB000325881AA80029399C /* WKWebViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewWrapper.swift; sourceTree = "<group>"; };
-		50AB000425881AA80029399C /* StationDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
-		50AB000525881AA80029399C /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		50AB000625881AA80029399C /* MetroTabBarApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetroTabBarApp.swift; sourceTree = "<group>"; };
-
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-
-
 		1D6058910D05DD3D006BFB54 /* MetroTabBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetroTabBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-
-
-
-
 		505AA0CB1331B9E30010B6FF /* apple-touch-icon-retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-retina.png"; sourceTree = "<group>"; };
-
-
 		506499B517DD2097007FE44C /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@2x.png"; sourceTree = "<group>"; };
 		506499B717DD209E007FE44C /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@2x.png"; sourceTree = "<group>"; };
 		506499B917DD2573007FE44C /* grey-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-star@2x.png"; sourceTree = "<group>"; };
@@ -126,33 +93,20 @@
 		506F916D19780C6000242E91 /* s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = s.png; path = metrolinescolors/s.png; sourceTree = "<group>"; };
 		506F917019780FC700242E91 /* dc_metro_silver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dc_metro_silver.png; sourceTree = "<group>"; };
 		506F917219780FFB00242E91 /* dc-metro-silver.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "dc-metro-silver.html"; sourceTree = "<group>"; };
+		50AB000125881AA80029399C /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		50AB000225881AA80029399C /* FavoritesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		50AB000325881AA80029399C /* WKWebViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewWrapper.swift; sourceTree = "<group>"; };
+		50AB000425881AA80029399C /* StationDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
+		50AB000525881AA80029399C /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		50AB000625881AA80029399C /* MetroTabBarApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetroTabBarApp.swift; sourceTree = "<group>"; };
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
-
 		50D5EA641337FB8A00E4E1E6 /* apple-touch-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon2.png"; sourceTree = "<group>"; };
-
-
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-
 		934322900EC8E64900374E69 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
 		934322910EC8E64900374E69 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		93B33E070EC0DA290069A656 /* apple-touch-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon.png"; sourceTree = "<group>"; };
 		93D9901C0EB2E79500DC7F32 /* orange-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orange-star.png"; sourceTree = "<group>"; };
 		93D990CB0EB2F77700DC7F32 /* grey-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-star.png"; sourceTree = "<group>"; };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,28 +123,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				1D3623240D0F684500981E51 /* MetroTabBarAppDelegate.h */,
-				1D3623250D0F684500981E51 /* MetroTabBarAppDelegate.m */,
-				D09E9B060E91727F00ECE763 /* ListViewController.h */,
-				D09E9B070E91727F00ECE763 /* ListViewController.m */,
-				D09E9B090E91728800ECE763 /* MapViewController.h */,
-				D09E9B0A0E91728800ECE763 /* MapViewController.m */,
-				D0C10A050E918A13008F3EA7 /* FavoritesViewController.h */,
-				D0C10A060E918A13008F3EA7 /* FavoritesViewController.m */,
-				D0C10A2A0E918B22008F3EA7 /* WebViewController.h */,
-				D0C10A2B0E918B22008F3EA7 /* WebViewController.m */,
-				506499B217DD16CA007FE44C /* MapWebViewController.h */,
-				506499B317DD16CA007FE44C /* MapWebViewController.m */,
-				93EF6C440EB3F560005092A7 /* MapUIScrollView.h */,
-				93EF6C450EB3F560005092A7 /* MapUIScrollView.m */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,7 +149,6 @@
 			name = MetroTabBar;
 			sourceTree = "<group>";
 		};
-
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,7 +178,6 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
-
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -343,23 +273,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				506499FF17DD2C9C007FE44C /* b.png in Resources */,
-				28AD73880D9D96C1002E5188 /* MainWindow.xib in Resources */,
 				506499B617DD2097007FE44C /* list@2x.png in Resources */,
 				50649A0B17DD2C9C007FE44C /* gy.png in Resources */,
 				50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */,
-				D09E9B030E91726300ECE763 /* ListView.xib in Resources */,
-				D09E9B050E91726900ECE763 /* MapView.xib in Resources */,
 				50649A0C17DD2C9C007FE44C /* gy@2x.png in Resources */,
 				50649A0617DD2C9C007FE44C /* bor@2x.png in Resources */,
-				50ED01D61DA14C8C006F0BC1 /* LaunchScreen.storyboard in Resources */,
 				506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */,
 				506F917119780FC700242E91 /* dc_metro_silver.png in Resources */,
-				D0C10A040E918A01008F3EA7 /* FavoritesView.xib in Resources */,
-				D0EFE0560E91900B006EDB00 /* WebView.xib in Resources */,
 				50649A0817DD2C9C007FE44C /* by@2x.png in Resources */,
 				93D9901D0EB2E79500DC7F32 /* orange-star.png in Resources */,
 				93D990CC0EB2F77700DC7F32 /* grey-star.png in Resources */,
-				930F23D50EBFFF0F00DDFBB0 /* MapWebView.xib in Resources */,
 				506499B817DD209E007FE44C /* map@2x.png in Resources */,
 				50649A1417DD2C9C007FE44C /* y@2x.png in Resources */,
 				50649A0E17DD2C9C007FE44C /* gyr@2x.png in Resources */,
@@ -385,7 +308,6 @@
 				50649A0317DD2C9C007FE44C /* bogy.png in Resources */,
 				50649A1117DD2C9C007FE44C /* r.png in Resources */,
 				50649A0517DD2C9C007FE44C /* bor.png in Resources */,
-				50D1A6E21336763C00AFAFCD /* MainWindow-iPad.xib in Resources */,
 				50D5EA651337FB8A00E4E1E6 /* apple-touch-icon2.png in Resources */,
 				50649A0917DD2C9C007FE44C /* g.png in Resources */,
 			);
@@ -426,7 +348,6 @@
 				50AB100425881AA80029399C /* StationDetailView.swift in Sources */,
 				50AB100525881AA80029399C /* ContentView.swift in Sources */,
 				50AB100625881AA80029399C /* MetroTabBarApp.swift in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,18 +356,14 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-
 			buildSettings = {
-				SWIFT_VERSION = 5.0;
-				CLANG_ENABLE_MODULES = YES;
-
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.0.13;
+				CURRENT_PROJECT_VERSION = 1.0.16;
 				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,54 +372,48 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
 				PRODUCT_NAME = MetroTabBar;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-
 			buildSettings = {
-				SWIFT_VERSION = 5.0;
-				CLANG_ENABLE_MODULES = YES;
-
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.0.13;
+				CURRENT_PROJECT_VERSION = 1.0.16;
 				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
 				PRODUCT_NAME = MetroTabBar;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 		939795360ECB7D62008123EE /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SWIFT_VERSION = 5.0;
 				CLANG_ENABLE_MODULES = YES;
-
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -526,47 +437,42 @@
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Distribution;
 		};
 		939795370ECB7D62008123EE /* Distribution */ = {
 			isa = XCBuildConfiguration;
-
 			buildSettings = {
-				SWIFT_VERSION = 5.0;
-				CLANG_ENABLE_MODULES = YES;
-
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.0.13;
+				CURRENT_PROJECT_VERSION = 1.0.16;
 				DEVELOPMENT_TEAM = 49WDPW523Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
 				PRODUCT_NAME = MetroTabBar;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Distribution;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SWIFT_VERSION = 5.0;
 				CLANG_ENABLE_MODULES = YES;
-
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -591,6 +497,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -598,9 +505,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SWIFT_VERSION = 5.0;
 				CLANG_ENABLE_MODULES = YES;
-
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -624,6 +529,7 @@
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

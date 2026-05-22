@@ -4,7 +4,7 @@ struct StationDetailView: View {
     let station: Station
     @EnvironmentObject var favoritesManager: FavoritesManager
     @State private var isLoading = true
-    
+
     var body: some View {
         WKWebViewWrapper(
             url: station.webURL,

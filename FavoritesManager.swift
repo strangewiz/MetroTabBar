@@ -3,15 +3,15 @@ import SwiftUI
 
 class FavoritesManager: ObservableObject {
     @Published var favoriteIDs: [String] = []
-    
+
     init() {
         loadFavorites()
     }
-    
+
     func isFavorite(_ station: Station) -> Bool {
         favoriteIDs.contains(station.id)
     }
-    
+
     func toggleFavorite(_ station: Station) {
         if isFavorite(station) {
             favoriteIDs.removeAll { $0 == station.id }
@@ -20,24 +20,24 @@ class FavoritesManager: ObservableObject {
         }
         save()
     }
-    
+
     func reorder(from source: IndexSet, to destination: Int) {
         favoriteIDs.move(fromOffsets: source, toOffset: destination)
         save()
     }
-    
+
     func delete(at offsets: IndexSet) {
         favoriteIDs.remove(atOffsets: offsets)
         save()
     }
-    
+
     private func loadFavorites() {
         // 1. Try to load from modern UserDefaults first
         if let saved = UserDefaults.standard.array(forKey: "MetroTabBar.Favorites") as? [String] {
-            self.favoriteIDs = saved
+            favoriteIDs = saved
             return
         }
-        
+
         // 2. Fall back to migrating legacy Documents/favorites file if present
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         if let documentsURL = paths.first {
@@ -53,7 +53,7 @@ class FavoritesManager: ObservableObject {
                             }
                         }
                         if !importedIDs.isEmpty {
-                            self.favoriteIDs = importedIDs
+                            favoriteIDs = importedIDs
                             save()
                             // Clean up legacy file
                             try? FileManager.default.removeItem(at: legacyURL)
@@ -65,10 +65,10 @@ class FavoritesManager: ObservableObject {
                 }
             }
         }
-        
-        self.favoriteIDs = []
+
+        favoriteIDs = []
     }
-    
+
     private func save() {
         UserDefaults.standard.set(favoriteIDs, forKey: "MetroTabBar.Favorites")
     }
