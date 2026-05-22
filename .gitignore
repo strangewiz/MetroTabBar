@@ -33,10 +33,10 @@ Package.resolved
 
 # CocoaPods (not used now, but good to keep out if anyone runs pod init)
 Pods/
-*.xcworkspace
 
 # Backup/Temp files
 *~.nib
 *.swp
 *.lock
 *~
+

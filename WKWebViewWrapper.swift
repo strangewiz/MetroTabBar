@@ -6,6 +6,7 @@ struct WKWebViewWrapper: UIViewRepresentable {
     let isLocalHTML: Bool
     var onStationFragmentTapped: ((String) -> Void)? = nil
     @Binding var isLoading: Bool
+    @Binding var errorMessage: String?
 
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
@@ -168,6 +169,7 @@ struct WKWebViewWrapper: UIViewRepresentable {
         func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
             DispatchQueue.main.async {
                 self.parent.isLoading = true
+                self.parent.errorMessage = nil
             }
         }
 
@@ -177,9 +179,17 @@ struct WKWebViewWrapper: UIViewRepresentable {
             }
         }
 
-        func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
+        func webView(_: WKWebView, didFail _: WKNavigation!, withError error: Error) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
+                self.parent.errorMessage = error.localizedDescription
+            }
+        }
+
+        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
+            DispatchQueue.main.async {
+                self.parent.isLoading = false
+                self.parent.errorMessage = error.localizedDescription
             }
         }
 
@@ -191,7 +201,6 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     decisionHandler(.cancel)
                     return
                 }
-
             }
             decisionHandler(.allow)
         }

@@ -1,10 +1,19 @@
 import Foundation
+import Observation
 import SwiftUI
 
-class FavoritesManager: ObservableObject {
-    @Published var favoriteIDs: [String] = []
+@Observable
+class FavoritesManager {
+    var favoriteIDs: [String] = [] {
+        didSet {
+            save()
+        }
+    }
 
     init() {
+        if ProcessInfo.processInfo.arguments.contains("--uitesting") {
+            UserDefaults.standard.removeObject(forKey: "MetroTabBar.Favorites")
+        }
         loadFavorites()
     }
 
@@ -18,17 +27,14 @@ class FavoritesManager: ObservableObject {
         } else {
             favoriteIDs.append(station.id)
         }
-        save()
     }
 
     func reorder(from source: IndexSet, to destination: Int) {
         favoriteIDs.move(fromOffsets: source, toOffset: destination)
-        save()
     }
 
     func delete(at offsets: IndexSet) {
         favoriteIDs.remove(atOffsets: offsets)
-        save()
     }
 
     private func loadFavorites() {
@@ -54,7 +60,6 @@ class FavoritesManager: ObservableObject {
                         }
                         if !importedIDs.isEmpty {
                             favoriteIDs = importedIDs
-                            save()
                             // Clean up legacy file
                             try? FileManager.default.removeItem(at: legacyURL)
                             return

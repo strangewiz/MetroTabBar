@@ -17,6 +17,15 @@ struct Station: Identifiable, Hashable {
         URL(string: "https://www.wmata.com/ridertools/station/\(webName)")
     }
 
+    /// Explicit Hashable & Equatable based only on the unique id
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: Station, rhs: Station) -> Bool {
+        lhs.id == rhs.id
+    }
+
     static let allStations: [Station] = [
         Station(id: "G03", name: "Addison Rd", colorImageName: "b"),
         Station(id: "F06", name: "Anacostia", colorImageName: "g"),
@@ -116,4 +125,17 @@ struct Station: Identifiable, Hashable {
         Station(id: "N06", name: "Wiehle-Reston East", colorImageName: "s"),
         Station(id: "A04", name: "Woodley Park", colorImageName: "r"),
     ]
+
+    /// Precomputed sorted station list to avoid expensive sorting during UI updates
+    static let allStationsSorted: [Station] = allStations.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+
+    /// Precomputed alphabetically grouped sections for ultra-high-efficiency rendering
+    static let groupedStations: [(letter: String, stations: [Station])] = {
+        let grouped = Dictionary(grouping: allStationsSorted) { station -> String in
+            guard let first = station.name.first else { return "#" }
+            return String(first).uppercased()
+        }
+        return grouped.map { (letter: $0.key, stations: $0.value) }
+            .sorted { $0.letter < $1.letter }
+    }()
 }
