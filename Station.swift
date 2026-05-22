@@ -4,7 +4,7 @@ struct Station: Identifiable, Codable, Hashable {
     let id: String // site code (e.g. "G03")
     let name: String
     let colorImageName: String // color image tag (e.g. "b", "gyr")
-    
+
     var webName: String {
         // Hyphenate name and lowercase it to match WMATA URL structure
         name.lowercased()
@@ -12,11 +12,11 @@ struct Station: Identifiable, Codable, Hashable {
             .replacingOccurrences(of: " ", with: "-")
             .replacingOccurrences(of: "--", with: "-")
     }
-    
+
     var webURL: URL? {
         URL(string: "https://www.wmata.com/ridertools/station/\(webName)")
     }
-    
+
     static let allStations: [Station] = [
         Station(id: "G03", name: "Addison Rd", colorImageName: "b"),
         Station(id: "F06", name: "Anacostia", colorImageName: "g"),
@@ -114,6 +114,6 @@ struct Station: Identifiable, Codable, Hashable {
         Station(id: "B10", name: "Wheaton", colorImageName: "r"),
         Station(id: "A12", name: "North Bethesda", colorImageName: "r"),
         Station(id: "N06", name: "Wiehle-Reston East", colorImageName: "s"),
-        Station(id: "A04", name: "Woodley Park", colorImageName: "r")
+        Station(id: "A04", name: "Woodley Park", colorImageName: "r"),
     ]
 }
