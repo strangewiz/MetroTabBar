@@ -3,7 +3,9 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var favoritesManager: FavoritesManager
     @State private var searchText = ""
-    @State private var selectedStation: Station?
+    @State private var selectedFavoriteStation: Station?
+    @State private var selectedListStation: Station?
+    @State private var selectedMapStation: Station?
     @State private var isMapLoading = true
     @State private var activeTab = 0
 
@@ -33,7 +35,7 @@ struct ContentView: View {
             // TAB 1: FAVORITES
             NavigationStack {
                 favoritesView
-                    .navigationDestination(item: $selectedStation) { station in
+                    .navigationDestination(item: $selectedFavoriteStation) { station in
                         StationDetailView(station: station)
                     }
             }
@@ -45,7 +47,7 @@ struct ContentView: View {
             // TAB 2: ALL STATIONS
             NavigationStack {
                 stationsListView
-                    .navigationDestination(item: $selectedStation) { station in
+                    .navigationDestination(item: $selectedListStation) { station in
                         StationDetailView(station: station)
                     }
             }
@@ -57,7 +59,7 @@ struct ContentView: View {
             // TAB 3: SYSTEM MAP
             NavigationStack {
                 mapView
-                    .navigationDestination(item: $selectedStation) { station in
+                    .navigationDestination(item: $selectedMapStation) { station in
                         StationDetailView(station: station)
                     }
             }
@@ -80,7 +82,7 @@ struct ContentView: View {
                 List {
                     ForEach(favoritedStations) { station in
                         Button(action: {
-                            selectedStation = station
+                            selectedFavoriteStation = station
                         }) {
                             StationRowView(station: station)
                         }
@@ -143,7 +145,7 @@ struct ContentView: View {
             if !searchText.isEmpty {
                 List(filteredStations) { station in
                     Button(action: {
-                        selectedStation = station
+                        selectedListStation = station
                     }) {
                         StationRowView(station: station)
                     }
@@ -157,7 +159,7 @@ struct ContentView: View {
                                 Section(header: Text(section.letter).id(section.letter)) {
                                     ForEach(section.stations) { station in
                                         Button(action: {
-                                            selectedStation = station
+                                            selectedListStation = station
                                         }) {
                                             StationRowView(station: station)
                                         }
@@ -190,7 +192,7 @@ struct ContentView: View {
             onStationFragmentTapped: { code in
                 // Look up station by site code
                 if let station = Station.allStations.first(where: { $0.id == code }) {
-                    selectedStation = station
+                    selectedMapStation = station
                 }
             },
             isLoading: $isMapLoading
@@ -219,16 +221,10 @@ struct StationRowView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            if let uiImage = UIImage(named: "metrolinescolors/\(station.colorImageName).png") ?? UIImage(named: "\(station.colorImageName).png") {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 32, height: 32)
-            } else {
-                Circle()
-                    .fill(Color.gray)
-                    .frame(width: 32, height: 32)
-            }
+            Image(station.colorImageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 32, height: 32)
 
             Text(station.name)
                 .font(.body)
