@@ -14,18 +14,80 @@ struct WKWebViewWrapper: UIViewRepresentable {
             // Register the script message handler for Xcode console logging
             configuration.userContentController.add(context.coordinator, name: "logger")
             
-            // Hide the body initially at document start to prevent flashing the header/footer
-            let hideSource = """
-            var style = document.createElement('style');
-            style.id = 'hide-body-style';
-            style.innerHTML = 'body { display: none !important; }';
-            document.documentElement.appendChild(style);
+            // Inject CSS isolation stylesheet at document start.
+            // This immediately hides non-essential layouts (header, footer, map, back button)
+            // and styles the main container to be clean, transparent, and responsive.
+            let cssSource = """
+            (function() {
+                var style = document.createElement('style');
+                style.id = 'metro-isolation-styles';
+                style.innerHTML = `
+                    /* Hide header/footer wrapper divs and non-essential side elements */
+                    body > div {
+                        display: none !important;
+                    }
+                    .rider-tools-map-content-wrapper,
+                    .back-button,
+                    .sidebar__slider-bar,
+                    .sidebar__slider-spacer {
+                        display: none !important;
+                    }
+
+                    /* Make ancestors and containers transparent and borderless */
+                    html, body,
+                    .wmata-app-wrapper,
+                    .sidebar,
+                    .sidebar__slider-container,
+                    .expandable-sidebar__content,
+                    .tabs-details {
+                        background: transparent !important;
+                        background-color: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        min-width: 0 !important;
+                        margin: 0 !important;
+                    }
+
+                    /* Override static margins/positioning for proper iOS viewport flow */
+                    .wmata-app-wrapper,
+                    .sidebar,
+                    .sidebar__slider-container,
+                    .expandable-sidebar__content {
+                        position: static !important;
+                        transform: none !important;
+                        height: auto !important;
+                        padding: 0 !important;
+                    }
+
+                    /* Prevent horizontal scroll and add high-end native padding */
+                    html, body {
+                        overflow-x: hidden !important;
+                    }
+                    body {
+                        padding: 16px !important;
+                        display: block !important;
+                    }
+                `;
+                if (document.documentElement) {
+                    document.documentElement.appendChild(style);
+                } else {
+                    var observer = new MutationObserver(function(mutations, obs) {
+                        if (document.documentElement) {
+                            document.documentElement.appendChild(style);
+                            obs.disconnect();
+                        }
+                    });
+                    observer.observe(document, { childList: true, subtree: true });
+                }
+            })();
             """
-            let hideScript = WKUserScript(source: hideSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-            configuration.userContentController.addUserScript(hideScript)
+            let cssScript = WKUserScript(source: cssSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(cssScript)
             
-            // Use MutationObserver at document start to wait for the target div to appear dynamically (React/Next.js hydration)
-            let observerSource = """
+            // Keep a clean instrumentation script to notify Xcode of loading success/state
+            let instrumentSource = """
             (function() {
                 function log(msg) {
                     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.logger) {
@@ -33,56 +95,25 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     }
                 }
                 
-                function isolate(targetDiv) {
-                    log("Target div '.tabs.tabs-details' found! Isolating content.");
-                    document.body.innerHTML = '';
-                    document.body.appendChild(targetDiv);
-                    
-                    // Add clean styling for the isolated content
-                    var style = document.createElement('style');
-                    style.innerHTML = 'body { display: block !important; padding: 16px !important; background-color: transparent !important; }';
-                    document.documentElement.appendChild(style);
-                }
+                log("Metro Tab Bar: Injected isolation styles successfully.");
                 
-                log("Setting up MutationObserver to watch for dynamic DOM hydration...");
+                // Watch for arrivals hydration and log state change
+                var checkHydration = setInterval(function() {
+                    var arrivals = document.querySelector('.service-nearby-times');
+                    if (arrivals) {
+                        clearInterval(checkHydration);
+                        log("Metro Tab Bar: Live arrivals hydrated successfully.");
+                    }
+                }, 500);
                 
-                var targetDiv = document.querySelector('div.tabs.tabs-details');
-                if (targetDiv) {
-                    isolate(targetDiv);
-                } else {
-                    var observer = new MutationObserver(function(mutations, obs) {
-                        var targetDiv = document.querySelector('div.tabs.tabs-details');
-                        if (targetDiv) {
-                            obs.disconnect();
-                            isolate(targetDiv);
-                        }
-                    });
-                    
-                    observer.observe(document.documentElement, {
-                        childList: true,
-                        subtree: true
-                    });
-                    
-                    // Safety fallback: if it doesn't appear in 5 seconds, reveal the body and dump DOM info
-                    setTimeout(function() {
-                        observer.disconnect();
-                        var style = document.getElementById('hide-body-style');
-                        if (style) {
-                            log("Target div '.tabs.tabs-details' not found after 5s timeout. Revealing default page.");
-                            style.remove();
-                            
-                            // Dump structural details of the DOM for debugging
-                            var firstDivs = Array.from(document.querySelectorAll('div'))
-                                .slice(0, 15)
-                                .map(function(d) { return d.tagName + (d.className ? '.' + d.className.split(' ').join('.') : '') + (d.id ? '#' + d.id : ''); });
-                            log("Top 15 DOM elements found: " + JSON.stringify(firstDivs));
-                        }
-                    }, 5000);
-                }
+                // Clear check after 10s to prevent infinite loops
+                setTimeout(function() {
+                    clearInterval(checkHydration);
+                }, 10000);
             })();
             """
-            let observerScript = WKUserScript(source: observerSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-            configuration.userContentController.addUserScript(observerScript)
+            let instrumentScript = WKUserScript(source: instrumentSource, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(instrumentScript)
         }
         
         let webView = WKWebView(frame: .zero, configuration: configuration)
