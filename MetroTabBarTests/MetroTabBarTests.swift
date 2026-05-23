@@ -38,20 +38,20 @@ final class MetroTabBarTests: XCTestCase {
     }
 
     func testStationWebName() {
-        let station1 = Station(id: "G03", name: "Addison Rd", colorImageName: "b")
+        let station1 = Station(id: "G03", name: "Addison Rd", colorImageName: "b", lat: 0, lon: 0)
         XCTAssertEqual(station1.webName, "addison-rd")
 
-        let station2 = Station(id: "F02", name: "Archives", colorImageName: "gy")
+        let station2 = Station(id: "F02", name: "Archives", colorImageName: "gy", lat: 0, lon: 0)
         XCTAssertEqual(station2.webName, "archives")
 
-        let station3 = Station(id: "E09", name: "College Park-U of MD", colorImageName: "g")
+        let station3 = Station(id: "E09", name: "College Park-U of MD", colorImageName: "g", lat: 0, lon: 0)
         XCTAssertEqual(station3.webName, "college-park-u-of-md")
     }
 
     func testStationEqualityAndHashing() {
-        let station1 = Station(id: "G03", name: "Addison Rd", colorImageName: "b")
-        let station2 = Station(id: "G03", name: "Different Name", colorImageName: "r")
-        let station3 = Station(id: "F06", name: "Anacostia", colorImageName: "g")
+        let station1 = Station(id: "G03", name: "Addison Rd", colorImageName: "b", lat: 0, lon: 0)
+        let station2 = Station(id: "G03", name: "Different Name", colorImageName: "r", lat: 0, lon: 0)
+        let station3 = Station(id: "F06", name: "Anacostia", colorImageName: "g", lat: 0, lon: 0)
 
         XCTAssertEqual(station1, station2)
         XCTAssertNotEqual(station1, station3)

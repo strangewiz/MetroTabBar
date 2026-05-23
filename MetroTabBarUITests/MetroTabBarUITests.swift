@@ -90,4 +90,45 @@ final class MetroTabBarUITests: XCTestCase {
         // 14. Verify that the empty state is shown again
         XCTAssertTrue(emptyStateText.waitForExistence(timeout: 5), "Empty state should be visible again after removing the favorite")
     }
+
+    @MainActor
+    func testMapMultiCodeStationTap() {
+        let app = XCUIApplication()
+
+        // 1. Go to Map Tab
+        let mapTabButton = app.tabBars.buttons["Map"]
+        XCTAssertTrue(mapTabButton.waitForExistence(timeout: 5), "Map tab button should be present")
+        mapTabButton.tap()
+
+        // 2. Wait for the map image to load
+        let mapImage = app.images["dc_metro_silver.png"]
+        XCTAssertTrue(mapImage.waitForExistence(timeout: 10), "Map image should be loaded")
+
+        // 3. Since we're using a native image map with coordinate matching, we simulate tapping the image where Metro Center is located.
+        // Metro Center is at coords 899,890 to 1098,784 in the original image (2000x1718).
+        // It's approximately in the middle. We normalize the coordinates for the image.
+        let normalizedX = 998.0 / 2000.0
+        let normalizedY = 837.0 / 1718.0
+
+        let coordinate = mapImage.coordinate(withNormalizedOffset: CGVector(dx: normalizedX, dy: normalizedY))
+        coordinate.tap()
+
+        // 4. Verify we navigated to Metro Center
+        let detailNavBar = app.navigationBars["Metro Center"]
+        XCTAssertTrue(detailNavBar.waitForExistence(timeout: 5), "Should navigate to Metro Center detail view")
+
+        // 5. Tap Back
+        let backButton = app.navigationBars.buttons.element(boundBy: 0)
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
+        backButton.tap()
+
+        // 6. Verify we are back on the map
+        XCTAssertTrue(mapImage.waitForExistence(timeout: 5), "Map image should be visible again after going back")
+
+        // 7. Tap Metro Center again
+        coordinate.tap()
+
+        // 8. Verify it opened again
+        XCTAssertTrue(detailNavBar.waitForExistence(timeout: 5), "Should navigate to Metro Center detail view a second time")
+    }
 }

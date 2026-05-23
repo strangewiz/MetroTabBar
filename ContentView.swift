@@ -20,7 +20,7 @@ struct ContentView: View {
                 .tag(1)
 
             // TAB 3: SYSTEM MAP
-            MapView()
+            NativeMapView()
                 .tabItem {
                     Label("Map", systemImage: "map.fill")
                 }
@@ -113,7 +113,16 @@ struct FavoritesView: View {
 // MARK: - 2. All Stations List Tab View
 
 struct StationsListView: View {
+    @Environment(LocationManager.self) var locationManager
     @State private var searchText = ""
+
+    private var nearbyStations: [Station] {
+        guard let location = locationManager.location else { return [] }
+        return Station.allStations
+            .sorted { ($0.distance(to: location) ?? .infinity) < ($1.distance(to: location) ?? .infinity) }
+            .prefix(3)
+            .map { $0 }
+    }
 
     /// Responsive filtering utilizing pre-sorted static data source
     private var filteredStations: [Station] {
@@ -138,6 +147,16 @@ struct StationsListView: View {
                     ScrollViewReader { proxy in
                         ZStack(alignment: .trailing) {
                             List {
+                                if !nearbyStations.isEmpty {
+                                    Section(header: Text("Nearby").id("Nearby")) {
+                                        ForEach(nearbyStations) { station in
+                                            NavigationLink(value: station) {
+                                                StationRowView(station: station)
+                                            }
+                                        }
+                                    }
+                                }
+
                                 ForEach(Station.groupedStations, id: \.letter) { section in
                                     Section(header: Text(section.letter).id(section.letter)) {
                                         ForEach(section.stations) { station in
@@ -165,50 +184,14 @@ struct StationsListView: View {
             .navigationDestination(for: Station.self) { station in
                 StationDetailView(station: station)
             }
-        }
-    }
-}
-
-// MARK: - 3. System Map Tab View
-
-struct MapView: View {
-    @State private var selectedMapStation: Station?
-    @State private var isMapLoading = true
-    @State private var mapErrorMessage: String? = nil
-
-    var body: some View {
-        NavigationStack {
-            WKWebViewWrapper(
-                url: nil,
-                isLocalHTML: true,
-                onStationFragmentTapped: { code in
-                    if let station = Station.allStations.first(where: { $0.id == code }) {
-                        selectedMapStation = station
-                    }
-                },
-                isLoading: $isMapLoading,
-                errorMessage: $mapErrorMessage
-            )
-            .ignoresSafeArea()
-            .overlay {
-                if isMapLoading {
-                    ProgressView("Loading System Map...")
-                        .scaleEffect(1.2)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(.systemBackground).opacity(0.8))
-                        )
-                }
-            }
-            .navigationTitle("System Map")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(item: $selectedMapStation) { station in
-                StationDetailView(station: station)
+            .onAppear {
+                locationManager.requestPermission()
             }
         }
     }
 }
+
+// Removed MapView in favor of NativeMapView
 
 // MARK: - 4. Station Row View
 

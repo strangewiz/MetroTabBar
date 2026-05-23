@@ -11,13 +11,15 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		506F917119780FC700242E91 /* dc_metro_silver.png in Resources */ = {isa = PBXBuildFile; fileRef = 506F917019780FC700242E91 /* dc_metro_silver.png */; };
-		506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */ = {isa = PBXBuildFile; fileRef = 506F917219780FFB00242E91 /* dc-metro-silver.html */; };
 		50AB100125881AA80029399C /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000125881AA80029399C /* Station.swift */; };
 		50AB100225881AA80029399C /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000225881AA80029399C /* FavoritesManager.swift */; };
 		50AB100325881AA80029399C /* WKWebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000325881AA80029399C /* WKWebViewWrapper.swift */; };
 		50AB100425881AA80029399C /* StationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000425881AA80029399C /* StationDetailView.swift */; };
 		50AB100525881AA80029399C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000525881AA80029399C /* ContentView.swift */; };
 		50AB100625881AA80029399C /* MetroTabBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000625881AA80029399C /* MetroTabBarApp.swift */; };
+		50AB100725881AA80029399C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000725881AA80029399C /* LocationManager.swift */; };
+		50AB100825881AA80029399C /* NativeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000825881AA80029399C /* NativeMapView.swift */; };
+		50AB100925881AA80029399C /* MapRegions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000925881AA80029399C /* MapRegions.swift */; };
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -44,13 +46,15 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		506F917019780FC700242E91 /* dc_metro_silver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dc_metro_silver.png; sourceTree = "<group>"; };
-		506F917219780FFB00242E91 /* dc-metro-silver.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "dc-metro-silver.html"; sourceTree = "<group>"; };
 		50AB000125881AA80029399C /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		50AB000225881AA80029399C /* FavoritesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		50AB000325881AA80029399C /* WKWebViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewWrapper.swift; sourceTree = "<group>"; };
 		50AB000425881AA80029399C /* StationDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
 		50AB000525881AA80029399C /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		50AB000625881AA80029399C /* MetroTabBarApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetroTabBarApp.swift; sourceTree = "<group>"; };
+		50AB000725881AA80029399C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		50AB000825881AA80029399C /* NativeMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeMapView.swift; sourceTree = "<group>"; };
+		50AB000925881AA80029399C /* MapRegions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapRegions.swift; sourceTree = "<group>"; };
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		935E0CB92FC1101E00AAFBA0 /* MetroTabBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetroTabBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +118,9 @@
 				50AB000425881AA80029399C /* StationDetailView.swift */,
 				50AB000525881AA80029399C /* ContentView.swift */,
 				50AB000625881AA80029399C /* MetroTabBarApp.swift */,
+				50AB000725881AA80029399C /* LocationManager.swift */,
+				50AB000825881AA80029399C /* NativeMapView.swift */,
+				50AB000925881AA80029399C /* MapRegions.swift */,
 			);
 			name = MetroTabBar;
 			sourceTree = "<group>";
@@ -123,7 +130,6 @@
 			children = (
 				50D10EF617DD0C8900D7E34B /* Images.xcassets */,
 				506F917019780FC700242E91 /* dc_metro_silver.png */,
-				506F917219780FFB00242E91 /* dc-metro-silver.html */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 			);
 			name = Resources;
@@ -250,7 +256,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */,
-				506F917319780FFB00242E91 /* dc-metro-silver.html in Resources */,
 				506F917119780FC700242E91 /* dc_metro_silver.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +287,9 @@
 				50AB100425881AA80029399C /* StationDetailView.swift in Sources */,
 				50AB100525881AA80029399C /* ContentView.swift in Sources */,
 				50AB100625881AA80029399C /* MetroTabBarApp.swift in Sources */,
+				50AB100725881AA80029399C /* LocationManager.swift in Sources */,
+				50AB100825881AA80029399C /* NativeMapView.swift in Sources */,
+				50AB100925881AA80029399C /* MapRegions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +340,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0.16;
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.debug;
 				PRODUCT_NAME = MetroTabBar;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

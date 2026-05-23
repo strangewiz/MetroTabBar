@@ -129,6 +129,10 @@ struct WKWebViewWrapper: UIViewRepresentable {
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(context.coordinator, action: #selector(Coordinator.refreshWebView(_:)), for: .valueChanged)
+        webView.scrollView.refreshControl = refreshControl
+
         return webView
     }
 
@@ -166,6 +170,12 @@ struct WKWebViewWrapper: UIViewRepresentable {
             self.parent = parent
         }
 
+        @objc func refreshWebView(_ sender: UIRefreshControl) {
+            if let scrollView = sender.superview as? UIScrollView, let webView = scrollView.superview as? WKWebView {
+                webView.reload()
+            }
+        }
+
         func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
             DispatchQueue.main.async {
                 self.parent.isLoading = true
@@ -173,23 +183,26 @@ struct WKWebViewWrapper: UIViewRepresentable {
             }
         }
 
-        func webView(_: WKWebView, didFinish _: WKNavigation!) {
+        func webView(_ webView: WKWebView, didFinish _: WKNavigation!) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
+                webView.scrollView.refreshControl?.endRefreshing()
             }
         }
 
-        func webView(_: WKWebView, didFail _: WKNavigation!, withError error: Error) {
+        func webView(_ webView: WKWebView, didFail _: WKNavigation!, withError error: Error) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
                 self.parent.errorMessage = error.localizedDescription
+                webView.scrollView.refreshControl?.endRefreshing()
             }
         }
 
-        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
+        func webView(_ webView: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
                 self.parent.errorMessage = error.localizedDescription
+                webView.scrollView.refreshControl?.endRefreshing()
             }
         }
 
