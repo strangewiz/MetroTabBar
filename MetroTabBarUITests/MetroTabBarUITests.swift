@@ -20,7 +20,7 @@ final class MetroTabBarUITests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        super.tearDown()
+        try super.tearDownWithError()
     }
 
     @MainActor

@@ -14,7 +14,7 @@ class FavoritesManager {
         if ProcessInfo.processInfo.arguments.contains("--uitesting") {
             UserDefaults.standard.removeObject(forKey: "MetroTabBar.Favorites")
         }
-        loadFavorites()
+        favoriteIDs = Self.loadFavorites()
     }
 
     func isFavorite(_ station: Station) -> Bool {
@@ -37,11 +37,10 @@ class FavoritesManager {
         favoriteIDs.remove(atOffsets: offsets)
     }
 
-    private func loadFavorites() {
+    private static func loadFavorites() -> [String] {
         // 1. Try to load from modern UserDefaults first
         if let saved = UserDefaults.standard.array(forKey: "MetroTabBar.Favorites") as? [String] {
-            favoriteIDs = saved
-            return
+            return saved
         }
 
         // 2. Fall back to migrating legacy Documents/favorites file if present
@@ -59,19 +58,22 @@ class FavoritesManager {
                             }
                         }
                         if !importedIDs.isEmpty {
-                            favoriteIDs = importedIDs
                             // Clean up legacy file
                             try? FileManager.default.removeItem(at: legacyURL)
-                            return
+                            // Save to modern UserDefaults immediately since we migrated
+                            UserDefaults.standard.set(importedIDs, forKey: "MetroTabBar.Favorites")
+                            return importedIDs
                         }
                     }
                 } catch {
-                    print("Legacy favorites migration failed or no legacy favorites found: \(error)")
+                    #if DEBUG
+                        print("Legacy favorites migration failed or no legacy favorites found: \(error)")
+                    #endif
                 }
             }
         }
 
-        favoriteIDs = []
+        return []
     }
 
     private func save() {

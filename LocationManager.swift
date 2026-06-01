@@ -6,6 +6,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
     var location: CLLocation?
     var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    private var isStarted = false
 
     override init() {
         super.init()
@@ -19,17 +20,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func startUpdating() {
-        manager.startUpdatingLocation()
+        isStarted = true
+        if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+            manager.startUpdatingLocation()
+        }
     }
 
     func stopUpdating() {
+        isStarted = false
         manager.stopUpdatingLocation()
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
         if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
-            manager.startUpdatingLocation()
+            if isStarted {
+                manager.startUpdatingLocation()
+            }
         } else {
             manager.stopUpdatingLocation()
         }
@@ -41,6 +48,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_: CLLocationManager, didFailWithError error: Error) {
-        print("Location manager failed: \(error.localizedDescription)")
+        #if DEBUG
+            print("Location manager failed: \(error.localizedDescription)")
+        #endif
     }
 }

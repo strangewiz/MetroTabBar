@@ -5,6 +5,7 @@
 //  Created by Justin Cohen on 5/22/26.
 //
 
+import CoreLocation
 @testable import MetroTabBar
 import XCTest
 
@@ -139,5 +140,36 @@ final class MetroTabBarTests: XCTestCase {
 
         XCTAssertEqual(manager.favoriteIDs, ["G03", "F06"])
         XCTAssertFalse(FileManager.default.fileExists(atPath: legacyURL.path))
+    }
+
+    func testStationWebURL() {
+        let station1 = Station(id: "G03", name: "Addison Rd", colorImageName: "b", lat: 0, lon: 0)
+        XCTAssertEqual(station1.webURL, URL(string: "https://www.wmata.com/ridertools/station/addison-rd"))
+
+        let station2 = Station(id: "F03,D03", name: "L'Enfant Plaza", colorImageName: "bogy", lat: 0, lon: 0)
+        XCTAssertEqual(station2.webURL, URL(string: "https://www.wmata.com/ridertools/station/l'enfant-plaza"))
+    }
+
+    func testStationDistance() throws {
+        let addison = Station(id: "G03", name: "Addison Rd", colorImageName: "b", lat: 38.886713, lon: -76.893592)
+        XCTAssertNil(addison.distance(to: nil))
+
+        let exactLocation = CLLocation(latitude: 38.886713, longitude: -76.893592)
+        let distanceToSelf = addison.distance(to: exactLocation)
+        XCTAssertNotNil(distanceToSelf)
+        XCTAssertEqual(try XCTUnwrap(distanceToSelf), 0, accuracy: 0.1)
+
+        let anacostiaLocation = CLLocation(latitude: 38.862073, longitude: -76.995398)
+        let distanceToAnacostia = addison.distance(to: anacostiaLocation)
+        XCTAssertNotNil(distanceToAnacostia)
+        XCTAssertEqual(try XCTUnwrap(distanceToAnacostia), 9245.0, accuracy: 50.0)
+    }
+
+    func testLocationManagerLifecycle() {
+        let locationManager = LocationManager()
+        XCTAssertNil(locationManager.location)
+
+        locationManager.startUpdating()
+        locationManager.stopUpdating()
     }
 }

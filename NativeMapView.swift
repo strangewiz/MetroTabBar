@@ -122,9 +122,7 @@ struct ZoomableMapScrollView: UIViewRepresentable {
                         let stationCodes = station.id.components(separatedBy: ",")
                         return !Set(regionCodes).isDisjoint(with: Set(stationCodes))
                     }) {
-                        DispatchQueue.main.async {
-                            self.parent.selectedStation = station
-                        }
+                        parent.selectedStation = station
                         return
                     }
                 }

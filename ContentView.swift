@@ -82,15 +82,17 @@ struct FavoritesView: View {
         VStack(spacing: 20) {
             Image(systemName: "star.bubble")
                 .font(.system(size: 60))
-                .foregroundColor(.orange)
+                .foregroundStyle(.orange)
+                .accessibilityHidden(true)
 
             Text("No Favorites Yet")
                 .font(.title3)
                 .fontWeight(.bold)
+                .accessibilityAddTraits(.isHeader)
 
             Text("Tap the star icon inside a station's live times, or tap a station on the system map to add it to your favorites.")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
 
@@ -99,13 +101,15 @@ struct FavoritesView: View {
             }) {
                 Text("Browse All Stations")
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
-                    .cornerRadius(10)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.horizontal, 40)
             }
+            .accessibilityLabel("Browse All Stations")
+            .accessibilityHint("Switches to the Stations tab to view all metro stations.")
         }
     }
 }
@@ -186,6 +190,10 @@ struct StationsListView: View {
             }
             .onAppear {
                 locationManager.requestPermission()
+                locationManager.startUpdating()
+            }
+            .onDisappear {
+                locationManager.stopUpdating()
             }
         }
     }
@@ -204,12 +212,16 @@ struct StationRowView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 32, height: 32)
+                .accessibilityHidden(true)
 
             Text(station.name)
                 .font(.body)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
         }
         .padding(.vertical, 4)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(station.name) Station")
+        .accessibilityHint("Shows details and real-time arrivals for \(station.name).")
     }
 }
 
@@ -226,7 +238,7 @@ struct AlphabetIndexSidebar: View {
             ForEach(letters, id: \.self) { letter in
                 Text(letter)
                     .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(dragLetter == letter ? .white : .blue)
+                    .foregroundStyle(dragLetter == letter ? .white : .blue)
                     .frame(width: 16, height: 16)
                     .background(
                         Circle()
@@ -267,5 +279,6 @@ struct AlphabetIndexSidebar: View {
             }
             return nil
         }
+        .accessibilityHidden(true)
     }
 }

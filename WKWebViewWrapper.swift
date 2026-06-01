@@ -131,6 +131,8 @@ struct WKWebViewWrapper: UIViewRepresentable {
         refreshControl.addTarget(context.coordinator, action: #selector(Coordinator.refreshWebView(_:)), for: .valueChanged)
         webView.scrollView.refreshControl = refreshControl
 
+        context.coordinator.webView = webView
+
         return webView
     }
 
@@ -155,6 +157,10 @@ struct WKWebViewWrapper: UIViewRepresentable {
         }
     }
 
+    static func dismantleUIView(_ uiView: WKWebView, coordinator _: Coordinator) {
+        uiView.configuration.userContentController.removeAllScriptMessageHandlers()
+    }
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -163,45 +169,36 @@ struct WKWebViewWrapper: UIViewRepresentable {
         var parent: WKWebViewWrapper
         var lastLoadedURL: URL?
         var lastLoadedLocalHTML = false
+        weak var webView: WKWebView?
 
         init(_ parent: WKWebViewWrapper) {
             self.parent = parent
         }
 
-        @objc func refreshWebView(_ sender: UIRefreshControl) {
-            if let scrollView = sender.superview as? UIScrollView, let webView = scrollView.superview as? WKWebView {
-                webView.reload()
-            }
+        @objc func refreshWebView(_: UIRefreshControl) {
+            webView?.reload()
         }
 
         func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
-            DispatchQueue.main.async {
-                self.parent.isLoading = true
-                self.parent.errorMessage = nil
-            }
+            parent.isLoading = true
+            parent.errorMessage = nil
         }
 
         func webView(_ webView: WKWebView, didFinish _: WKNavigation!) {
-            DispatchQueue.main.async {
-                self.parent.isLoading = false
-                webView.scrollView.refreshControl?.endRefreshing()
-            }
+            parent.isLoading = false
+            webView.scrollView.refreshControl?.endRefreshing()
         }
 
         func webView(_ webView: WKWebView, didFail _: WKNavigation!, withError error: Error) {
-            DispatchQueue.main.async {
-                self.parent.isLoading = false
-                self.parent.errorMessage = error.localizedDescription
-                webView.scrollView.refreshControl?.endRefreshing()
-            }
+            parent.isLoading = false
+            parent.errorMessage = error.localizedDescription
+            webView.scrollView.refreshControl?.endRefreshing()
         }
 
         func webView(_ webView: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
-            DispatchQueue.main.async {
-                self.parent.isLoading = false
-                self.parent.errorMessage = error.localizedDescription
-                webView.scrollView.refreshControl?.endRefreshing()
-            }
+            parent.isLoading = false
+            parent.errorMessage = error.localizedDescription
+            webView.scrollView.refreshControl?.endRefreshing()
         }
 
         func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -221,7 +218,9 @@ struct WKWebViewWrapper: UIViewRepresentable {
 extension WKWebViewWrapper.Coordinator: WKScriptMessageHandler {
     func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "logger" {
-            print("WKWebView [JS LOG]: \(message.body)")
+            #if DEBUG
+                print("WKWebView [JS LOG]: \(message.body)")
+            #endif
         }
     }
 }

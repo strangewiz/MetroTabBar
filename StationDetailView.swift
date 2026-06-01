@@ -13,7 +13,7 @@ struct StationDetailView: View {
                 VStack(spacing: 20) {
                     Image(systemName: "wifi.slash")
                         .font(.system(size: 64))
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
 
                     Text("Connection Failed")
                         .font(.title3)
@@ -21,7 +21,7 @@ struct StationDetailView: View {
 
                     Text(error)
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
 
@@ -32,11 +32,11 @@ struct StationDetailView: View {
                     }) {
                         Label("Try Again", systemImage: "arrow.clockwise")
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.blue)
-                            .cornerRadius(10)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding(.horizontal, 40)
                     }
                 }
@@ -74,7 +74,7 @@ struct StationDetailView: View {
                     }
                 }) {
                     Image(systemName: isFav ? "star.fill" : "star")
-                        .foregroundColor(isFav ? .orange : .gray)
+                        .foregroundStyle(isFav ? .orange : .gray)
                         .imageScale(.large)
                         .scaleEffect(isFav ? 1.2 : 1.0)
                 }
