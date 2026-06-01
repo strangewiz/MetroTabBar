@@ -41,8 +41,6 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     .sidebar__slider-container,
                     .expandable-sidebar__content,
                     .tabs-details {
-                        background: transparent !important;
-                        background-color: transparent !important;
                         border: none !important;
                         box-shadow: none !important;
                         width: 100% !important;
