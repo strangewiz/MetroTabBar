@@ -24,6 +24,7 @@ xcuserdata/
 *.xcworkspace
 !default.xcworkspace
 *.xcscmblueprint
+GEMINI.md
 
 # Swift Package Manager
 .build/
