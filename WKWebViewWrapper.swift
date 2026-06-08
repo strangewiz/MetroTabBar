@@ -30,7 +30,10 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     .rider-tools-map-content-wrapper,
                     .back-button,
                     .sidebar__slider-bar,
-                    .sidebar__slider-spacer {
+                    .sidebar__slider-spacer,
+                    .station-detail-tabs,
+                    .service-nearby-times__update,
+                    .service-nearby-times__line.notranslate {
                         display: none !important;
                     }
 
@@ -67,6 +70,9 @@ struct WKWebViewWrapper: UIViewRepresentable {
                     body {
                         padding: 16px !important;
                         display: block !important;
+                    }
+                    .tabs__content-container {
+                        padding: 5px !important;
                     }
                 `;
                 if (document.documentElement) {
