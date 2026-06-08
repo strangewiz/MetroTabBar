@@ -23,63 +23,41 @@ struct NativeMapView: View {
     }
 }
 
-class PDFMapView: UIView {
-    private let page: PDFPage
-
-    override class var layerClass: AnyClass {
-        return CATiledLayer.self
-    }
-
-    init(frame: CGRect, document: PDFDocument) {
-        guard let firstPage = document.page(at: 0) else {
-            fatalError("Could not load PDF page")
-        }
-        page = firstPage
-        super.init(frame: frame)
-        backgroundColor = .white
-
-        // Configure tiled layer for crisp details on high zooms
-        if let tiledLayer = layer as? CATiledLayer {
-            tiledLayer.levelsOfDetail = 4
-            tiledLayer.levelsOfDetailBias = 4
-            tiledLayer.tileSize = CGSize(width: 512, height: 512)
-        }
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func draw(_: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-
-        context.saveGState()
-
-        // Flip coordinates for Y-up PDF rendering
-        context.translateBy(x: 0, y: bounds.height)
-        context.scaleBy(x: 1.0, y: -1.0)
-
-        // Scale to match the MapRegions coordinate system (2000 x 1718)
-        // PDF points: 1080 x 1312
-        context.scaleBy(x: 1.92, y: 1.92)
-
-        // Translate to the bottom-left of our crop box in Y-up PDF space
-        // tx = 16.6667 pt
-        // ty = 1312.0 (PDF height) - 283.3333 (top crop) - 894.7917 (cropped height) = 133.875 pt
-        context.translateBy(x: -16.6667, y: -133.875)
-
-        if let pageRef = page.pageRef {
-            context.drawPDFPage(pageRef)
-        }
-
-        context.restoreGState()
-    }
-}
-
 struct ZoomableMapScrollView: UIViewRepresentable {
     let viewSize: CGSize
     @Binding var selectedStation: Station?
+
+    func renderPDF(document: PDFDocument, scale: CGFloat = 3.0) -> UIImage? {
+        guard let page = document.page(at: 0), let pageRef = page.pageRef else { return nil }
+
+        let targetSize = CGSize(width: 2000, height: 1718)
+        let pixelWidth = Int(targetSize.width * scale)
+        let pixelHeight = Int(targetSize.height * scale)
+
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0 // Render explicitly at pixel coordinates
+
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: pixelWidth, height: pixelHeight), format: format)
+        return renderer.image { context in
+            let cgContext = context.cgContext
+
+            // Fill background with white
+            cgContext.setFillColor(UIColor.white.cgColor)
+            cgContext.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
+
+            // Flip coordinates for Y-up PDF rendering
+            cgContext.translateBy(x: 0, y: CGFloat(pixelHeight))
+            cgContext.scaleBy(x: 1.0, y: -1.0)
+
+            // Scale to match target size (2000x1718) and resolution multiplier
+            cgContext.scaleBy(x: 1.92 * scale, y: 1.92 * scale)
+
+            // Translate to the bottom-left of the crop box in PDF points
+            cgContext.translateBy(x: -16.6667, y: -133.875)
+
+            cgContext.drawPDFPage(pageRef)
+        }
+    }
 
     func makeUIView(context: Context) -> UIScrollView {
         let scrollView = UIScrollView()
@@ -92,17 +70,21 @@ struct ZoomableMapScrollView: UIViewRepresentable {
         let pdfURL = Bundle.main.url(forResource: "system-map-rail", withExtension: "pdf")
         if let url = pdfURL, let document = PDFDocument(url: url) {
             let size = CGSize(width: 2000, height: 1718)
-            let mapView = PDFMapView(frame: CGRect(origin: .zero, size: size), document: document)
-            mapView.accessibilityIdentifier = "dc_metro_silver.png"
-            mapView.accessibilityTraits = .image
-            mapView.isUserInteractionEnabled = true
 
-            let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap(_:)))
-            mapView.addGestureRecognizer(tapGesture)
+            // Render the PDF to a high-res image (3x scale) in memory
+            if let image = renderPDF(document: document, scale: 3.0) {
+                let imageView = UIImageView(image: image)
+                imageView.frame = CGRect(origin: .zero, size: size)
+                imageView.accessibilityIdentifier = "dc_metro_silver.png"
+                imageView.isUserInteractionEnabled = true
 
-            scrollView.addSubview(mapView)
-            scrollView.contentSize = size
-            context.coordinator.mapView = mapView
+                let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap(_:)))
+                imageView.addGestureRecognizer(tapGesture)
+
+                scrollView.addSubview(imageView)
+                scrollView.contentSize = size
+                context.coordinator.imageView = imageView
+            }
         }
 
         return scrollView
@@ -110,7 +92,7 @@ struct ZoomableMapScrollView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UIScrollView, context: Context) {
         context.coordinator.parent = self
-        guard context.coordinator.mapView != nil else { return }
+        guard context.coordinator.imageView != nil else { return }
 
         let contentSize = CGSize(width: 2000, height: 1718)
 
@@ -145,7 +127,7 @@ struct ZoomableMapScrollView: UIViewRepresentable {
 
     class Coordinator: NSObject, UIScrollViewDelegate {
         var parent: ZoomableMapScrollView
-        weak var mapView: PDFMapView?
+        weak var imageView: UIImageView?
         var lastHeight: CGFloat = 0
 
         init(_ parent: ZoomableMapScrollView) {
@@ -153,24 +135,24 @@ struct ZoomableMapScrollView: UIViewRepresentable {
         }
 
         func viewForZooming(in _: UIScrollView) -> UIView? {
-            return mapView
+            return imageView
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
-            guard let mapView = mapView else { return }
+            guard let imageView = imageView else { return }
             // Keeps the image perfectly centered if zoomed out smaller than the scroll view
             let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) * 0.5, 0)
             let offsetY = max((scrollView.bounds.height - scrollView.contentSize.height) * 0.5, 0)
-            mapView.center = CGPoint(
+            imageView.center = CGPoint(
                 x: scrollView.contentSize.width * 0.5 + offsetX,
                 y: scrollView.contentSize.height * 0.5 + offsetY
             )
         }
 
         @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-            guard let mapView = mapView else { return }
+            guard let imageView = imageView else { return }
             // Tap coordinates in the 2000x1718 coordinate space!
-            let location = gesture.location(in: mapView)
+            let location = gesture.location(in: imageView)
 
             for region in MapRegions.all {
                 if region.path.contains(location) {
