@@ -77,52 +77,50 @@ struct StationDetailView: View {
         .navigationTitle(station.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                HStack(spacing: 16) {
-                    // Live Activity Tracking Button
-                    if activityManager.isTracking && activityManager.trackingStation == station {
-                        Button(action: {
-                            activityManager.stopTracking()
-                        }) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                // Live Activity Tracking Button
+                if activityManager.isTracking && activityManager.trackingStation == station {
+                    Button(action: {
+                        activityManager.stopTracking()
+                    }) {
+                        Image(systemName: "timer")
+                            .foregroundStyle(.orange)
+                            .imageScale(.large)
+                    }
+                    .accessibilityLabel("Stop Tracking Train")
+                } else {
+                    if !trackingOptions.isEmpty {
+                        Menu {
+                            ForEach(trackingOptions) { option in
+                                Button(action: {
+                                    activityManager.startTracking(station: station, lines: option.lines, directionGroup: option.directionGroup)
+                                }) {
+                                    Text(option.label)
+                                }
+                            }
+                        } label: {
                             Image(systemName: "timer")
-                                .foregroundStyle(.orange)
+                                .foregroundStyle(.blue)
                                 .imageScale(.large)
                         }
-                        .accessibilityLabel("Stop Tracking Train")
-                    } else {
-                        if !trackingOptions.isEmpty {
-                            Menu {
-                                ForEach(trackingOptions) { option in
-                                    Button(action: {
-                                        activityManager.startTracking(station: station, lines: option.lines, directionGroup: option.directionGroup)
-                                    }) {
-                                        Text(option.label)
-                                    }
-                                }
-                            } label: {
-                                Image(systemName: "timer")
-                                    .foregroundStyle(.blue)
-                                    .imageScale(.large)
-                            }
-                            .accessibilityLabel("Track Train Arrivals")
-                        }
+                        .accessibilityLabel("Track Train Arrivals")
                     }
-
-                    // Favorite Button
-                    let isFav = favoritesManager.isFavorite(station)
-                    Button(action: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                            favoritesManager.toggleFavorite(station)
-                        }
-                    }) {
-                        Image(systemName: isFav ? "star.fill" : "star")
-                            .foregroundStyle(isFav ? .orange : .gray)
-                            .imageScale(.large)
-                            .scaleEffect(isFav ? 1.2 : 1.0)
-                    }
-                    .accessibilityIdentifier("favorite_button")
-                    .accessibilityLabel(isFav ? "Remove from Favorites" : "Add to Favorites")
                 }
+
+                // Favorite Button
+                let isFav = favoritesManager.isFavorite(station)
+                Button(action: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                        favoritesManager.toggleFavorite(station)
+                    }
+                }) {
+                    Image(systemName: isFav ? "star.fill" : "star")
+                        .foregroundStyle(isFav ? .orange : .gray)
+                        .imageScale(.large)
+                        .scaleEffect(isFav ? 1.2 : 1.0)
+                }
+                .accessibilityIdentifier("favorite_button")
+                .accessibilityLabel(isFav ? "Remove from Favorites" : "Add to Favorites")
             }
         }
         .onAppear {
