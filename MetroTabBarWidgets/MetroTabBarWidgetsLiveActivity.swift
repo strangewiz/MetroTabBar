@@ -8,7 +8,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TrainTrackingAttributes.self) { context in
             // Lock screen/banner UI
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 6) {
                 // Header Row
                 HStack {
                     Text("🚇 \(context.attributes.stationName)")
@@ -35,7 +35,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                 Divider()
 
                 // Arrivals Info
-                VStack(spacing: 8) {
+                VStack(spacing: 4) {
                     // Next Train
                     HStack {
                         Image(systemName: "train.side.front.car")
@@ -151,6 +151,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                             .fontWeight(.semibold)
                     }
                     .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
                     .tint(.secondary.opacity(0.2))
                     .foregroundStyle(.primary)
 
@@ -161,11 +162,13 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                             .fontWeight(.bold)
                     }
                     .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
                     .tint(.blue)
                     .foregroundStyle(.white)
                 }
             }
-            .padding(16)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
             .activityBackgroundTint(Color(.systemBackground).opacity(0.8))
             .activitySystemActionForegroundColor(Color.primary)
 
@@ -173,94 +176,67 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
             DynamicIsland {
                 // Expanded UI
                 DynamicIslandExpandedRegion(.leading) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Image(systemName: "train.side.front.car")
-                            .font(.title2)
-                            .foregroundStyle(.orange)
-                    }
+                    Image(systemName: "train.side.front.car")
+                        .font(.title2)
+                        .foregroundStyle(lineColor(for: context.state.nextTrainLineCode))
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack(alignment: .trailing, spacing: 4) {
-                        Text(context.state.nextTrainTime)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.orange)
+                    Text(context.state.nextTrainTime)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.orange)
+                }
+
+                DynamicIslandExpandedRegion(.center) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(context.attributes.stationName)
+                            .font(.headline)
+                            .lineLimit(1)
+                        Text("Next: \(context.state.nextTrainDestination)")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
                     }
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(context.attributes.stationName)
-                            .font(.headline)
-                            .foregroundStyle(.primary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        if !context.state.followingTrainDestination.isEmpty && context.state.followingTrainDestination != "No Train" {
+                            HStack(spacing: 6) {
+                                if !context.state.followingTrainLineCode.isEmpty {
+                                    Text(context.state.followingTrainLineCode)
+                                        .font(.caption2)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(.white)
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 2)
+                                        .background(lineColor(for: context.state.followingTrainLineCode))
+                                        .clipShape(Capsule())
+                                }
 
-                        HStack(spacing: 6) {
-                            if !context.state.nextTrainLineCode.isEmpty {
-                                Text(context.state.nextTrainLineCode)
-                                    .font(.caption2)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(.white)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(lineColor(for: context.state.nextTrainLineCode))
-                                    .clipShape(Capsule())
+                                Text("Then: \(context.state.followingTrainDestination) (\(context.state.followingTrainTime))")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
                             }
+                        }
 
-                            Text("Next: \(context.state.nextTrainDestination)")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-
-                            Spacer()
-
+                        HStack(spacing: 8) {
                             if let status = context.state.statusMessage {
                                 Text(status)
                                     .font(.caption2)
                                     .foregroundStyle(.tertiary)
                             }
-                        }
 
-                        HStack(spacing: 6) {
-                            if !context.state.followingTrainLineCode.isEmpty {
-                                Text(context.state.followingTrainLineCode)
-                                    .font(.caption2)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(.white)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(lineColor(for: context.state.followingTrainLineCode))
-                                    .clipShape(Capsule())
-                            }
+                            Spacer()
 
-                            Text("Then: \(context.state.followingTrainDestination) (\(context.state.followingTrainTime))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-
-                        HStack(spacing: 6) {
-                            if !context.state.thirdTrainLineCode.isEmpty {
-                                Text(context.state.thirdTrainLineCode)
-                                    .font(.caption2)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(.white)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(lineColor(for: context.state.thirdTrainLineCode))
-                                    .clipShape(Capsule())
-                            }
-
-                            Text("Then: \(context.state.thirdTrainDestination) (\(context.state.thirdTrainTime))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-
-                        HStack(spacing: 8) {
                             Button(intent: MissedTrainIntent()) {
                                 Text("Missed It")
                                     .font(.caption)
                                     .fontWeight(.semibold)
                             }
                             .buttonStyle(.bordered)
+                            .controlSize(.small)
                             .tint(.secondary)
 
                             Button(intent: BoardedTrainIntent()) {
@@ -269,29 +245,32 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                                     .fontWeight(.bold)
                             }
                             .buttonStyle(.borderedProminent)
+                            .controlSize(.small)
                             .tint(.blue)
                         }
                     }
                 }
             } compactLeading: {
-                HStack(spacing: 2) {
+                HStack(spacing: 4) {
                     Image(systemName: "train.side.front.car")
                         .font(.caption2)
-                        .foregroundStyle(.orange)
-                    Text(context.attributes.targetLines.joined(separator: "/"))
+                        .foregroundStyle(lineColor(for: context.state.nextTrainLineCode))
+                    Text(compactLeadingText(context: context))
                         .font(.caption2)
                         .fontWeight(.bold)
                 }
             } compactTrailing: {
-                Text(context.state.nextTrainTime)
+                Text(compactTrailingText(context: context))
                     .font(.caption2)
                     .fontWeight(.bold)
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(.secondary)
             } minimal: {
-                Text(context.state.nextTrainTime.replacingOccurrences(of: " min", with: "m"))
+                let t1 = cleanMin(context.state.nextTrainTime)
+                let suffix = (t1 == "ARR" || t1 == "BRD") ? "" : "m"
+                Text(t1.isEmpty ? "--" : "\(t1)\(suffix)")
                     .font(.caption2)
                     .fontWeight(.bold)
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(lineColor(for: context.state.nextTrainLineCode))
             }
             .widgetURL(URL(string: "metroapp://track"))
             .keylineTint(Color.orange)
@@ -308,5 +287,32 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
         case "SV": return .gray
         default: return .primary
         }
+    }
+
+    private func compactLeadingText(context: ActivityViewContext<TrainTrackingAttributes>) -> String {
+        let t1 = cleanMin(context.state.nextTrainTime)
+        if t1.isEmpty { return "--" }
+        let prefix = context.attributes.targetLines.count > 1 && !context.state.nextTrainLineCode.isEmpty ? "\(context.state.nextTrainLineCode):" : ""
+        let suffix = (t1 == "ARR" || t1 == "BRD") ? "" : "m"
+        return "\(prefix)\(t1)\(suffix)"
+    }
+
+    private func compactTrailingText(context: ActivityViewContext<TrainTrackingAttributes>) -> String {
+        let t2 = cleanMin(context.state.followingTrainTime)
+        if t2.isEmpty { return "" }
+        let prefix = context.attributes.targetLines.count > 1 && !context.state.followingTrainLineCode.isEmpty ? "\(context.state.followingTrainLineCode):" : ""
+        let suffix = (t2 == "ARR" || t2 == "BRD") ? "" : "m"
+        return "\(prefix)\(t2)\(suffix)"
+    }
+
+    private func cleanMin(_ val: String) -> String {
+        let cleaned = val.lowercased()
+            .replacingOccurrences(of: " min", with: "")
+            .replacingOccurrences(of: " mins", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        if cleaned.isEmpty || cleaned == "--" || cleaned.contains("error") || cleaned.contains("no") {
+            return ""
+        }
+        return cleaned.uppercased()
     }
 }
