@@ -21,10 +21,24 @@
 		50AB100725881AA80029399C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000725881AA80029399C /* LocationManager.swift */; };
 		50AB100825881AA80029399C /* NativeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000825881AA80029399C /* NativeMapView.swift */; };
 		50AB100925881AA80029399C /* MapRegions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000925881AA80029399C /* MapRegions.swift */; };
+		50AB100A25881AA80029399A /* MetroTabBarWidgets/LiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000A25881AA80029399A /* MetroTabBarWidgets/LiveActivityAttributes.swift */; };
+		50AB100B25881AA80029399B /* WMATAClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000B25881AA80029399B /* WMATAClient.swift */; };
+		50AB100C25881AA80029399C /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000C25881AA80029399C /* LiveActivityManager.swift */; };
+		50AB100D25881AA80029399D /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB000D25881AA80029399D /* Secrets.swift */; };
 		50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D10EF617DD0C8900D7E34B /* Images.xcassets */; };
+		933BD3152FD6D60E0090E4C2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933BD3142FD6D60E0090E4C2 /* WidgetKit.framework */; };
+		933BD3172FD6D60E0090E4C2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933BD3162FD6D60E0090E4C2 /* SwiftUI.framework */; };
+		933BD3282FD6D6100090E4C2 /* MetroTabBarWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 933BD3132FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		933BD3262FD6D6100090E4C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 933BD3122FD6D60E0090E4C2;
+			remoteInfo = MetroTabBarWidgetsExtension;
+		};
 		935E0CBD2FC1101E00AAFBA0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -40,6 +54,20 @@
 			remoteInfo = MetroTabBar;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		933BD32D2FD6D6100090E4C2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				933BD3282FD6D6100090E4C2 /* MetroTabBarWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -57,13 +85,31 @@
 		50AB000725881AA80029399C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		50AB000825881AA80029399C /* NativeMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeMapView.swift; sourceTree = "<group>"; };
 		50AB000925881AA80029399C /* MapRegions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapRegions.swift; sourceTree = "<group>"; };
+		50AB000A25881AA80029399A /* MetroTabBarWidgets/LiveActivityAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetroTabBarWidgets/LiveActivityAttributes.swift; sourceTree = "<group>"; };
+		50AB000B25881AA80029399B /* WMATAClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMATAClient.swift; sourceTree = "<group>"; };
+		50AB000C25881AA80029399C /* LiveActivityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		50AB000D25881AA80029399D /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		50D10EF617DD0C8900D7E34B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MetroTabBar/Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		933BD3132FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MetroTabBarWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		933BD3142FD6D60E0090E4C2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		933BD3162FD6D60E0090E4C2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		935E0CB92FC1101E00AAFBA0 /* MetroTabBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetroTabBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		935E0CC62FC1103600AAFBA0 /* MetroTabBarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetroTabBarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		933BD3292FD6D6100090E4C2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 933BD3122FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		933BD3182FD6D60E0090E4C2 /* MetroTabBarWidgets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (933BD3292FD6D6100090E4C2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MetroTabBarWidgets; sourceTree = "<group>"; };
 		935E0CBA2FC1101E00AAFBA0 /* MetroTabBarTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MetroTabBarTests; sourceTree = "<group>"; };
 		935E0CC72FC1103600AAFBA0 /* MetroTabBarUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MetroTabBarUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,6 +122,15 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933BD3102FD6D60E0090E4C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				933BD3172FD6D60E0090E4C2 /* SwiftUI.framework in Frameworks */,
+				933BD3152FD6D60E0090E4C2 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +157,7 @@
 				1D6058910D05DD3D006BFB54 /* MetroTabBar.app */,
 				935E0CB92FC1101E00AAFBA0 /* MetroTabBarTests.xctest */,
 				935E0CC62FC1103600AAFBA0 /* MetroTabBarUITests.xctest */,
+				933BD3132FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +168,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				935E0CBA2FC1101E00AAFBA0 /* MetroTabBarTests */,
 				935E0CC72FC1103600AAFBA0 /* MetroTabBarUITests */,
+				933BD3182FD6D60E0090E4C2 /* MetroTabBarWidgets */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				50AB000125881AA80029399C /* Station.swift */,
@@ -123,6 +180,10 @@
 				50AB000725881AA80029399C /* LocationManager.swift */,
 				50AB000825881AA80029399C /* NativeMapView.swift */,
 				50AB000925881AA80029399C /* MapRegions.swift */,
+				50AB000A25881AA80029399A /* MetroTabBarWidgets/LiveActivityAttributes.swift */,
+				50AB000B25881AA80029399B /* WMATAClient.swift */,
+				50AB000C25881AA80029399C /* LiveActivityManager.swift */,
+				50AB000D25881AA80029399D /* Secrets.swift */,
 			);
 			name = MetroTabBar;
 			sourceTree = "<group>";
@@ -144,6 +205,8 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
+				933BD3142FD6D60E0090E4C2 /* WidgetKit.framework */,
+				933BD3162FD6D60E0090E4C2 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,15 +221,39 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				933BD32D2FD6D6100090E4C2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				933BD3272FD6D6100090E4C2 /* PBXTargetDependency */,
 			);
 			name = MetroTabBar;
 			productName = MetroTabBar;
 			productReference = 1D6058910D05DD3D006BFB54 /* MetroTabBar.app */;
 			productType = "com.apple.product-type.application";
+		};
+		933BD3122FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 933BD32A2FD6D6100090E4C2 /* Build configuration list for PBXNativeTarget "MetroTabBarWidgetsExtension" */;
+			buildPhases = (
+				933BD30F2FD6D60E0090E4C2 /* Sources */,
+				933BD3102FD6D60E0090E4C2 /* Frameworks */,
+				933BD3112FD6D60E0090E4C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				933BD3182FD6D60E0090E4C2 /* MetroTabBarWidgets */,
+			);
+			name = MetroTabBarWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = MetroTabBarWidgetsExtension;
+			productReference = 933BD3132FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		935E0CB82FC1101E00AAFBA0 /* MetroTabBarTests */ = {
 			isa = PBXNativeTarget;
@@ -223,6 +310,9 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					933BD3122FD6D60E0090E4C2 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
 					935E0CB82FC1101E00AAFBA0 = {
 						CreatedOnToolsVersion = 26.1.1;
 						TestTargetID = 1D6058900D05DD3D006BFB54;
@@ -249,6 +339,7 @@
 				1D6058900D05DD3D006BFB54 /* MetroTabBar */,
 				935E0CB82FC1101E00AAFBA0 /* MetroTabBarTests */,
 				935E0CC52FC1103600AAFBA0 /* MetroTabBarUITests */,
+				933BD3122FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -261,6 +352,13 @@
 				50D10EF717DD0C8900D7E34B /* Images.xcassets in Resources */,
 				506F917119780FC700242E91 /* dc_metro_silver.png in Resources */,
 				506F917319780FC700242E93 /* system-map-rail.pdf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933BD3112FD6D60E0090E4C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +392,17 @@
 				50AB100725881AA80029399C /* LocationManager.swift in Sources */,
 				50AB100825881AA80029399C /* NativeMapView.swift in Sources */,
 				50AB100925881AA80029399C /* MapRegions.swift in Sources */,
+				50AB100A25881AA80029399A /* MetroTabBarWidgets/LiveActivityAttributes.swift in Sources */,
+				50AB100B25881AA80029399B /* WMATAClient.swift in Sources */,
+				50AB100C25881AA80029399C /* LiveActivityManager.swift in Sources */,
+				50AB100D25881AA80029399D /* Secrets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933BD30F2FD6D60E0090E4C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +423,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		933BD3272FD6D6100090E4C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 933BD3122FD6D60E0090E4C2 /* MetroTabBarWidgetsExtension */;
+			targetProxy = 933BD3262FD6D6100090E4C2 /* PBXContainerItemProxy */;
+		};
 		935E0CBE2FC1101E00AAFBA0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1D6058900D05DD3D006BFB54 /* MetroTabBar */;
@@ -371,6 +485,141 @@
 				PRODUCT_NAME = MetroTabBar;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		933BD32B2FD6D6100090E4C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 49WDPW523Y;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MetroTabBarWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MetroTabBarWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.debug.MetroTabBarWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		933BD32C2FD6D6100090E4C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 49WDPW523Y;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MetroTabBarWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MetroTabBarWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.MetroTabBarWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -667,6 +916,15 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		933BD32A2FD6D6100090E4C2 /* Build configuration list for PBXNativeTarget "MetroTabBarWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				933BD32B2FD6D6100090E4C2 /* Debug */,
+				933BD32C2FD6D6100090E4C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

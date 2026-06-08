@@ -490,7 +490,7 @@ enum MapRegions {
             p.addRect(CGRect(x: 969, y: 1407, width: 196, height: 30))
         }),
         // Potomac Yard
-        MapRegion(id: "C122", path: Path { p in
+        MapRegion(id: "C11", path: Path { p in
             p.addRect(CGRect(x: 969, y: 1377, width: 206, height: 25))
         }),
         // King St-Old Town

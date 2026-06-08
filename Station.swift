@@ -26,6 +26,22 @@ struct Station: Identifiable, Hashable {
         return stationLoc.distance(from: location)
     }
 
+    var lineCodes: [String] {
+        var codes: [String] = []
+        for char in colorImageName {
+            switch char {
+            case "r": codes.append("RD")
+            case "o": codes.append("OR")
+            case "s": codes.append("SV")
+            case "b": codes.append("BL")
+            case "g": codes.append("GR")
+            case "y": codes.append("YL")
+            default: break
+            }
+        }
+        return codes
+    }
+
     /// Explicit Hashable & Equatable based only on the unique id
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -45,20 +61,20 @@ struct Station: Identifiable, Hashable {
         Station(id: "G01", name: "Benning Rd", colorImageName: "sb", lat: 38.890488, lon: -76.938291),
         Station(id: "A09", name: "Bethesda", colorImageName: "r", lat: 38.984282, lon: -77.094431),
         Station(id: "C12", name: "Braddock Rd", colorImageName: "by", lat: 38.814577, lon: -77.053733),
-        Station(id: "C122", name: "Potomac Yard", colorImageName: "by", lat: 38.83335, lon: -77.04635),
+        Station(id: "C11", name: "Potomac Yard", colorImageName: "by", lat: 38.83335, lon: -77.04635),
         Station(id: "F11", name: "Branch Av", colorImageName: "g", lat: 38.826995, lon: -76.912134),
         Station(id: "B05", name: "Brookland-CUA", colorImageName: "r", lat: 38.933234, lon: -76.994544),
         Station(id: "G02", name: "Capitol Heights", colorImageName: "sb", lat: 38.889757, lon: -76.913382),
         Station(id: "D05", name: "Capitol South", colorImageName: "bo", lat: 38.885062, lon: -77.005934),
-        Station(id: "D11", name: "Cheverly", colorImageName: "o", lat: 38.91652, lon: -76.915427),
+        Station(id: "D11", name: "Cheverly", colorImageName: "os", lat: 38.91652, lon: -76.915427),
         Station(id: "K02", name: "Clarendon", colorImageName: "os", lat: 38.886373, lon: -77.094953),
         Station(id: "A05", name: "Cleveland Park", colorImageName: "r", lat: 38.934703, lon: -77.058226),
-        Station(id: "E09", name: "College Park-U of MD", colorImageName: "g", lat: 38.978523, lon: -76.928432),
+        Station(id: "E09", name: "College Park-U of MD", colorImageName: "gy", lat: 38.978523, lon: -76.928432),
         Station(id: "E04", name: "Columbia Heights", colorImageName: "gy", lat: 38.927826, lon: -77.032536),
         Station(id: "F07", name: "Congress Heights", colorImageName: "g", lat: 38.845334, lon: -76.98817),
         Station(id: "K01", name: "Court House", colorImageName: "os", lat: 38.89063, lon: -77.084803),
         Station(id: "C09", name: "Crystal City", colorImageName: "by", lat: 38.85779, lon: -77.050589),
-        Station(id: "D10", name: "Deanwood", colorImageName: "o", lat: 38.907734, lon: -76.936177),
+        Station(id: "D10", name: "Deanwood", colorImageName: "os", lat: 38.907734, lon: -76.936177),
         Station(id: "K07", name: "Dunn Loring", colorImageName: "o", lat: 38.883015, lon: -77.228939),
         Station(id: "A03", name: "Dupont Circle", colorImageName: "r", lat: 38.909499, lon: -77.04362),
         Station(id: "K05", name: "East Falls Church", colorImageName: "os", lat: 38.885841, lon: -77.157177),
@@ -76,7 +92,7 @@ struct Station: Identifiable, Hashable {
         Station(id: "B01,F01", name: "Gallery Place", colorImageName: "gyr", lat: 38.89834, lon: -77.021851),
         Station(id: "E05", name: "Georgia Av Petworth", colorImageName: "gy", lat: 38.936077, lon: -77.024728),
         Station(id: "B11", name: "Glenmont", colorImageName: "r", lat: 39.061713, lon: -77.05341),
-        Station(id: "E10", name: "Greenbelt", colorImageName: "g", lat: 39.011036, lon: -76.911362),
+        Station(id: "E10", name: "Greenbelt", colorImageName: "gy", lat: 39.011036, lon: -76.911362),
         Station(id: "N03", name: "Greensboro", colorImageName: "s", lat: 38.919749, lon: -77.235192),
         Station(id: "A11", name: "Grosvenor-Strathmore", colorImageName: "r", lat: 39.029158, lon: -77.10415),
         Station(id: "N08", name: "Herndon", colorImageName: "s", lat: 38.952821, lon: -77.385178),
@@ -85,14 +101,14 @@ struct Station: Identifiable, Hashable {
         Station(id: "B02", name: "Judiciary Sq", colorImageName: "r", lat: 38.896084, lon: -77.016643),
         Station(id: "C13", name: "King St-Old Town", colorImageName: "by", lat: 38.806474, lon: -77.061115),
         Station(id: "F03,D03", name: "L'Enfant Plaza", colorImageName: "bogys", lat: 38.884775, lon: -77.021964),
-        Station(id: "D12", name: "Landover", colorImageName: "o", lat: 38.934411, lon: -76.890988),
+        Station(id: "D12", name: "Landover", colorImageName: "os", lat: 38.934411, lon: -76.890988),
         Station(id: "G05", name: "Downtown Largo", colorImageName: "sb", lat: 38.9008, lon: -76.8449),
         Station(id: "N11", name: "Loudoun Gateway", colorImageName: "s", lat: 38.99204, lon: -77.460685),
         Station(id: "N01", name: "McLean", colorImageName: "s", lat: 38.924478, lon: -77.210167),
         Station(id: "C02", name: "McPherson Sq", colorImageName: "osb", lat: 38.901316, lon: -77.033652),
         Station(id: "A10", name: "Medical Center", colorImageName: "r", lat: 38.999947, lon: -77.097253),
         Station(id: "C01,A01", name: "Metro Center", colorImageName: "bors", lat: 38.898303, lon: -77.028099),
-        Station(id: "D09", name: "Minnesota Av", colorImageName: "o", lat: 38.898284, lon: -76.948042),
+        Station(id: "D09", name: "Minnesota Av", colorImageName: "os", lat: 38.898284, lon: -76.948042),
         Station(id: "G04", name: "Morgan Blvd", colorImageName: "sb", lat: 38.8913, lon: -76.8682),
         Station(id: "E01", name: "Mt Vernon Sq", colorImageName: "gy", lat: 38.905604, lon: -77.022256),
         Station(id: "F05", name: "Navy Yard-Ballpark", colorImageName: "g", lat: 38.876588, lon: -77.005086),
@@ -102,7 +118,7 @@ struct Station: Identifiable, Hashable {
         Station(id: "C07", name: "Pentagon", colorImageName: "by", lat: 38.869349, lon: -77.054013),
         Station(id: "C08", name: "Pentagon City", colorImageName: "by", lat: 38.863045, lon: -77.059507),
         Station(id: "D07", name: "Potomac Av", colorImageName: "osb", lat: 38.880841, lon: -76.985721),
-        Station(id: "E08", name: "Hyattsville Crossing", colorImageName: "g", lat: 38.965276, lon: -76.956182),
+        Station(id: "E08", name: "Hyattsville Crossing", colorImageName: "gy", lat: 38.965276, lon: -76.956182),
         Station(id: "N07", name: "Reston Town Center", colorImageName: "s", lat: 38.952768, lon: -77.360185),
         Station(id: "B04", name: "Rhode Island Av", colorImageName: "r", lat: 38.920741, lon: -76.995984),
         Station(id: "A14", name: "Rockville", colorImageName: "r", lat: 39.084215, lon: -77.146424),
@@ -129,7 +145,7 @@ struct Station: Identifiable, Hashable {
         Station(id: "N10", name: "Washington Dulles International Airport", colorImageName: "s", lat: 38.955784, lon: -77.448148),
         Station(id: "F04", name: "Waterfront", colorImageName: "g", lat: 38.876221, lon: -77.017491),
         Station(id: "K06", name: "West Falls Church", colorImageName: "o", lat: 38.90067, lon: -77.189394),
-        Station(id: "E07", name: "West Hyattsville", colorImageName: "g", lat: 38.954931, lon: -76.969881),
+        Station(id: "E07", name: "West Hyattsville", colorImageName: "gy", lat: 38.954931, lon: -76.969881),
         Station(id: "B10", name: "Wheaton", colorImageName: "r", lat: 39.038558, lon: -77.051098),
         Station(id: "A12", name: "North Bethesda", colorImageName: "r", lat: 39.048043, lon: -77.113131),
         Station(id: "N06", name: "Wiehle-Reston East", colorImageName: "s", lat: 38.947753, lon: -77.340179),

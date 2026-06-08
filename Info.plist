@@ -40,5 +40,13 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>DC Metro needs your location to show the closest stations to you.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>DC Metro needs your location in the background to update train arrival countdowns while walking.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 </dict>
 </plist>
