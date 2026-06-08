@@ -44,3 +44,8 @@ Pods/
 # Secrets Configuration
 Secrets.swift
 
+# Private Documentation / Artifacts
+walkthrough.md
+implementation_plan.md
+code_review_analysis.md
+
