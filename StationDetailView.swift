@@ -136,47 +136,58 @@ struct StationDetailView: View {
     private func loadTrackingOptions() {
         Task {
             do {
-                let predictions = try await WMATAClient.shared.fetchPredictions(for: station.id)
+                let subCodes = station.id.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                var options: [TrackingOption] = []
 
-                // Group by group ("1" or "2")
-                var group1Destinations = Set<String>()
-                var group1Lines = Set<String>()
-                var group2Destinations = Set<String>()
-                var group2Lines = Set<String>()
+                for subCode in subCodes {
+                    guard !subCode.isEmpty else { continue }
+                    let predictions = try await WMATAClient.shared.fetchPredictions(for: subCode)
 
-                for p in predictions {
-                    if p.group == "1" {
-                        group1Destinations.insert(p.destination)
-                        group1Lines.insert(p.line)
-                    } else if p.group == "2" {
-                        group2Destinations.insert(p.destination)
-                        group2Lines.insert(p.line)
+                    // Group by group ("1" or "2")
+                    var group1Destinations = Set<String>()
+                    var group1Lines = Set<String>()
+                    var group2Destinations = Set<String>()
+                    var group2Lines = Set<String>()
+
+                    for p in predictions {
+                        if p.group == "1" {
+                            group1Destinations.insert(p.destination)
+                            group1Lines.insert(p.line)
+                        } else if p.group == "2" {
+                            group2Destinations.insert(p.destination)
+                            group2Lines.insert(p.line)
+                        }
+                    }
+
+                    // If no predictions were found for this subcode, use fallback lines derived from station lines
+                    let subCodeLines = group1Lines.union(group2Lines)
+                    let activeLines = subCodeLines.isEmpty ? Set(station.lineCodes) : subCodeLines
+                    let linePrefix = lineGroupName(for: activeLines)
+
+                    if !group1Destinations.isEmpty {
+                        let destList = Array(group1Destinations).sorted().joined(separator: " / ")
+                        options.append(TrackingOption(
+                            directionGroup: "1",
+                            label: "\(linePrefix): Towards \(destList)",
+                            lines: Array(group1Lines)
+                        ))
+                    }
+
+                    if !group2Destinations.isEmpty {
+                        let destList = Array(group2Destinations).sorted().joined(separator: " / ")
+                        options.append(TrackingOption(
+                            directionGroup: "2",
+                            label: "\(linePrefix): Towards \(destList)",
+                            lines: Array(group2Lines)
+                        ))
                     }
                 }
 
-                var options: [TrackingOption] = []
-
-                if !group1Destinations.isEmpty {
-                    let destList = Array(group1Destinations).sorted().joined(separator: " / ")
-                    options.append(TrackingOption(
-                        directionGroup: "1",
-                        label: "Towards \(destList)",
-                        lines: Array(group1Lines)
-                    ))
-                }
-
-                if !group2Destinations.isEmpty {
-                    let destList = Array(group2Destinations).sorted().joined(separator: " / ")
-                    options.append(TrackingOption(
-                        directionGroup: "2",
-                        label: "Towards \(destList)",
-                        lines: Array(group2Lines)
-                    ))
-                }
-
-                // If the API returns no predictions (e.g. late night), build fallbacks
+                // If no options were resolved (e.g. late night), build fallback configurations
                 if options.isEmpty {
-                    buildFallbackOptions()
+                    await MainActor.run {
+                        buildFallbackOptions()
+                    }
                 } else {
                     await MainActor.run {
                         self.trackingOptions = options
@@ -190,13 +201,52 @@ struct StationDetailView: View {
         }
     }
 
-    private func buildFallbackOptions() {
-        let lines = station.lineCodes
-        if !lines.isEmpty {
-            trackingOptions = [
-                TrackingOption(directionGroup: "1", label: "Track Westbound/Northbound", lines: lines),
-                TrackingOption(directionGroup: "2", label: "Track Eastbound/Southbound", lines: lines),
-            ]
+    private func lineGroupName(for lines: Set<String>) -> String {
+        let sortedLines = Array(lines).sorted()
+        let names = sortedLines.map { code -> String in
+            switch code.uppercased() {
+            case "RD": return "Red"
+            case "OR": return "Orange"
+            case "YL": return "Yellow"
+            case "GR": return "Green"
+            case "BL": return "Blue"
+            case "SV": return "Silver"
+            default: return code
+            }
         }
+        return names.joined(separator: "/")
+    }
+
+    private func buildFallbackOptions() {
+        let subCodes = station.id.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+        var options: [TrackingOption] = []
+
+        for subCode in subCodes {
+            let lines: [String]
+            if subCode == "A01" || subCode.hasPrefix("A") || subCode.hasPrefix("B") {
+                lines = ["RD"]
+            } else {
+                lines = station.lineCodes.filter { $0 != "RD" }
+            }
+
+            if !lines.isEmpty {
+                let linePrefix = lineGroupName(for: Set(lines))
+                options.append(TrackingOption(directionGroup: "1", label: "\(linePrefix): Direction 1", lines: lines))
+                options.append(TrackingOption(directionGroup: "2", label: "\(linePrefix): Direction 2", lines: lines))
+            }
+        }
+
+        if options.isEmpty {
+            let lines = station.lineCodes
+            if !lines.isEmpty {
+                let linePrefix = lineGroupName(for: Set(lines))
+                options = [
+                    TrackingOption(directionGroup: "1", label: "\(linePrefix): Direction 1", lines: lines),
+                    TrackingOption(directionGroup: "2", label: "\(linePrefix): Direction 2", lines: lines),
+                ]
+            }
+        }
+
+        trackingOptions = options
     }
 }

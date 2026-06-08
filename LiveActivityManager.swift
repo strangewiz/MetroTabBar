@@ -154,12 +154,16 @@ class LiveActivityManager {
 
             let nextTrain: WMATATrainPrediction? = sorted.indices.contains(startIndex) ? sorted[startIndex] : nil
             let followingTrain: WMATATrainPrediction? = sorted.indices.contains(startIndex + 1) ? sorted[startIndex + 1] : nil
+            let thirdTrain: WMATATrainPrediction? = sorted.indices.contains(startIndex + 2) ? sorted[startIndex + 2] : nil
 
             let nextMin = nextTrain?.min ?? "--"
             let nextDest = nextTrain?.destinationName ?? "No Train"
 
             let followingMin = followingTrain?.min ?? "--"
             let followingDest = followingTrain?.destinationName ?? "No Train"
+
+            let thirdMin = thirdTrain?.min ?? "--"
+            let thirdDest = thirdTrain?.destinationName ?? "No Train"
 
             var status: String? = nil
             if nextTrain != nil {
@@ -171,8 +175,13 @@ class LiveActivityManager {
             return TrainTrackingAttributes.ContentState(
                 nextTrainTime: nextMin == "ARR" || nextMin == "BRD" ? nextMin : "\(nextMin) min",
                 followingTrainTime: followingMin == "ARR" || followingMin == "BRD" ? followingMin : "\(followingMin) min",
+                thirdTrainTime: thirdMin == "ARR" || thirdMin == "BRD" ? thirdMin : "\(thirdMin) min",
                 nextTrainDestination: nextDest,
                 followingTrainDestination: followingDest,
+                thirdTrainDestination: thirdDest,
+                nextTrainLineCode: nextTrain?.line ?? "",
+                followingTrainLineCode: followingTrain?.line ?? "",
+                thirdTrainLineCode: thirdTrain?.line ?? "",
                 statusMessage: status
             )
 
@@ -180,8 +189,13 @@ class LiveActivityManager {
             return TrainTrackingAttributes.ContentState(
                 nextTrainTime: "--",
                 followingTrainTime: "--",
+                thirdTrainTime: "--",
                 nextTrainDestination: "Error loading",
                 followingTrainDestination: "Error loading",
+                thirdTrainDestination: "Error loading",
+                nextTrainLineCode: "",
+                followingTrainLineCode: "",
+                thirdTrainLineCode: "",
                 statusMessage: "Failed to connect to WMATA"
             )
         }

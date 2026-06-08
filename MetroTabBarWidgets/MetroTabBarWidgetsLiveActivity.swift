@@ -1,7 +1,7 @@
 import ActivityKit
+import AppIntents
 import SwiftUI
 import WidgetKit
-import AppIntents
 
 @main
 struct MetroTabBarWidgetsLiveActivity: Widget {
@@ -46,6 +46,17 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                             .font(.subheadline)
                             .fontWeight(.medium)
 
+                        if !context.state.nextTrainLineCode.isEmpty {
+                            Text(context.state.nextTrainLineCode)
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(lineColor(for: context.state.nextTrainLineCode))
+                                .clipShape(Capsule())
+                        }
+
                         Text(context.state.nextTrainDestination)
                             .font(.subheadline)
                             .foregroundStyle(.primary)
@@ -67,6 +78,17 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                         Text("Then:")
                             .font(.caption)
 
+                        if !context.state.followingTrainLineCode.isEmpty {
+                            Text(context.state.followingTrainLineCode)
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(lineColor(for: context.state.followingTrainLineCode))
+                                .clipShape(Capsule())
+                        }
+
                         Text(context.state.followingTrainDestination)
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -74,6 +96,37 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                         Spacer()
 
                         Text(context.state.followingTrainTime)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    // Third Train
+                    HStack {
+                        Image(systemName: "train.side.middle.car")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                        Text("Then:")
+                            .font(.caption)
+
+                        if !context.state.thirdTrainLineCode.isEmpty {
+                            Text(context.state.thirdTrainLineCode)
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(lineColor(for: context.state.thirdTrainLineCode))
+                                .clipShape(Capsule())
+                        }
+
+                        Text(context.state.thirdTrainDestination)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                        Spacer()
+
+                        Text(context.state.thirdTrainTime)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -142,7 +195,18 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                             .font(.headline)
                             .foregroundStyle(.primary)
 
-                        HStack {
+                        HStack(spacing: 6) {
+                            if !context.state.nextTrainLineCode.isEmpty {
+                                Text(context.state.nextTrainLineCode)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(lineColor(for: context.state.nextTrainLineCode))
+                                    .clipShape(Capsule())
+                            }
+
                             Text("Next: \(context.state.nextTrainDestination)")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
@@ -154,6 +218,40 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                                     .font(.caption2)
                                     .foregroundStyle(.tertiary)
                             }
+                        }
+
+                        HStack(spacing: 6) {
+                            if !context.state.followingTrainLineCode.isEmpty {
+                                Text(context.state.followingTrainLineCode)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(lineColor(for: context.state.followingTrainLineCode))
+                                    .clipShape(Capsule())
+                            }
+
+                            Text("Then: \(context.state.followingTrainDestination) (\(context.state.followingTrainTime))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        HStack(spacing: 6) {
+                            if !context.state.thirdTrainLineCode.isEmpty {
+                                Text(context.state.thirdTrainLineCode)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(lineColor(for: context.state.thirdTrainLineCode))
+                                    .clipShape(Capsule())
+                            }
+
+                            Text("Then: \(context.state.thirdTrainDestination) (\(context.state.thirdTrainTime))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
 
                         HStack(spacing: 8) {

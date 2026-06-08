@@ -7,8 +7,13 @@ struct TrainTrackingAttributes: ActivityAttributes {
         // Dynamic variables that change over time
         var nextTrainTime: String // e.g. "3 Min"
         var followingTrainTime: String // e.g. "7 Min"
+        var thirdTrainTime: String // e.g. "11 Min"
         var nextTrainDestination: String // e.g. "Vienna"
         var followingTrainDestination: String // e.g. "Ashburn"
+        var thirdTrainDestination: String // e.g. "Vienna"
+        var nextTrainLineCode: String // e.g. "OR"
+        var followingTrainLineCode: String // e.g. "SV"
+        var thirdTrainLineCode: String // e.g. "OR"
         var statusMessage: String? // e.g. "Updated 10:45 PM"
     }
 
