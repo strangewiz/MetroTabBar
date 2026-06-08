@@ -89,8 +89,13 @@ struct StationDetailView: View {
                     }
                     .accessibilityLabel("Stop Tracking Train")
                 } else {
-                    if !trackingOptions.isEmpty {
-                        Menu {
+                    Menu {
+                        if trackingOptions.isEmpty {
+                            Button(action: {}) {
+                                Label("Loading directions...", systemImage: "arrow.clockwise")
+                            }
+                            .disabled(true)
+                        } else {
                             ForEach(trackingOptions) { option in
                                 Button(action: {
                                     activityManager.startTracking(station: station, lines: option.lines, directionGroup: option.directionGroup)
@@ -98,13 +103,13 @@ struct StationDetailView: View {
                                     Text(option.label)
                                 }
                             }
-                        } label: {
-                            Image(systemName: "timer")
-                                .foregroundStyle(.blue)
-                                .imageScale(.large)
                         }
-                        .accessibilityLabel("Track Train Arrivals")
+                    } label: {
+                        Image(systemName: "timer")
+                            .foregroundStyle(trackingOptions.isEmpty ? Color.secondary : Color.blue)
+                            .imageScale(.large)
                     }
+                    .accessibilityLabel("Track Train Arrivals")
                 }
 
                 // Favorite Button
