@@ -23,6 +23,63 @@ struct NativeMapView: View {
     }
 }
 
+#if DEBUG
+    class DebugRegionsOverlayView: UIView {
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            backgroundColor = .clear
+            isUserInteractionEnabled = false // Let gestures pass through to parent
+        }
+
+        @available(*, unavailable)
+        required init?(coder _: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func draw(_: CGRect) {
+            guard let context = UIGraphicsGetCurrentContext() else { return }
+
+            context.saveGState()
+
+            for region in MapRegions.all {
+                let cgPath = region.path.cgPath
+                context.addPath(cgPath)
+
+                // Fill: semi-transparent red
+                context.setFillColor(UIColor.red.withAlphaComponent(0.2).cgColor)
+                // Stroke: solid red outline
+                context.setStrokeColor(UIColor.red.cgColor)
+                context.setLineWidth(1.5)
+
+                context.drawPath(using: .fillStroke)
+
+                // Draw station code at the center of the bounding box
+                let bounds = cgPath.boundingBox
+                let text = region.id.replacingOccurrences(of: "#", with: "")
+                let attrs: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.boldSystemFont(ofSize: 9),
+                    .foregroundColor: UIColor.systemBlue,
+                ]
+                let stringSize = text.size(withAttributes: attrs)
+                let textRect = CGRect(
+                    x: bounds.midX - stringSize.width / 2,
+                    y: bounds.midY - stringSize.height / 2,
+                    width: stringSize.width,
+                    height: stringSize.height
+                )
+
+                // White text backdrop for contrast
+                context.setFillColor(UIColor.white.withAlphaComponent(0.75).cgColor)
+                context.fill(textRect)
+
+                text.draw(in: textRect, withAttributes: attrs)
+            }
+
+            context.restoreGState()
+        }
+    }
+#endif
+
 struct ZoomableMapScrollView: UIViewRepresentable {
     let viewSize: CGSize
     @Binding var selectedStation: Station?
@@ -77,6 +134,11 @@ struct ZoomableMapScrollView: UIViewRepresentable {
                 imageView.frame = CGRect(origin: .zero, size: size)
                 imageView.accessibilityIdentifier = "dc_metro_silver.png"
                 imageView.isUserInteractionEnabled = true
+
+                #if DEBUG
+                    let debugOverlay = DebugRegionsOverlayView(frame: CGRect(origin: .zero, size: size))
+                    imageView.addSubview(debugOverlay)
+                #endif
 
                 let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap(_:)))
                 imageView.addGestureRecognizer(tapGesture)

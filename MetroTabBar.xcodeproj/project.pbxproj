@@ -47,7 +47,7 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		506F917019780FC700242E91 /* dc_metro_silver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dc_metro_silver.png; sourceTree = "<group>"; };
-		506F917219780FC700242E92 /* system-map-rail.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = system-map-rail.pdf; sourceTree = "<group>"; };
+		506F917219780FC700242E92 /* system-map-rail.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "system-map-rail.pdf"; sourceTree = "<group>"; };
 		50AB000125881AA80029399C /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		50AB000225881AA80029399C /* FavoritesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		50AB000325881AA80029399C /* WKWebViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewWrapper.swift; sourceTree = "<group>"; };
@@ -347,6 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinc.metroapp.debug;
 				PRODUCT_NAME = MetroTabBar;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
