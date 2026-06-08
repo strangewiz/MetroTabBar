@@ -6,10 +6,10 @@ struct MetroTabBarApp: App {
     @State private var locationManager = LocationManager()
 
     init() {
-        LiveActivityActionRegistry.onMissedTrain = {
+        LiveActivityActionRegistry.onMissedTrain = { @MainActor in
             LiveActivityManager.shared.incrementMissedTrain()
         }
-        LiveActivityActionRegistry.onBoardedTrain = {
+        LiveActivityActionRegistry.onBoardedTrain = { @MainActor in
             LiveActivityManager.shared.stopTracking()
         }
     }

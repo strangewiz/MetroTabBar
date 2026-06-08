@@ -172,4 +172,65 @@ final class MetroTabBarTests: XCTestCase {
         locationManager.startUpdating()
         locationManager.stopUpdating()
     }
+
+    func testLiveActivityParseMinutes() {
+        XCTAssertEqual(LiveActivityManager.parseMinutes("ARR"), 0)
+        XCTAssertEqual(LiveActivityManager.parseMinutes("BRD"), 0)
+        XCTAssertEqual(LiveActivityManager.parseMinutes("DLY"), 999)
+        XCTAssertEqual(LiveActivityManager.parseMinutes("--"), 999)
+        XCTAssertEqual(LiveActivityManager.parseMinutes("5"), 5)
+        XCTAssertEqual(LiveActivityManager.parseMinutes("12"), 12)
+        XCTAssertEqual(LiveActivityManager.parseMinutes("garbage"), 999)
+    }
+
+    func testLiveActivityProcessPredictions() {
+        let mockPredictions = [
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "5"),
+            WMATATrainPrediction(car: "8", destination: "Shady Grove", destinationCode: "A15", destinationName: "Shady Grove", group: "2", line: "RD", locationCode: "A01", locationName: "Metro Center", min: "2"),
+            WMATATrainPrediction(car: "6", destination: "Glenmont", destinationCode: "B11", destinationName: "Glenmont", group: "1", line: "RD", locationCode: "A01", locationName: "Metro Center", min: "ARR"),
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "DLY"),
+        ]
+
+        // Filter for RD, group 2
+        let rdGroup2 = LiveActivityManager.processPredictions(mockPredictions, lines: ["RD"], direction: "2", skippedTrains: [])
+        XCTAssertEqual(rdGroup2.count, 1)
+        XCTAssertEqual(rdGroup2.first?.destinationName, "Shady Grove")
+        XCTAssertEqual(rdGroup2.first?.min, "2")
+
+        // Filter for OR, group 2
+        let orGroup2 = LiveActivityManager.processPredictions(mockPredictions, lines: ["OR"], direction: "2", skippedTrains: [])
+        XCTAssertEqual(orGroup2.count, 2)
+        XCTAssertEqual(orGroup2[0].min, "5") // 5 min is sorted before DLY
+        XCTAssertEqual(orGroup2[1].min, "DLY")
+    }
+
+    func testLiveActivityProcessPredictionsWithSkips() {
+        let mockPredictions = [
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "2"),
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "5"),
+        ]
+
+        let now = Date()
+        // Skip the first train (2 min)
+        let arrivalTime = now.addingTimeInterval(2 * 60)
+        let skipped = SkippedTrain(line: "OR", destinationCode: "K08", group: "2", expectedArrival: arrivalTime)
+
+        let processed = LiveActivityManager.processPredictions(mockPredictions, lines: ["OR"], direction: "2", skippedTrains: [skipped], now: now)
+
+        // The first train (2 min) should be skipped, leaving only the second train (5 min)
+        XCTAssertEqual(processed.count, 1)
+        XCTAssertEqual(processed.first?.min, "5")
+
+        // Verify that after time passes and the skipped train expected arrival passes (+2 minutes), the skip no longer matches or we clear it.
+        // A new train is approaching (2 min away, same line/dest)
+        let laterNow = now.addingTimeInterval(4 * 60)
+        let newPredictions = [
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "2"),
+        ]
+
+        let processedLater = LiveActivityManager.processPredictions(newPredictions, lines: ["OR"], direction: "2", skippedTrains: [skipped], now: laterNow)
+        // Since laterNow is past skipped.expectedArrival + 90 seconds, the skip check should NOT filter it out!
+        XCTAssertEqual(processedLater.count, 1)
+        XCTAssertEqual(processedLater.first?.min, "2")
+    }
 }

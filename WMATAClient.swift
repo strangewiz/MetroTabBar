@@ -40,28 +40,25 @@ class WMATAClient {
     static let shared = WMATAClient()
 
     func fetchPredictions(for stationCode: String) async throws -> [WMATATrainPrediction] {
-        let subCodes = stationCode.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-        var allPredictions: [WMATATrainPrediction] = []
+        let cleanedCode = stationCode.replacingOccurrences(of: " ", with: "")
+        guard !cleanedCode.isEmpty else { return [] }
 
-        for code in subCodes {
-            guard !code.isEmpty else { continue }
-            let urlString = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/\(code)"
-            guard let url = URL(string: urlString) else { continue }
-
-            var request = URLRequest(url: url)
-            request.setValue(Secrets.wmataApiKey, forHTTPHeaderField: "api_key")
-            request.timeoutInterval = 10.0
-
-            let (data, response) = try await URLSession.shared.data(for: request)
-
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw URLError(.badServerResponse)
-            }
-
-            let decoded = try JSONDecoder().decode(WMATAPredictionResponse.self, from: data)
-            allPredictions.append(contentsOf: decoded.trains)
+        let urlString = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/\(cleanedCode)"
+        guard let url = URL(string: urlString) else {
+            throw URLError(.badURL)
         }
 
-        return allPredictions
+        var request = URLRequest(url: url)
+        request.setValue(Secrets.wmataApiKey, forHTTPHeaderField: "api_key")
+        request.timeoutInterval = 10.0
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
+
+        let decoded = try JSONDecoder().decode(WMATAPredictionResponse.self, from: data)
+        return decoded.trains
     }
 }

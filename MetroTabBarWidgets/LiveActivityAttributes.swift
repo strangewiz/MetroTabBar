@@ -25,8 +25,8 @@ struct TrainTrackingAttributes: ActivityAttributes {
 
 /// Registry to delegate widget taps in the main app target without compiling LiveActivityManager in the Widget Extension
 enum LiveActivityActionRegistry {
-    static var onMissedTrain: (() -> Void)?
-    static var onBoardedTrain: (() -> Void)?
+    static var onMissedTrain: (@MainActor () -> Void)?
+    static var onBoardedTrain: (@MainActor () -> Void)?
 }
 
 struct MissedTrainIntent: LiveActivityIntent {

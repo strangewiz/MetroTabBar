@@ -2,11 +2,20 @@ import ActivityKit
 import CoreLocation
 import Foundation
 
+struct SkippedTrain: Hashable {
+    let line: String
+    let destinationCode: String
+    let group: String
+    let expectedArrival: Date
+}
+
 @Observable
+@MainActor
 class LiveActivityManager {
     static let shared = LiveActivityManager()
 
     private(set) var activeActivity: Activity<TrainTrackingAttributes>?
+    private var startTask: Task<Void, Never>?
     private var trackingTask: Task<Void, Never>?
     private let locationManager = LocationManager()
 
@@ -19,8 +28,14 @@ class LiveActivityManager {
     var targetLines: [String] = []
     var directionGroup: String = ""
 
-    /// Missed train counter / offset
-    private var missedCount = 0
+    /// Set of currently skipped trains to implement "I Missed the Train" logic
+    private var skippedTrains: Set<SkippedTrain> = []
+
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }()
 
     private init() {}
 
@@ -31,7 +46,7 @@ class LiveActivityManager {
         trackingStation = station
         targetLines = lines
         self.directionGroup = directionGroup
-        missedCount = 0
+        skippedTrains.removeAll()
 
         // Ensure Live Activities are supported/enabled
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
@@ -51,12 +66,21 @@ class LiveActivityManager {
         )
 
         // Fetch initial predictions immediately, then request
-        Task {
+        startTask = Task {
             let initialState = await fetchUpdatedState(stationCode: station.id, lines: lines, direction: directionGroup)
+
+            guard !Task.isCancelled else { return }
 
             do {
                 let content = ActivityContent(state: initialState, staleDate: nil)
-                let activity = try Activity.request(attributes: attributes, content: content, pushType: nil)
+                // Request activity (removed deprecated pushType: nil)
+                let activity = try Activity.request(attributes: attributes, content: content)
+
+                guard !Task.isCancelled else {
+                    await activity.end(nil, dismissalPolicy: .immediate)
+                    return
+                }
+
                 self.activeActivity = activity
 
                 #if DEBUG
@@ -75,6 +99,9 @@ class LiveActivityManager {
     }
 
     func stopTracking() {
+        startTask?.cancel()
+        startTask = nil
+
         trackingTask?.cancel()
         trackingTask = nil
 
@@ -90,13 +117,42 @@ class LiveActivityManager {
         trackingStation = nil
         targetLines = []
         directionGroup = ""
-        missedCount = 0
+        skippedTrains.removeAll()
     }
 
     func incrementMissedTrain() {
-        missedCount += 1
-        // Force update immediately
-        triggerUpdate()
+        guard let station = trackingStation else { return }
+
+        Task {
+            do {
+                let predictions = try await WMATAClient.shared.fetchPredictions(for: station.id)
+                let now = Date()
+
+                // Keep only unexpired skips when processing the predictions list
+                let activeSkips = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
+
+                // Find the first train in predictions that is not currently skipped
+                let processed = Self.processPredictions(predictions, lines: targetLines, direction: directionGroup, skippedTrains: activeSkips, now: now)
+
+                if let trainToSkip = processed.first {
+                    let minVal = Self.parseMinutes(trainToSkip.min)
+                    // Compute expected arrival (use 0 for ARR/BRD/DLY/-- fallback)
+                    let minutesToAdd = (minVal == 999) ? 0 : minVal
+                    let expectedArrival = now.addingTimeInterval(Double(minutesToAdd) * 60)
+
+                    skippedTrains.insert(SkippedTrain(
+                        line: trainToSkip.line,
+                        destinationCode: trainToSkip.destinationCode ?? "",
+                        group: trainToSkip.group,
+                        expectedArrival: expectedArrival
+                    ))
+                }
+
+                triggerUpdate()
+            } catch {
+                triggerUpdate()
+            }
+        }
     }
 
     private func triggerUpdate() {
@@ -133,28 +189,15 @@ class LiveActivityManager {
         do {
             let predictions = try await WMATAClient.shared.fetchPredictions(for: stationCode)
 
-            // Filter predictions by matching line and direction group
-            let filtered = predictions.filter { prediction in
-                let matchesLine = lines.contains { lineCode in
-                    prediction.line.uppercased() == lineCode.uppercased()
-                }
-                let matchesDirection = prediction.group == direction
-                return matchesLine && matchesDirection
-            }
+            // Clean up expired skips (arrival time passed by more than 2 minutes)
+            let now = Date()
+            skippedTrains = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
 
-            // Sort predictions: numeric minutes ascending, ARR/BRD first, delay/none last
-            let sorted = filtered.sorted { p1, p2 in
-                let m1 = parseMinutes(p1.min)
-                let m2 = parseMinutes(p2.min)
-                return m1 < m2
-            }
+            let activePredictions = Self.processPredictions(predictions, lines: lines, direction: direction, skippedTrains: skippedTrains, now: now)
 
-            // Adjust index if user skipped train (missed count)
-            let startIndex = missedCount
-
-            let nextTrain: WMATATrainPrediction? = sorted.indices.contains(startIndex) ? sorted[startIndex] : nil
-            let followingTrain: WMATATrainPrediction? = sorted.indices.contains(startIndex + 1) ? sorted[startIndex + 1] : nil
-            let thirdTrain: WMATATrainPrediction? = sorted.indices.contains(startIndex + 2) ? sorted[startIndex + 2] : nil
+            let nextTrain: WMATATrainPrediction? = activePredictions.indices.contains(0) ? activePredictions[0] : nil
+            let followingTrain: WMATATrainPrediction? = activePredictions.indices.contains(1) ? activePredictions[1] : nil
+            let thirdTrain: WMATATrainPrediction? = activePredictions.indices.contains(2) ? activePredictions[2] : nil
 
             let nextMin = nextTrain?.min ?? "--"
             let nextDest = nextTrain?.destinationName ?? "No Train"
@@ -201,7 +244,9 @@ class LiveActivityManager {
         }
     }
 
-    private func parseMinutes(_ minStr: String) -> Int {
+    // MARK: - Unit-Testable Predictions Processing Logic
+
+    static func parseMinutes(_ minStr: String) -> Int {
         if minStr == "ARR" || minStr == "BRD" {
             return 0
         }
@@ -211,9 +256,41 @@ class LiveActivityManager {
         return Int(minStr) ?? 999
     }
 
+    static func processPredictions(
+        _ predictions: [WMATATrainPrediction],
+        lines: [String],
+        direction: String,
+        skippedTrains: Set<SkippedTrain>,
+        now: Date = Date()
+    ) -> [WMATATrainPrediction] {
+        // Filter predictions by matching line and direction group
+        let filtered = predictions.filter { prediction in
+            let matchesLine = lines.contains { lineCode in
+                prediction.line.uppercased() == lineCode.uppercased()
+            }
+            let matchesDirection = prediction.group == direction
+            return matchesLine && matchesDirection
+        }
+
+        // Sort predictions: numeric minutes ascending, ARR/BRD first, delay/none last
+        let sorted = filtered.sorted { p1, p2 in
+            let m1 = parseMinutes(p1.min)
+            let m2 = parseMinutes(p2.min)
+            return m1 < m2
+        }
+
+        // Filter out skipped trains from predictions
+        return sorted.filter { p in
+            !skippedTrains.contains { skipped in
+                p.line == skipped.line &&
+                    (p.destinationCode ?? "") == skipped.destinationCode &&
+                    p.group == skipped.group &&
+                    abs(now.addingTimeInterval(Double(parseMinutes(p.min)) * 60).timeIntervalSince(skipped.expectedArrival)) < 90
+            }
+        }
+    }
+
     private func formattedCurrentTime() -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: Date())
+        Self.timeFormatter.string(from: Date())
     }
 }
