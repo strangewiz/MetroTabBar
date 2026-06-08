@@ -45,6 +45,7 @@ struct Station: Identifiable, Hashable {
         Station(id: "G01", name: "Benning Rd", colorImageName: "sb", lat: 38.890488, lon: -76.938291),
         Station(id: "A09", name: "Bethesda", colorImageName: "r", lat: 38.984282, lon: -77.094431),
         Station(id: "C12", name: "Braddock Rd", colorImageName: "by", lat: 38.814577, lon: -77.053733),
+        Station(id: "C122", name: "Potomac Yard", colorImageName: "by", lat: 38.83335, lon: -77.04635),
         Station(id: "F11", name: "Branch Av", colorImageName: "g", lat: 38.826995, lon: -76.912134),
         Station(id: "B05", name: "Brookland-CUA", colorImageName: "r", lat: 38.933234, lon: -76.994544),
         Station(id: "G02", name: "Capitol Heights", colorImageName: "sb", lat: 38.889757, lon: -76.913382),

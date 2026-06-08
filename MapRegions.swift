@@ -487,11 +487,15 @@ enum MapRegions {
         }),
         // Braddock Rd
         MapRegion(id: "C12", path: Path { p in
-            p.addRect(CGRect(x: 969, y: 1377, width: 196, height: 43))
+            p.addRect(CGRect(x: 969, y: 1407, width: 196, height: 30))
+        }),
+        // Potomac Yard
+        MapRegion(id: "C122", path: Path { p in
+            p.addRect(CGRect(x: 969, y: 1377, width: 206, height: 25))
         }),
         // King St-Old Town
         MapRegion(id: "C13", path: Path { p in
-            p.addRect(CGRect(x: 964, y: 1431, width: 294, height: 70))
+            p.addRect(CGRect(x: 964, y: 1451, width: 294, height: 50))
         }),
         // Eisenhower Av
         MapRegion(id: "C14", path: Path { p in
