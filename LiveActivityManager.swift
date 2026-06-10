@@ -185,26 +185,16 @@ class LiveActivityManager {
 
     private func startPolling() {
         trackingTask = Task {
-            var loopCount = 0
             while !Task.isCancelled {
-                // Poll/update every 20 seconds
+                // Poll/update every 60 seconds
                 do {
-                    try await Task.sleep(for: .seconds(20))
+                    try await Task.sleep(for: .seconds(60))
                 } catch {
                     break
                 }
 
                 guard let station = trackingStation else { break }
-
-                // Fetch new predictions from the network every 40 seconds (every other loop iteration),
-                // otherwise calculate the estimated state locally.
-                let state: TrainTrackingAttributes.ContentState
-                if loopCount % 2 == 0 {
-                    state = await fetchUpdatedState(stationCode: station.id, lines: targetLines, direction: directionGroup)
-                } else {
-                    state = getEstimatedState()
-                }
-                loopCount += 1
+                let state = await fetchUpdatedState(stationCode: station.id, lines: targetLines, direction: directionGroup)
 
                 if let activity = activeActivity {
                     let content = makeActivityContent(state: state)

@@ -16,6 +16,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         manager.allowsBackgroundLocationUpdates = false
         manager.showsBackgroundLocationIndicator = false
+        manager.pausesLocationUpdatesAutomatically = false
         authorizationStatus = manager.authorizationStatus
     }
 
