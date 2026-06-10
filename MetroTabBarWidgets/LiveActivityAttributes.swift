@@ -27,10 +27,11 @@ struct TrainTrackingAttributes: ActivityAttributes {
 enum LiveActivityActionRegistry {
     static var onMissedTrain: (@MainActor () -> Void)?
     static var onBoardedTrain: (@MainActor () -> Void)?
+    static var onRefresh: (@MainActor () -> Void)?
 }
 
 struct MissedTrainIntent: LiveActivityIntent {
-    static var title: LocalizedStringResource = "I Missed the Train"
+    static var title: LocalizedStringResource = "Skip Next Train"
 
     init() {}
 
@@ -50,6 +51,19 @@ struct BoardedTrainIntent: LiveActivityIntent {
     func perform() async throws -> some IntentResult {
         await MainActor.run {
             LiveActivityActionRegistry.onBoardedTrain?()
+        }
+        return .result()
+    }
+}
+
+struct RefreshIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "Refresh Live Activity"
+
+    init() {}
+
+    func perform() async throws -> some IntentResult {
+        await MainActor.run {
+            LiveActivityActionRegistry.onRefresh?()
         }
         return .result()
     }

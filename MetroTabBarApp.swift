@@ -12,6 +12,9 @@ struct MetroTabBarApp: App {
         LiveActivityActionRegistry.onBoardedTrain = { @MainActor in
             LiveActivityManager.shared.stopTracking()
         }
+        LiveActivityActionRegistry.onRefresh = { @MainActor in
+            LiveActivityManager.shared.forceRefresh()
+        }
     }
 
     var body: some Scene {

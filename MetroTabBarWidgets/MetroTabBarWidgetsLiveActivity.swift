@@ -71,64 +71,74 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
 
                     // Following Train
                     HStack {
-                        Image(systemName: "train.side.middle.car")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        if !context.state.followingTrainDestination.isEmpty && context.state.followingTrainDestination != "No Train" {
+                            Image(systemName: "train.side.middle.car")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
 
-                        Text("Then:")
-                            .font(.caption)
+                            Text("Then:")
+                                .font(.caption)
 
-                        if !context.state.followingTrainLineCode.isEmpty {
-                            Text(context.state.followingTrainLineCode)
-                                .font(.caption2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(lineColor(for: context.state.followingTrainLineCode))
-                                .clipShape(Capsule())
+                            if !context.state.followingTrainLineCode.isEmpty {
+                                Text(context.state.followingTrainLineCode)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(lineColor(for: context.state.followingTrainLineCode))
+                                    .clipShape(Capsule())
+                            }
+
+                            Text(context.state.followingTrainDestination)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            Spacer()
+
+                            Text(context.state.followingTrainTime)
+                                .font(.subheadline)
+                                .foregroundStyle(lineColor(for: context.state.followingTrainLineCode))
+                        } else {
+                            Spacer()
+                                .frame(height: 20)
                         }
-
-                        Text(context.state.followingTrainDestination)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-
-                        Spacer()
-
-                        Text(context.state.followingTrainTime)
-                            .font(.subheadline)
-                            .foregroundStyle(lineColor(for: context.state.followingTrainLineCode))
                     }
 
                     // Third Train
                     HStack {
-                        Image(systemName: "train.side.middle.car")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        if !context.state.thirdTrainDestination.isEmpty && context.state.thirdTrainDestination != "No Train" {
+                            Image(systemName: "train.side.middle.car")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
 
-                        Text("Then:")
-                            .font(.caption)
+                            Text("Then:")
+                                .font(.caption)
 
-                        if !context.state.thirdTrainLineCode.isEmpty {
-                            Text(context.state.thirdTrainLineCode)
-                                .font(.caption2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(lineColor(for: context.state.thirdTrainLineCode))
-                                .clipShape(Capsule())
+                            if !context.state.thirdTrainLineCode.isEmpty {
+                                Text(context.state.thirdTrainLineCode)
+                                    .font(.caption2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(lineColor(for: context.state.thirdTrainLineCode))
+                                    .clipShape(Capsule())
+                            }
+
+                            Text(context.state.thirdTrainDestination)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            Spacer()
+
+                            Text(context.state.thirdTrainTime)
+                                .font(.subheadline)
+                                .foregroundStyle(lineColor(for: context.state.thirdTrainLineCode))
+                        } else {
+                            Spacer()
+                                .frame(height: 20)
                         }
-
-                        Text(context.state.thirdTrainDestination)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-
-                        Spacer()
-
-                        Text(context.state.thirdTrainTime)
-                            .font(.subheadline)
-                            .foregroundStyle(lineColor(for: context.state.thirdTrainLineCode))
                     }
                 }
 
@@ -137,16 +147,25 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                 // Bottom Control / Interactive Buttons
                 HStack(spacing: 8) {
                     if let status = context.state.statusMessage {
-                        Text(status)
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
+                        HStack(spacing: 4) {
+                            Text(status)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+
+                            Button(intent: RefreshIntent()) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
 
                     Spacer()
 
-                    // Missed Train Button
+                    // Skip Train Button
                     Button(intent: MissedTrainIntent()) {
-                        Label("I Missed It", systemImage: "clock.arrow.circlepath")
+                        Label("Skip Next", systemImage: "arrow.forward.to.line")
                             .font(.caption2)
                             .fontWeight(.semibold)
                     }
@@ -223,15 +242,24 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
 
                         HStack(spacing: 8) {
                             if let status = context.state.statusMessage {
-                                Text(status)
-                                    .font(.caption2)
-                                    .foregroundStyle(.tertiary)
+                                HStack(spacing: 4) {
+                                    Text(status)
+                                        .font(.caption2)
+                                        .foregroundStyle(.tertiary)
+
+                                    Button(intent: RefreshIntent()) {
+                                        Image(systemName: "arrow.clockwise")
+                                            .font(.caption2)
+                                            .foregroundStyle(.tertiary)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
                             }
 
                             Spacer()
 
                             Button(intent: MissedTrainIntent()) {
-                                Text("Missed It")
+                                Text("Skip Next")
                                     .font(.caption)
                                     .fontWeight(.semibold)
                             }

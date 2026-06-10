@@ -234,6 +234,38 @@ final class MetroTabBarTests: XCTestCase {
         XCTAssertEqual(processedLater.first?.min, "2")
     }
 
+    func testLiveActivitySkipTrainWithElapsedBaseTime() {
+        let fetchTime = Date()
+        let mockPredictions = [
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "2"),
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "5"),
+        ]
+
+        // Calculate expectedArrival using fetchTime + minVal * 60
+        // Imagine user skips after 1 minute has elapsed (so now is fetchTime + 60)
+        let now = fetchTime.addingTimeInterval(60)
+
+        let minVal = LiveActivityManager.parseMinutes(mockPredictions[0].min) // 2
+        let expectedArrival = fetchTime.addingTimeInterval(Double(minVal) * 60) // 12:02
+
+        let skipped = SkippedTrain(line: "OR", destinationCode: "K08", group: "2", expectedArrival: expectedArrival)
+
+        // Process predictions at 'now' (1 minute after fetch).
+        // The predictions returned from the network at 'now' have counted down:
+        // Train A (was 2, now 1)
+        // Train B (was 5, now 4)
+        let updatedPredictions = [
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "1"),
+            WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "4"),
+        ]
+
+        let processed = LiveActivityManager.processPredictions(updatedPredictions, lines: ["OR"], direction: "2", skippedTrains: [skipped], now: now)
+
+        // Train A (1 min) should be skipped, and Train B (4 min) should NOT be skipped.
+        XCTAssertEqual(processed.count, 1)
+        XCTAssertEqual(processed.first?.min, "4")
+    }
+
     func testResolveTrackingOptionsWithPredictions() {
         let mockStation = Station(id: "A01,C01", name: "Metro Center", colorImageName: "r-o", lat: 38.898314, lon: -77.028078)
         let mockPredictions = [

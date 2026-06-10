@@ -1,6 +1,7 @@
 import ActivityKit
 import CoreLocation
 import Foundation
+import UIKit
 
 struct SkippedTrain: Hashable {
     let line: String
@@ -154,8 +155,9 @@ class LiveActivityManager {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            guard let self = self else { return }
-            self.triggerUpdate()
+            Task { @MainActor in
+                self?.triggerUpdate()
+            }
         }
 
         backgroundObserver = NotificationCenter.default.addObserver(
@@ -163,8 +165,9 @@ class LiveActivityManager {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            guard let self = self else { return }
-            self.triggerUpdate()
+            Task { @MainActor in
+                self?.triggerUpdate()
+            }
         }
     }
 
@@ -191,7 +194,7 @@ class LiveActivityManager {
         if let trainToSkip = processed.first {
             let minVal = Self.parseMinutes(trainToSkip.min)
             let minutesToAdd = (minVal == 999) ? 0 : minVal
-            let expectedArrival = now.addingTimeInterval(Double(minutesToAdd) * 60)
+            let expectedArrival = (lastFetchTime ?? now).addingTimeInterval(Double(minutesToAdd) * 60)
 
             skippedTrains.insert(SkippedTrain(
                 line: trainToSkip.line,
@@ -203,6 +206,14 @@ class LiveActivityManager {
 
         // Update Live Activity locally with the new skip applied, without network calls
         updateLiveActivityLocal()
+
+        // Simultaneously trigger an async background update to get fresh predictions
+        triggerUpdate()
+    }
+
+    func forceRefresh() {
+        skippedTrains.removeAll()
+        triggerUpdate()
     }
 
     private func updateLiveActivityLocal() {
@@ -226,9 +237,9 @@ class LiveActivityManager {
     private func startPolling() {
         trackingTask = Task {
             while !Task.isCancelled {
-                // Poll/update every 60 seconds
+                // Poll/update every 45 seconds
                 do {
-                    try await Task.sleep(for: .seconds(60))
+                    try await Task.sleep(for: .seconds(45))
                 } catch {
                     break
                 }
@@ -262,7 +273,7 @@ class LiveActivityManager {
     }
 
     private func getEstimatedState() -> TrainTrackingAttributes.ContentState {
-        guard let station = trackingStation else {
+        guard trackingStation != nil else {
             return TrainTrackingAttributes.ContentState(
                 nextTrainTime: "--",
                 followingTrainTime: "--",
@@ -333,6 +344,11 @@ class LiveActivityManager {
         // Clean up expired skips (arrival time passed by more than 2 minutes)
         skippedTrains = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
 
+        let filtered = predictions.filter { pred in
+            guard lines.contains(pred.line) else { return false }
+            return pred.group == direction
+        }
+
         let activePredictions = Self.processPredictions(predictions, lines: lines, direction: direction, skippedTrains: skippedTrains, now: now)
 
         func estimateMin(_ pred: WMATATrainPrediction?) -> String {
@@ -360,15 +376,32 @@ class LiveActivityManager {
         let followingMin = estimateMin(followingTrain)
         let thirdMin = estimateMin(thirdTrain)
 
-        let nextDest = nextTrain?.destinationName ?? "No Train"
-        let followingDest = followingTrain?.destinationName ?? "No Train"
-        let thirdDest = thirdTrain?.destinationName ?? "No Train"
+        let nextDest: String
+        let followingDest: String
+        let thirdDest: String
+
+        if let next = nextTrain {
+            nextDest = next.destinationName
+        } else {
+            if !filtered.isEmpty {
+                nextDest = "Skipped (Tap Refresh)"
+            } else {
+                nextDest = "No predictions in range"
+            }
+        }
+
+        followingDest = followingTrain?.destinationName ?? ""
+        thirdDest = thirdTrain?.destinationName ?? ""
 
         var status: String? = nil
         if nextTrain != nil {
-            status = "Updated \(formattedCurrentTime())"
+            status = "Updated \(formattedTime(fetchTime))"
         } else {
-            status = "No upcoming trains found"
+            if !filtered.isEmpty {
+                status = "Skips active. Tap Refresh to reset"
+            } else {
+                status = "No upcoming trains found"
+            }
         }
 
         return TrainTrackingAttributes.ContentState(
@@ -405,12 +438,9 @@ class LiveActivityManager {
         now: Date = Date()
     ) -> [WMATATrainPrediction] {
         // Filter predictions by matching line and direction group
-        let filtered = predictions.filter { prediction in
-            let matchesLine = lines.contains { lineCode in
-                prediction.line.uppercased() == lineCode.uppercased()
-            }
-            let matchesDirection = prediction.group == direction
-            return matchesLine && matchesDirection
+        let filtered = predictions.filter { pred in
+            guard lines.contains(pred.line) else { return false }
+            return pred.group == direction
         }
 
         // Sort predictions: numeric minutes ascending, ARR/BRD first, delay/none last
@@ -420,7 +450,7 @@ class LiveActivityManager {
             return m1 < m2
         }
 
-        // Filter out skipped trains from predictions
+        // Apply skips
         return sorted.filter { p in
             !skippedTrains.contains { skipped in
                 p.line == skipped.line &&
@@ -431,7 +461,7 @@ class LiveActivityManager {
         }
     }
 
-    private func formattedCurrentTime() -> String {
-        Self.timeFormatter.string(from: Date())
+    private func formattedTime(_ date: Date) -> String {
+        Self.timeFormatter.string(from: date)
     }
 }
