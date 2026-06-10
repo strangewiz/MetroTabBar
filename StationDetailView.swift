@@ -7,7 +7,7 @@ struct StationDetailView: View {
     @State private var errorMessage: String? = nil
     @State private var reloadID = 0
 
-    @State private var activityManager = LiveActivityManager.shared
+    private let activityManager = LiveActivityManager.shared
     @State private var trackingOptions: [TrackingOption] = []
 
     struct TrackingOption: Identifiable {

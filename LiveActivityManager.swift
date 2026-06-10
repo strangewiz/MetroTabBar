@@ -90,7 +90,7 @@ class LiveActivityManager {
             guard !Task.isCancelled else { return }
 
             do {
-                let content = ActivityContent(state: initialState, staleDate: nil)
+                let content = makeActivityContent(state: initialState)
                 // Request activity (removed deprecated pushType: nil)
                 let activity = try Activity.request(attributes: attributes, content: content)
 
@@ -140,37 +140,37 @@ class LiveActivityManager {
     }
 
     func incrementMissedTrain() {
-        guard let station = trackingStation else { return }
+        let now = Date()
 
+        // Keep only unexpired skips
+        skippedTrains = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
+
+        // Find the first train in cached predictions that is not currently skipped
+        let processed = Self.processPredictions(lastFetchedPredictions, lines: targetLines, direction: directionGroup, skippedTrains: skippedTrains, now: now)
+
+        if let trainToSkip = processed.first {
+            let minVal = Self.parseMinutes(trainToSkip.min)
+            let minutesToAdd = (minVal == 999) ? 0 : minVal
+            let expectedArrival = now.addingTimeInterval(Double(minutesToAdd) * 60)
+
+            skippedTrains.insert(SkippedTrain(
+                line: trainToSkip.line,
+                destinationCode: trainToSkip.destinationCode ?? "",
+                group: trainToSkip.group,
+                expectedArrival: expectedArrival
+            ))
+        }
+
+        // Update Live Activity locally with the new skip applied, without network calls
+        updateLiveActivityLocal()
+    }
+
+    private func updateLiveActivityLocal() {
+        guard let activity = activeActivity else { return }
+        let state = getEstimatedState()
+        let content = makeActivityContent(state: state)
         Task {
-            do {
-                let predictions = try await WMATAClient.shared.fetchPredictions(for: station.id)
-                let now = Date()
-
-                // Keep only unexpired skips when processing the predictions list
-                let activeSkips = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
-
-                // Find the first train in predictions that is not currently skipped
-                let processed = Self.processPredictions(predictions, lines: targetLines, direction: directionGroup, skippedTrains: activeSkips, now: now)
-
-                if let trainToSkip = processed.first {
-                    let minVal = Self.parseMinutes(trainToSkip.min)
-                    // Compute expected arrival (use 0 for ARR/BRD/DLY/-- fallback)
-                    let minutesToAdd = (minVal == 999) ? 0 : minVal
-                    let expectedArrival = now.addingTimeInterval(Double(minutesToAdd) * 60)
-
-                    skippedTrains.insert(SkippedTrain(
-                        line: trainToSkip.line,
-                        destinationCode: trainToSkip.destinationCode ?? "",
-                        group: trainToSkip.group,
-                        expectedArrival: expectedArrival
-                    ))
-                }
-
-                triggerUpdate()
-            } catch {
-                triggerUpdate()
-            }
+            await activity.update(content)
         }
     }
 
@@ -178,7 +178,7 @@ class LiveActivityManager {
         guard let activity = activeActivity, let station = trackingStation else { return }
         Task {
             let updatedState = await fetchUpdatedState(stationCode: station.id, lines: targetLines, direction: directionGroup)
-            let content = ActivityContent(state: updatedState, staleDate: nil)
+            let content = makeActivityContent(state: updatedState)
             await activity.update(content)
         }
     }
@@ -207,11 +207,28 @@ class LiveActivityManager {
                 loopCount += 1
 
                 if let activity = activeActivity {
-                    let content = ActivityContent(state: state, staleDate: nil)
+                    let content = makeActivityContent(state: state)
                     await activity.update(content)
                 }
             }
         }
+    }
+
+    private func makeActivityContent(state: TrainTrackingAttributes.ContentState) -> ActivityContent<TrainTrackingAttributes.ContentState> {
+        let staleDate = lastFetchTime?.addingTimeInterval(120)
+
+        var score: Double = 0
+        let now = Date()
+        let activeSkips = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
+        let activePredictions = Self.processPredictions(lastFetchedPredictions, lines: targetLines, direction: directionGroup, skippedTrains: activeSkips, now: now)
+        if let nextTrain = activePredictions.first {
+            let minutes = Self.parseMinutes(nextTrain.min)
+            if minutes <= 3 {
+                score = 100
+            }
+        }
+
+        return ActivityContent(state: state, staleDate: staleDate, relevanceScore: score)
     }
 
     private func getEstimatedState() -> TrainTrackingAttributes.ContentState {

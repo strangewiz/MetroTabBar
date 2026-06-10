@@ -237,7 +237,7 @@ struct AlphabetIndexSidebar: View {
         VStack(spacing: 0) {
             ForEach(letters, id: \.self) { letter in
                 Text(letter)
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .font(.system(.caption2, design: .rounded).bold())
                     .foregroundStyle(dragLetter == letter ? .white : .blue)
                     .frame(width: 16, height: 16)
                     .background(
