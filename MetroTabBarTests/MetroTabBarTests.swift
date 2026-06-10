@@ -166,7 +166,7 @@ final class MetroTabBarTests: XCTestCase {
     }
 
     func testLocationManagerLifecycle() {
-        let locationManager = LocationManager()
+        let locationManager = LocationManager.shared
         XCTAssertNil(locationManager.location)
 
         locationManager.startUpdating()
@@ -232,5 +232,47 @@ final class MetroTabBarTests: XCTestCase {
         // Since laterNow is past skipped.expectedArrival + 90 seconds, the skip check should NOT filter it out!
         XCTAssertEqual(processedLater.count, 1)
         XCTAssertEqual(processedLater.first?.min, "2")
+    }
+
+    func testResolveTrackingOptionsWithPredictions() {
+        let mockStation = Station(id: "A01,C01", name: "Metro Center", colorImageName: "r-o", lat: 38.898314, lon: -77.028078)
+        let mockPredictions = [
+            "A01": [
+                WMATATrainPrediction(car: "8", destination: "Glenmont", destinationCode: "B11", destinationName: "Glenmont", group: "1", line: "RD", locationCode: "A01", locationName: "Metro Center", min: "5"),
+                WMATATrainPrediction(car: "8", destination: "Shady Grove", destinationCode: "A15", destinationName: "Shady Grove", group: "2", line: "RD", locationCode: "A01", locationName: "Metro Center", min: "2"),
+            ],
+            "C01": [
+                WMATATrainPrediction(car: "8", destination: "Vienna", destinationCode: "K08", destinationName: "Vienna", group: "2", line: "OR", locationCode: "C01", locationName: "Metro Center", min: "1"),
+            ],
+        ]
+
+        let resolved = WMATAClient.resolveTrackingOptions(for: mockStation, predictionsBySubcode: mockPredictions)
+
+        // Should resolve three options: 2 for subcode A01 (group 1 & 2), and 1 for C01 (group 2)
+        XCTAssertEqual(resolved.count, 3)
+
+        let option1 = resolved.first { $0.directionGroup == "1" && $0.lines.contains("RD") }
+        XCTAssertNotNil(option1)
+        XCTAssertEqual(option1?.label, "Red: Towards Glenmont")
+
+        let option2 = resolved.first { $0.directionGroup == "2" && $0.lines.contains("RD") }
+        XCTAssertNotNil(option2)
+        XCTAssertEqual(option2?.label, "Red: Towards Shady Grove")
+
+        let option3 = resolved.first { $0.directionGroup == "2" && $0.lines.contains("OR") }
+        XCTAssertNotNil(option3)
+        XCTAssertEqual(option3?.label, "Orange: Towards Vienna")
+    }
+
+    func testResolveTrackingOptionsFallback() {
+        let mockStation = Station(id: "A01", name: "Metro Center", colorImageName: "r", lat: 38.898314, lon: -77.028078)
+        let resolved = WMATAClient.resolveTrackingOptions(for: mockStation, predictionsBySubcode: [:])
+
+        // Should fallback to Direction 1 and Direction 2 options for Red line
+        XCTAssertEqual(resolved.count, 2)
+        XCTAssertEqual(resolved[0].label, "Red: Direction 1")
+        XCTAssertEqual(resolved[0].directionGroup, "1")
+        XCTAssertEqual(resolved[1].label, "Red: Direction 2")
+        XCTAssertEqual(resolved[1].directionGroup, "2")
     }
 }
