@@ -3,7 +3,7 @@ import SwiftUI
 @main
 struct MetroTabBarApp: App {
     @State private var favoritesManager = FavoritesManager()
-    @State private var locationManager = LocationManager()
+    @State private var locationManager = LocationManager.shared
 
     init() {
         LiveActivityActionRegistry.onMissedTrain = { @MainActor in

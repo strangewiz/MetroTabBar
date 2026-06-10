@@ -3,12 +3,14 @@ import Observation
 
 @Observable
 class LocationManager: NSObject, CLLocationManagerDelegate {
+    static let shared = LocationManager()
+
     private let manager = CLLocationManager()
     var location: CLLocation?
     var authorizationStatus: CLAuthorizationStatus = .notDetermined
     private var isStarted = false
 
-    override init() {
+    override private init() {
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyHundredMeters

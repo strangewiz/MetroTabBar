@@ -17,7 +17,7 @@ class LiveActivityManager {
     private(set) var activeActivity: Activity<TrainTrackingAttributes>?
     private var startTask: Task<Void, Never>?
     private var trackingTask: Task<Void, Never>?
-    private let locationManager = LocationManager()
+    private let locationManager = LocationManager.shared
 
     /// Store current state for UI
     var isTracking: Bool {
