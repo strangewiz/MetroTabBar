@@ -18,6 +18,8 @@ class LiveActivityManager {
     private var startTask: Task<Void, Never>?
     private var trackingTask: Task<Void, Never>?
     private let locationManager = LocationManager.shared
+    private var foregroundObserver: NSObjectProtocol?
+    private var backgroundObserver: NSObjectProtocol?
 
     /// Store current state for UI
     var isTracking: Bool {
@@ -52,6 +54,7 @@ class LiveActivityManager {
             // Resume background location updates and polling
             locationManager.setBackgroundUpdatesEnabled(true)
             locationManager.startUpdating()
+            setupLifecycleObservers()
             startPolling()
         }
     }
@@ -105,6 +108,9 @@ class LiveActivityManager {
                     print("Live Activity started successfully: \(activity.id)")
                 #endif
 
+                // Listen for lifecycle transitions to force immediate updates
+                setupLifecycleObservers()
+
                 // Start polling loop
                 startPolling()
             } catch {
@@ -125,6 +131,7 @@ class LiveActivityManager {
 
         locationManager.stopUpdating()
         locationManager.setBackgroundUpdatesEnabled(false)
+        removeLifecycleObservers()
 
         if let activity = activeActivity {
             Task {
@@ -137,6 +144,39 @@ class LiveActivityManager {
         targetLines = []
         directionGroup = ""
         skippedTrains.removeAll()
+    }
+
+    private func setupLifecycleObservers() {
+        removeLifecycleObservers()
+
+        foregroundObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.willEnterForegroundNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.triggerUpdate()
+        }
+
+        backgroundObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.didEnterBackgroundNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.triggerUpdate()
+        }
+    }
+
+    private func removeLifecycleObservers() {
+        if let observer = foregroundObserver {
+            NotificationCenter.default.removeObserver(observer)
+            foregroundObserver = nil
+        }
+        if let observer = backgroundObserver {
+            NotificationCenter.default.removeObserver(observer)
+            backgroundObserver = nil
+        }
     }
 
     func incrementMissedTrain() {
