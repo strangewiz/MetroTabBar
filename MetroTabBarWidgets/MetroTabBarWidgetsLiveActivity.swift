@@ -66,7 +66,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                         Text(context.state.nextTrainTime)
                             .font(.headline)
                             .fontWeight(.bold)
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(lineColor(for: context.state.nextTrainLineCode))
                     }
 
                     // Following Train
@@ -97,7 +97,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
 
                         Text(context.state.followingTrainTime)
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(lineColor(for: context.state.followingTrainLineCode))
                     }
 
                     // Third Train
@@ -128,7 +128,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
 
                         Text(context.state.thirdTrainTime)
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(lineColor(for: context.state.thirdTrainLineCode))
                     }
                 }
 
@@ -185,7 +185,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                     Text(context.state.nextTrainTime)
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(lineColor(for: context.state.nextTrainLineCode))
                 }
 
                 DynamicIslandExpandedRegion(.center) {
@@ -263,7 +263,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                 Text(compactTrailingText(context: context))
                     .font(.caption2)
                     .fontWeight(.bold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(lineColor(for: context.state.followingTrainLineCode))
             } minimal: {
                 let t1 = cleanMin(context.state.nextTrainTime)
                 let suffix = (t1 == "ARR" || t1 == "BRD") ? "" : "m"
@@ -273,7 +273,7 @@ struct MetroTabBarWidgetsLiveActivity: Widget {
                     .foregroundStyle(lineColor(for: context.state.nextTrainLineCode))
             }
             .widgetURL(URL(string: "metroapp://track"))
-            .keylineTint(Color.orange)
+            .keylineTint(lineColor(for: context.state.nextTrainLineCode))
         }
     }
 

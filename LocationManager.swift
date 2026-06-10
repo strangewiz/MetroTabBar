@@ -12,7 +12,14 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        manager.allowsBackgroundLocationUpdates = false
+        manager.showsBackgroundLocationIndicator = false
         authorizationStatus = manager.authorizationStatus
+    }
+
+    func setBackgroundUpdatesEnabled(_ enabled: Bool) {
+        manager.allowsBackgroundLocationUpdates = enabled
+        manager.showsBackgroundLocationIndicator = enabled
     }
 
     func requestPermission() {

@@ -31,13 +31,30 @@ class LiveActivityManager {
     /// Set of currently skipped trains to implement "I Missed the Train" logic
     private var skippedTrains: Set<SkippedTrain> = []
 
+    private var lastFetchedPredictions: [WMATATrainPrediction] = []
+    private var lastFetchTime: Date?
+
     private static let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter
     }()
 
-    private init() {}
+    private init() {
+        // Restore active activity on initialization (e.g. if the app is cold-started but a Live Activity is already active)
+        if let activity = Activity<TrainTrackingAttributes>.activities.first {
+            activeActivity = activity
+            // Retrieve station and options from attributes
+            trackingStation = Station.allStations.first { $0.name == activity.attributes.stationName }
+            targetLines = activity.attributes.targetLines
+            directionGroup = activity.attributes.directionGroup
+
+            // Resume background location updates and polling
+            locationManager.setBackgroundUpdatesEnabled(true)
+            locationManager.startUpdating()
+            startPolling()
+        }
+    }
 
     func startTracking(station: Station, lines: [String], directionGroup: String) {
         // Stop any current tracking first
@@ -57,6 +74,7 @@ class LiveActivityManager {
         }
 
         // Start background location updates to keep app alive in background while walking
+        locationManager.setBackgroundUpdatesEnabled(true)
         locationManager.startUpdating()
 
         let attributes = TrainTrackingAttributes(
@@ -106,6 +124,7 @@ class LiveActivityManager {
         trackingTask = nil
 
         locationManager.stopUpdating()
+        locationManager.setBackgroundUpdatesEnabled(false)
 
         if let activity = activeActivity {
             Task {
@@ -166,16 +185,26 @@ class LiveActivityManager {
 
     private func startPolling() {
         trackingTask = Task {
+            var loopCount = 0
             while !Task.isCancelled {
-                // Poll every 30 seconds
+                // Poll/update every 20 seconds
                 do {
-                    try await Task.sleep(for: .seconds(30))
+                    try await Task.sleep(for: .seconds(20))
                 } catch {
                     break
                 }
 
                 guard let station = trackingStation else { break }
-                let state = await fetchUpdatedState(stationCode: station.id, lines: targetLines, direction: directionGroup)
+
+                // Fetch new predictions from the network every 40 seconds (every other loop iteration),
+                // otherwise calculate the estimated state locally.
+                let state: TrainTrackingAttributes.ContentState
+                if loopCount % 2 == 0 {
+                    state = await fetchUpdatedState(stationCode: station.id, lines: targetLines, direction: directionGroup)
+                } else {
+                    state = getEstimatedState()
+                }
+                loopCount += 1
 
                 if let activity = activeActivity {
                     let content = ActivityContent(state: state, staleDate: nil)
@@ -185,50 +214,51 @@ class LiveActivityManager {
         }
     }
 
+    private func getEstimatedState() -> TrainTrackingAttributes.ContentState {
+        guard let station = trackingStation else {
+            return TrainTrackingAttributes.ContentState(
+                nextTrainTime: "--",
+                followingTrainTime: "--",
+                thirdTrainTime: "--",
+                nextTrainDestination: "Error loading",
+                followingTrainDestination: "Error loading",
+                thirdTrainDestination: "Error loading",
+                nextTrainLineCode: "",
+                followingTrainLineCode: "",
+                thirdTrainLineCode: "",
+                statusMessage: "No active tracking"
+            )
+        }
+        if let lastFetch = lastFetchTime {
+            return processAndFormatPredictions(lastFetchedPredictions, lines: targetLines, direction: directionGroup, fetchTime: lastFetch)
+        } else {
+            return TrainTrackingAttributes.ContentState(
+                nextTrainTime: "--",
+                followingTrainTime: "--",
+                thirdTrainTime: "--",
+                nextTrainDestination: "Error loading",
+                followingTrainDestination: "Error loading",
+                thirdTrainDestination: "Error loading",
+                nextTrainLineCode: "",
+                followingTrainLineCode: "",
+                thirdTrainLineCode: "",
+                statusMessage: "Waiting for update"
+            )
+        }
+    }
+
     private func fetchUpdatedState(stationCode: String, lines: [String], direction: String) async -> TrainTrackingAttributes.ContentState {
         do {
             let predictions = try await WMATAClient.shared.fetchPredictions(for: stationCode)
 
-            // Clean up expired skips (arrival time passed by more than 2 minutes)
-            let now = Date()
-            skippedTrains = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
+            lastFetchedPredictions = predictions
+            lastFetchTime = Date()
 
-            let activePredictions = Self.processPredictions(predictions, lines: lines, direction: direction, skippedTrains: skippedTrains, now: now)
-
-            let nextTrain: WMATATrainPrediction? = activePredictions.indices.contains(0) ? activePredictions[0] : nil
-            let followingTrain: WMATATrainPrediction? = activePredictions.indices.contains(1) ? activePredictions[1] : nil
-            let thirdTrain: WMATATrainPrediction? = activePredictions.indices.contains(2) ? activePredictions[2] : nil
-
-            let nextMin = nextTrain?.min ?? "--"
-            let nextDest = nextTrain?.destinationName ?? "No Train"
-
-            let followingMin = followingTrain?.min ?? "--"
-            let followingDest = followingTrain?.destinationName ?? "No Train"
-
-            let thirdMin = thirdTrain?.min ?? "--"
-            let thirdDest = thirdTrain?.destinationName ?? "No Train"
-
-            var status: String? = nil
-            if nextTrain != nil {
-                status = "Updated \(formattedCurrentTime())"
-            } else {
-                status = "No upcoming trains found"
-            }
-
-            return TrainTrackingAttributes.ContentState(
-                nextTrainTime: nextMin == "ARR" || nextMin == "BRD" ? nextMin : "\(nextMin) min",
-                followingTrainTime: followingMin == "ARR" || followingMin == "BRD" ? followingMin : "\(followingMin) min",
-                thirdTrainTime: thirdMin == "ARR" || thirdMin == "BRD" ? thirdMin : "\(thirdMin) min",
-                nextTrainDestination: nextDest,
-                followingTrainDestination: followingDest,
-                thirdTrainDestination: thirdDest,
-                nextTrainLineCode: nextTrain?.line ?? "",
-                followingTrainLineCode: followingTrain?.line ?? "",
-                thirdTrainLineCode: thirdTrain?.line ?? "",
-                statusMessage: status
-            )
-
+            return processAndFormatPredictions(predictions, lines: lines, direction: direction, fetchTime: lastFetchTime ?? Date())
         } catch {
+            if let lastFetch = lastFetchTime, Date().timeIntervalSince(lastFetch) < 300 {
+                return processAndFormatPredictions(lastFetchedPredictions, lines: lines, direction: direction, fetchTime: lastFetch)
+            }
             return TrainTrackingAttributes.ContentState(
                 nextTrainTime: "--",
                 followingTrainTime: "--",
@@ -244,9 +274,73 @@ class LiveActivityManager {
         }
     }
 
+    private func processAndFormatPredictions(
+        _ predictions: [WMATATrainPrediction],
+        lines: [String],
+        direction: String,
+        fetchTime: Date
+    ) -> TrainTrackingAttributes.ContentState {
+        let now = Date()
+        let elapsedMinutes = Int(now.timeIntervalSince(fetchTime) / 60.0)
+
+        // Clean up expired skips (arrival time passed by more than 2 minutes)
+        skippedTrains = skippedTrains.filter { $0.expectedArrival.addingTimeInterval(120) > now }
+
+        let activePredictions = Self.processPredictions(predictions, lines: lines, direction: direction, skippedTrains: skippedTrains, now: now)
+
+        func estimateMin(_ pred: WMATATrainPrediction?) -> String {
+            guard let pred = pred else { return "--" }
+            let originalMin = pred.min
+            if originalMin == "ARR" || originalMin == "BRD" {
+                return originalMin
+            }
+            let parsed = Self.parseMinutes(originalMin)
+            if parsed == 999 {
+                return originalMin
+            }
+            let estimated = parsed - elapsedMinutes
+            if estimated <= 0 {
+                return "1 min"
+            }
+            return "\(estimated) min"
+        }
+
+        let nextTrain: WMATATrainPrediction? = activePredictions.indices.contains(0) ? activePredictions[0] : nil
+        let followingTrain: WMATATrainPrediction? = activePredictions.indices.contains(1) ? activePredictions[1] : nil
+        let thirdTrain: WMATATrainPrediction? = activePredictions.indices.contains(2) ? activePredictions[2] : nil
+
+        let nextMin = estimateMin(nextTrain)
+        let followingMin = estimateMin(followingTrain)
+        let thirdMin = estimateMin(thirdTrain)
+
+        let nextDest = nextTrain?.destinationName ?? "No Train"
+        let followingDest = followingTrain?.destinationName ?? "No Train"
+        let thirdDest = thirdTrain?.destinationName ?? "No Train"
+
+        var status: String? = nil
+        if nextTrain != nil {
+            status = "Updated \(formattedCurrentTime())"
+        } else {
+            status = "No upcoming trains found"
+        }
+
+        return TrainTrackingAttributes.ContentState(
+            nextTrainTime: nextMin,
+            followingTrainTime: followingMin,
+            thirdTrainTime: thirdMin,
+            nextTrainDestination: nextDest,
+            followingTrainDestination: followingDest,
+            thirdTrainDestination: thirdDest,
+            nextTrainLineCode: nextTrain?.line ?? "",
+            followingTrainLineCode: followingTrain?.line ?? "",
+            thirdTrainLineCode: thirdTrain?.line ?? "",
+            statusMessage: status
+        )
+    }
+
     // MARK: - Unit-Testable Predictions Processing Logic
 
-    static func parseMinutes(_ minStr: String) -> Int {
+    nonisolated static func parseMinutes(_ minStr: String) -> Int {
         if minStr == "ARR" || minStr == "BRD" {
             return 0
         }
@@ -256,7 +350,7 @@ class LiveActivityManager {
         return Int(minStr) ?? 999
     }
 
-    static func processPredictions(
+    nonisolated static func processPredictions(
         _ predictions: [WMATATrainPrediction],
         lines: [String],
         direction: String,
